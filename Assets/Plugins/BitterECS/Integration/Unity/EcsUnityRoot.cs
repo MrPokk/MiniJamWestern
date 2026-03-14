@@ -5,19 +5,19 @@ namespace BitterECS.Integration.Unity
 {
     [DefaultExecutionOrder(int.MinValue)]
     [DisallowMultipleComponent]
-    public class EcsUnityRoot : MonoBehaviour
+    public abstract class EcsUnityRoot<T> : MonoBehaviour where T : EcsUnityRoot<T>
     {
-        private static EcsUnityRoot s_instance;
-        public static EcsUnityRoot Instance
+        private static T s_instance;
+        public static T Instance
         {
             get
             {
                 if (s_instance == null)
                 {
-                    var instanceFind = FindFirstObjectByType<EcsUnityRoot>();
+                    var instanceFind = FindFirstObjectByType<T>();
                     if (instanceFind == null)
                     {
-                        s_instance = new GameObject($"[EcsUnityRoot]").AddComponent<EcsUnityRoot>();
+                        s_instance = new GameObject($"[{typeof(T).Name}]").AddComponent<T>();
                     }
                     else
                     {

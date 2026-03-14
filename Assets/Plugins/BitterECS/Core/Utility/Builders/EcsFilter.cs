@@ -271,25 +271,32 @@ namespace BitterECS.Core
 
     public struct EcsFilter<T1> where T1 : new()
     {
-        private EcsFilter _filter;
-        public int Count => _filter.Count;
+        private EcsFilter _f;
+        private bool _init;
 
-        public EcsFilter(EcsWorld world) => _filter = new EcsFilter(world).Has<T1>();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Init() { if (!_init) { _f = new EcsFilter(null).Has<T1>(); _init = true; } }
 
-        public EcsFilter<T1> Exclude<T2>() where T2 : new() { _filter = _filter.Not<T2>(); return this; }
-        public EcsFilter<T1> Include<T2>(Predicate<T2> predicate) where T2 : new() { _filter = _filter.Has(predicate); return this; }
-        public EcsFilter<T1> Where(Predicate<EcsEntity> predicate) { _filter = _filter.Where(predicate); return this; }
-        public EcsFilter<T1> WhereProvider<TComponent>() where TComponent : class, ILinkableProvider { _filter = _filter.WhereProvider<TComponent>(); return this; }
-        public EcsFilter.Enumerator GetEnumerator() => _filter.GetEnumerator();
+        public int Count { get { Init(); return _f.Count; } }
 
-        public EcsEntity First() => _filter.First();
-        public EcsEntity First(Predicate<EcsEntity> predicate) => _filter.First(predicate);
-        public EcsEntity Last() => _filter.Last();
-        public EcsEntity Last(Predicate<EcsEntity> predicate) => _filter.Last(predicate);
+        public EcsFilter(EcsWorld world) { _f = new EcsFilter(world).Has<T1>(); _init = true; }
 
+        public EcsFilter<T1> Exclude<T2>() where T2 : new() { Init(); _f = _f.Not<T2>(); return this; }
+        public EcsFilter<T1> Include<T2>(Predicate<T2> predicate) where T2 : new() { Init(); _f = _f.Has(predicate); return this; }
+        public EcsFilter<T1> Where(Predicate<EcsEntity> predicate) { Init(); _f = _f.Where(predicate); return this; }
+        public EcsFilter<T1> WhereProvider<TComponent>() where TComponent : class, ILinkableProvider { Init(); _f = _f.WhereProvider<TComponent>(); return this; }
+        public EcsFilter.Enumerator GetEnumerator() { Init(); return _f.GetEnumerator(); }
+
+        public EcsEntity First() { Init(); return _f.First(); }
+        public EcsEntity First(Predicate<EcsEntity> predicate) { Init(); return _f.First(predicate); }
+        public EcsEntity Last() { Init(); return _f.Last(); }
+        public EcsEntity Last(Predicate<EcsEntity> predicate) { Init(); return _f.Last(predicate); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void For(EcsFilterFor<T1> action)
         {
-            var enumerator = GetEnumerator();
+            Init();
+            var enumerator = _f.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
@@ -300,23 +307,30 @@ namespace BitterECS.Core
 
     public struct EcsFilter<T1, T2> where T1 : new() where T2 : new()
     {
-        private EcsFilter _filter;
-        public int Count => _filter.Count;
+        private EcsFilter _f;
+        private bool _init;
 
-        public EcsFilter(EcsWorld world) => _filter = new EcsFilter(world).Has<T1>().Has<T2>();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Init() { if (!_init) { _f = new EcsFilter(null).Has<T1>().Has<T2>(); _init = true; } }
 
-        public EcsFilter<T1, T2> Exclude<T3>() where T3 : new() { _filter = _filter.Not<T3>(); return this; }
-        public EcsFilter<T1, T2> Where(Predicate<EcsEntity> predicate) { _filter = _filter.Where(predicate); return this; }
-        public EcsFilter.Enumerator GetEnumerator() => _filter.GetEnumerator();
+        public int Count { get { Init(); return _f.Count; } }
 
-        public EcsEntity First() => _filter.First();
-        public EcsEntity First(Predicate<EcsEntity> predicate) => _filter.First(predicate);
-        public EcsEntity Last() => _filter.Last();
-        public EcsEntity Last(Predicate<EcsEntity> predicate) => _filter.Last(predicate);
+        public EcsFilter(EcsWorld world) { _f = new EcsFilter(world).Has<T1>().Has<T2>(); _init = true; }
 
+        public EcsFilter<T1, T2> Exclude<T3>() where T3 : new() { Init(); _f = _f.Not<T3>(); return this; }
+        public EcsFilter<T1, T2> Where(Predicate<EcsEntity> predicate) { Init(); _f = _f.Where(predicate); return this; }
+        public EcsFilter.Enumerator GetEnumerator() { Init(); return _f.GetEnumerator(); }
+
+        public EcsEntity First() { Init(); return _f.First(); }
+        public EcsEntity First(Predicate<EcsEntity> predicate) { Init(); return _f.First(predicate); }
+        public EcsEntity Last() { Init(); return _f.Last(); }
+        public EcsEntity Last(Predicate<EcsEntity> predicate) { Init(); return _f.Last(predicate); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void For(EcsFilterFor<T1, T2> action)
         {
-            var enumerator = GetEnumerator();
+            Init();
+            var enumerator = _f.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
@@ -327,24 +341,30 @@ namespace BitterECS.Core
 
     public struct EcsFilter<T1, T2, T3> where T1 : new() where T2 : new() where T3 : new()
     {
-        private EcsFilter _filter;
-        public int Count => _filter.Count;
+        private EcsFilter _f;
+        private bool _init;
 
-        public EcsFilter(EcsWorld world) => _filter = new EcsFilter(world).Has<T1>().Has<T2>().Has<T3>();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Init() { if (!_init) { _f = new EcsFilter(null).Has<T1>().Has<T2>().Has<T3>(); _init = true; } }
 
-        public EcsFilter<T1, T2, T3> Exclude<T4>() where T4 : new() { _filter = _filter.Not<T4>(); return this; }
-        public EcsFilter<T1, T2, T3> Where(Predicate<EcsEntity> predicate) { _filter = _filter.Where(predicate); return this; }
-        public EcsFilter.Enumerator GetEnumerator() => _filter.GetEnumerator();
+        public int Count { get { Init(); return _f.Count; } }
 
-        public EcsEntity First() => _filter.First();
-        public EcsEntity First(Predicate<EcsEntity> predicate) => _filter.First(predicate);
-        public EcsEntity Last() => _filter.Last();
-        public EcsEntity Last(Predicate<EcsEntity> predicate) => _filter.Last(predicate);
+        public EcsFilter(EcsWorld world) { _f = new EcsFilter(world).Has<T1>().Has<T2>().Has<T3>(); _init = true; }
+
+        public EcsFilter<T1, T2, T3> Exclude<T4>() where T4 : new() { Init(); _f = _f.Not<T4>(); return this; }
+        public EcsFilter<T1, T2, T3> Where(Predicate<EcsEntity> predicate) { Init(); _f = _f.Where(predicate); return this; }
+        public EcsFilter.Enumerator GetEnumerator() { Init(); return _f.GetEnumerator(); }
+
+        public EcsEntity First() { Init(); return _f.First(); }
+        public EcsEntity First(Predicate<EcsEntity> predicate) { Init(); return _f.First(predicate); }
+        public EcsEntity Last() { Init(); return _f.Last(); }
+        public EcsEntity Last(Predicate<EcsEntity> predicate) { Init(); return _f.Last(predicate); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void For(EcsFilterFor<T1, T2, T3> action)
         {
-            var enumerator = GetEnumerator();
+            Init();
+            var enumerator = _f.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
@@ -355,24 +375,30 @@ namespace BitterECS.Core
 
     public struct EcsFilter<T1, T2, T3, T4> where T1 : new() where T2 : new() where T3 : new() where T4 : new()
     {
-        private EcsFilter _filter;
-        public int Count => _filter.Count;
+        private EcsFilter _f;
+        private bool _init;
 
-        public EcsFilter(EcsWorld world) => _filter = new EcsFilter(world).Has<T1>().Has<T2>().Has<T3>().Has<T4>();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Init() { if (!_init) { _f = new EcsFilter(null).Has<T1>().Has<T2>().Has<T3>().Has<T4>(); _init = true; } }
 
-        public EcsFilter<T1, T2, T3, T4> Exclude<T5>() where T5 : new() { _filter = _filter.Not<T5>(); return this; }
-        public EcsFilter<T1, T2, T3, T4> Where(Predicate<EcsEntity> predicate) { _filter = _filter.Where(predicate); return this; }
-        public EcsFilter.Enumerator GetEnumerator() => _filter.GetEnumerator();
+        public int Count { get { Init(); return _f.Count; } }
 
-        public EcsEntity First() => _filter.First();
-        public EcsEntity First(Predicate<EcsEntity> predicate) => _filter.First(predicate);
-        public EcsEntity Last() => _filter.Last();
-        public EcsEntity Last(Predicate<EcsEntity> predicate) => _filter.Last(predicate);
+        public EcsFilter(EcsWorld world) { _f = new EcsFilter(world).Has<T1>().Has<T2>().Has<T3>().Has<T4>(); _init = true; }
+
+        public EcsFilter<T1, T2, T3, T4> Exclude<T5>() where T5 : new() { Init(); _f = _f.Not<T5>(); return this; }
+        public EcsFilter<T1, T2, T3, T4> Where(Predicate<EcsEntity> predicate) { Init(); _f = _f.Where(predicate); return this; }
+        public EcsFilter.Enumerator GetEnumerator() { Init(); return _f.GetEnumerator(); }
+
+        public EcsEntity First() { Init(); return _f.First(); }
+        public EcsEntity First(Predicate<EcsEntity> predicate) { Init(); return _f.First(predicate); }
+        public EcsEntity Last() { Init(); return _f.Last(); }
+        public EcsEntity Last(Predicate<EcsEntity> predicate) { Init(); return _f.Last(predicate); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void For(EcsFilterFor<T1, T2, T3, T4> action)
         {
-            var enumerator = GetEnumerator();
+            Init();
+            var enumerator = _f.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;

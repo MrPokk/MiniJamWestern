@@ -161,7 +161,7 @@ namespace BitterECS.Integration.Unity
         public static implicit operator T(UnityComponent<T> proxy) => proxy.value;
     }
 
-    public abstract class ProxyProvider<T> : ProviderEcs<UnityComponent<T>> where T : Component
+    public abstract class ProviderUnity<T> : ProviderEcs<UnityComponent<T>> where T : Component
     {
         protected override void Awake()
         {

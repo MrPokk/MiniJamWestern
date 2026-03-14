@@ -1,8 +1,8 @@
 ﻿<Solution>
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="FastScriptReload.Editor.csproj" />
   <Project Path="Assembly-CSharp-firstpass.csproj" />
   <Project Path="Assembly-CSharp-Editor-firstpass.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="FastScriptReload.Runtime.csproj" />
   <Project Path="FolderColorizer.Editor.csproj" />
 </Solution>

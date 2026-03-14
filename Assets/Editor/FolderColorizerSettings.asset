@@ -15,8 +15,8 @@ MonoBehaviour:
   m_enabled: 1
   m_backgroundAlpha: 0.3
   m_saturation: 0.7
-  m_brightness: 0.85
-  m_colorizeChildren: 0
+  m_brightness: 0.5
+  m_colorizeChildren: 1
   m_minDepth: 2
   m_outlineColor: {r: 0, g: 0, b: 0, a: 1}
   m_textColor: {r: 1, g: 1, b: 1, a: 1}

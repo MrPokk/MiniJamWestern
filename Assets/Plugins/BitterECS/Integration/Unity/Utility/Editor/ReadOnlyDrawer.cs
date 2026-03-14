@@ -12,5 +12,4 @@ namespace BitterECS.Integration.Unity
             GUI.enabled = true;
         }
     }
-    public class ReadOnlyAttribute : PropertyAttribute { }
 }
