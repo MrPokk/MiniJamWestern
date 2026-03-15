@@ -5,13 +5,16 @@
 
 public static class PrefabObjectsPaths
 {
-    /// <summary> Provider: TagPlayerProvider </summary>
+    /// <summary> Provider: TransformProvider </summary>
+    public const string GOBLIN_ENTITY = "Entities/Prefabs/GoblinEntity";
+    /// <summary> Provider: TransformProvider </summary>
     public const string PLAYER_ENTITY = "Entities/Prefabs/PlayerEntity";
 
     public static readonly string[] AllPaths = new string[]
     {
+        GOBLIN_ENTITY,
         PLAYER_ENTITY,
     };
 
-    public const int COUNT = 1;
+    public const int COUNT = 2;
 }

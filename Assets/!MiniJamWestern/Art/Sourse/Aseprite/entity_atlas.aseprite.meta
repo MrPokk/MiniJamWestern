@@ -151,14 +151,14 @@ ScriptedImporter:
   spriteSheetImportData:
   - name: entity_atlas_0
     originalName: 
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
       x: 4
-      y: 4
+      y: 41
       width: 16
       height: 21
     spriteID: dac263c818f638e9195074ebacd5b880
@@ -172,17 +172,59 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: entity_atlas_1
     originalName: 
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
       x: 30
-      y: 4
+      y: 41
       width: 16
       height: 21
     spriteID: 23b45e53865df90b7a126763eef41446
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: entity_atlas_2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 21
+      y: 7
+      width: 28
+      height: 30
+    spriteID: f3f6c9dd3b6a9b64fbd5a5316fe67366
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: entity_atlas_3
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 67
+      y: 4
+      width: 43
+      height: 45
+    spriteID: de4c8a2e2d1182b959a26cc0a36522fa
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -210,9 +252,9 @@ ScriptedImporter:
       additiveSortOrder: 0
       cellRect:
         x: 4
-        y: 213
-        width: 42
-        height: 21
+        y: 176
+        width: 106
+        height: 58
       spriteId: a50b23d00101c78cfa87c8e06c832d87
     linkedCells: []
     tileCells: []
@@ -260,4 +302,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 384, y: 256}
-  previousTextureSize: {x: 64, y: 32}
+  previousTextureSize: {x: 128, y: 128}

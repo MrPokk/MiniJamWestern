@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace UINotDependence.Core
 {
     public class UIInit
     {
-        public static void Initialize(string prefabPath = "UI")
+        public static void Initialize(string prefabPath = "UI", Camera uiCamera = null)
         {
             if (UIController.Instance.IsInitialized) return;
 
@@ -21,7 +22,7 @@ namespace UINotDependence.Core
                 }
             }
 
-            UIFactory.Create(allBinders);
+            UIFactory.Create(allBinders, uiCamera);
         }
     }
 }

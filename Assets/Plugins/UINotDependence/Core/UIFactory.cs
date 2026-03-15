@@ -8,13 +8,13 @@ namespace UINotDependence.Core
 {
     public static class UIFactory
     {
-        public static UIController Create(Dictionary<Type, WindowBinder> binders)
+        public static UIController Create(Dictionary<Type, WindowBinder> binders, Camera uiCamera = null)
         {
             var rootManager = UIController.Instance;
 
             if (rootManager.IsInitialized) return rootManager;
 
-            var canvas = CreateCanvas(rootManager.transform);
+            var canvas = CreateCanvas(rootManager.transform, uiCamera);
             var screens = CreateUIContainer("UIScreens", canvas);
             var popups = CreateUIContainer("UIPopups", canvas);
 
@@ -24,13 +24,22 @@ namespace UINotDependence.Core
             return rootManager;
         }
 
-        private static Transform CreateCanvas(Transform parent)
+        private static Transform CreateCanvas(Transform parent, Camera uiCamera)
         {
             var canvasObject = new GameObject("UIRootCanvas");
             canvasObject.transform.SetParent(parent);
 
             var canvas = canvasObject.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+
+            if (uiCamera != null)
+            {
+                canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                canvas.worldCamera = uiCamera;
+            }
+            else
+            {
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            }
 
             var scaler = canvasObject.AddComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;

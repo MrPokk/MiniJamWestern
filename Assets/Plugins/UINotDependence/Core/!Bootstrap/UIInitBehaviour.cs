@@ -7,6 +7,7 @@ namespace UINotDependence.Core
     public class UIInitBehaviour : MonoBehaviour
     {
         [SerializeField] private string _uiPrefabsPath = "UI";
+        [SerializeField] private Camera _uiCamera;
 
         private void Awake()
         {
@@ -22,7 +23,7 @@ namespace UINotDependence.Core
                 }
             }
 
-            UIFactory.Create(allBinders);
+            UIFactory.Create(allBinders, _uiCamera);
             Destroy(gameObject);
         }
     }

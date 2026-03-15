@@ -14,9 +14,10 @@ namespace BitterECS.Extra
 #endif
 
         public const string ENTITIES = "Entities/";
-        public const string ENVIRAMENT = "Envirament/";
+        public const string ENVIRONMENT = "Environment/";
         public const string SETTINGS = "!Settings/";
         public const string UI = "UI/";
+        public const string ACTIONS = ENTITIES + "Actions/";
         public const string PREFAB_OBJECTS = ENTITIES + "Prefabs/";
         public const string GAMEPLAY_SETTING = SETTINGS + "Gameplay/";
         public const string UI_POPUPS = UI + "!Popups/";

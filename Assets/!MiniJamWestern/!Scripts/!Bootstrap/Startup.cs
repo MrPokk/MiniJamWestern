@@ -1,4 +1,5 @@
-﻿using BitterECS.Core;
+﻿using System;
+using BitterECS.Core;
 using BitterECS.Integration.Unity;
 using UINotDependence.Core;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class Startup : EcsUnityRoot<Startup>
 {
+    private CameraObject _cameraObject;
     [SerializeField] private GridConfig _playfieldConfig;
     [SerializeField] public GameObject gridParent;
 
@@ -13,20 +15,28 @@ public class Startup : EcsUnityRoot<Startup>
 
     protected override void Bootstrap()
     {
+        InitializeCamera();
         InitializeUI();
         InitializeGrid();
         InitializeEventSystem();
         InitializePlaying();
     }
 
+    private void InitializeCamera()
+    {
+        DontDestroyOnLoad(_cameraObject = new Loader<CameraObject>(EnvironmentPaths.CAMERA_OBJECT).New());
+    }
+
     private void InitializeUI()
     {
-        UIInit.Initialize();
+        UIInit.Initialize("UI", _cameraObject.CameraTarget);
     }
 
     private void InitializePlaying()
     {
+        var goblinPref = new Loader<TagEnemyProvider>(PrefabObjectsPaths.GOBLIN_ENTITY).Prefab();
         var playerPref = new Loader<TagPlayerProvider>(PrefabObjectsPaths.PLAYER_ENTITY).Prefab();
+        GridInteractionHandler.InstantiateObject(new Vector2Int(0, 5), goblinPref, out _);
         GridInteractionHandler.InstantiateObject(new Vector2Int(0, 0), playerPref, out _);
 
         new GFlow(new(DifficultyTier.Tier1_Base)).Play();
@@ -42,18 +52,3 @@ public class Startup : EcsUnityRoot<Startup>
         new Loader<EventSystem>(SettingsPaths.EVENT_SYSTEM).New();
     }
 }
-
-public class Test : IEcsInitSystem
-{
-    public Priority Priority => Priority.High;
-
-    private EcsFilter<TagPlayer> _ecsEntities;
-    public async void Init()
-    {
-        _ecsEntities.For((EcsEntity e, ref TagPlayer tag) =>
-        {
-
-        });
-    }
-}
-

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51919544095551e6c9328399ad1d0710, type: 3}
   m_Name: PlayfieldConfig
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::GridConfig
-  _position: {x: -1.5, y: -3, z: 0}
+  _position: {x: -0.5, y: -4.5, z: 0}
   _rotation: {x: 0, y: 0, z: 0}
-  _cellSize: 1
+  _cellSize: 1.5
   _cellOffset: {x: 0, y: 0}
   _nodePrefab: {fileID: 0}
   _cells:
@@ -24,15 +24,3 @@ MonoBehaviour:
   - {x: 0, y: 3}
   - {x: 0, y: 4}
   - {x: 0, y: 5}
-  - {x: 1, y: 0}
-  - {x: 1, y: 1}
-  - {x: 1, y: 2}
-  - {x: 1, y: 3}
-  - {x: 1, y: 4}
-  - {x: 1, y: 5}
-  - {x: 2, y: 0}
-  - {x: 2, y: 1}
-  - {x: 2, y: 2}
-  - {x: 2, y: 3}
-  - {x: 2, y: 4}
-  - {x: 2, y: 5}
