@@ -15,8 +15,6 @@ public class UIChamberPopup : UIPopup
 
     private void OnNext()
     {
-        Debug.Log("Next turn button clicked");
-
         GFlow.RefreshTurn();
     }
 

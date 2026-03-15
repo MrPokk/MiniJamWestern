@@ -5,12 +5,18 @@ public class PushForward : IUpdateTurn
 {
     public Priority Priority => Priority.Medium;
 
-    private EcsFilter<GridComponent, TagPushForward, TargetToMove> _filter;
+    private EcsFilter<GridComponent, IsActionComponent, TargetToMove> _filter;
 
     public void RefreshTurn()
     {
-        _filter.For((EcsEntity e, ref GridComponent gridCom, ref TagPushForward tag, ref TargetToMove target) =>
+        _filter.For((EcsEntity e, ref GridComponent gridCom, ref IsActionComponent tag, ref TargetToMove target) =>
         {
+            var isType = tag.Is<TagPushForward>();
+            if (!isType)
+            {
+                return;
+            }
+
             if (!MovementUtility.TryGetStepDirection(gridCom.currentPosition, target.position, out var direction))
             {
                 return;

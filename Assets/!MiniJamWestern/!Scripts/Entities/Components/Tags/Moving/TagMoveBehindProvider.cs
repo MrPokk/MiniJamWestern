@@ -1,5 +1,8 @@
-﻿using BitterECS.Integration.Unity;
+﻿using System;
+using BitterECS.Integration.Unity;
 
-public struct TagMoveBehind { }
+[Serializable]
+public struct TagMoveBehind : IActionAbility
+{ }
 
 public class TagMoveBehindProvider : ProviderEcs<TagMoveBehind> { }

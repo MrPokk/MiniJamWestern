@@ -1,5 +1,8 @@
-﻿using BitterECS.Integration.Unity;
+﻿using System;
+using BitterECS.Integration.Unity;
 
-public struct TagPushForward { }
+[Serializable]
+public struct TagPushForward : IActionAbility
+{ }
 
 public class TagPushForwardProvider : ProviderEcs<TagPushForward> { }

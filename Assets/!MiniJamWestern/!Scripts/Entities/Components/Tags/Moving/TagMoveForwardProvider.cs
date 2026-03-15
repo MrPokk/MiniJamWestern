@@ -1,6 +1,8 @@
-﻿using BitterECS.Integration.Unity;
+﻿using System;
+using BitterECS.Integration.Unity;
 
-public struct TagMoveForward
+[Serializable]
+public struct TagMoveForward : IActionAbility
 { }
 
 public class TagMoveForwardProvider : ProviderEcs<TagMoveForward> { }

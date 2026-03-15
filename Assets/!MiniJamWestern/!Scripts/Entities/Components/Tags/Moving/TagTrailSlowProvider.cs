@@ -1,5 +1,8 @@
-﻿using BitterECS.Integration.Unity;
+﻿using System;
+using BitterECS.Integration.Unity;
 
-public struct TagTrailSlow { }
+[Serializable]
+public struct TagTrailSlow : IActionAbility
+{ }
 
 public class TagTrailSlowProvider : ProviderEcs<TagTrailSlow> { }

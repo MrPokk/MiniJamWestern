@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c61ac94a5d03ec6b3ea48da48e16c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldSlotElement
-  _gizmoColor: {r: 0, g: 1, b: 0, a: 1}
+  _gizmoColor: {r: 0, g: 1, b: 0, a: 0}
   currentItem: {fileID: 0}
 --- !u!1 &8949300816209093632
 GameObject:
@@ -195,8 +195,8 @@ GameObject:
   - component: {fileID: 8519356800687042514}
   - component: {fileID: 4884942284734336874}
   - component: {fileID: 6788570003604514119}
-  - component: {fileID: -2950068567183539005}
   - component: {fileID: 7089066654635992049}
+  - component: {fileID: 5793022533508053176}
   m_Layer: 0
   m_Name: GoblinEntity
   m_TagString: Untagged
@@ -245,18 +245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d7a5bd379270c4f4ab276ff47ba9e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TagGoblinProvider
---- !u!114 &-2950068567183539005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8949300816209093632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9541b52a38fb32cfaa6b41a92db84b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TagMoveForwardProvider
 --- !u!114 &7089066654635992049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,3 +259,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RenderSpriteComponentProvider
   _value:
     renderer: {fileID: 7365184786023615348}
+--- !u!114 &5793022533508053176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949300816209093632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b937e52d12f6a85ddb2b5ffb2d27c1ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContainerActionsProvider
+  _value:
+    listAction:
+    - {fileID: 4245648685441444015}

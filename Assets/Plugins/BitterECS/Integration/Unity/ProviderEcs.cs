@@ -77,7 +77,7 @@ namespace BitterECS.Integration.Unity
             return _linkedEntity;
         }
 
-        private void OnDestroy() => Dispose();
+        protected virtual void OnDestroy() => Dispose();
 
         public override void AddToBuilder(ref EcsBuilder builder)
         {
