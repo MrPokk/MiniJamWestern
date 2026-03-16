@@ -1,5 +1,6 @@
 ﻿using System;
 using BitterECS.Core;
+using TMPro;
 using UINotDependence.Core;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class UIChamberPopup : UIPopup
 {
     [SerializeField] private Button _nextTurnBtn;
+    [SerializeField] private TMP_Text _countEnergy;
 
     public override void Open()
     {

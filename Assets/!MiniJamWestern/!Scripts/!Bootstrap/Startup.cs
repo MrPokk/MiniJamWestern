@@ -37,7 +37,7 @@ public class Startup : EcsUnityRoot<Startup>
     {
         var goblinPref = new Loader<TagEnemyProvider>(PrefabObjectsPaths.GOBLIN_ENTITY).Prefab();
         var playerPref = new Loader<TagPlayerProvider>(PrefabObjectsPaths.PLAYER_ENTITY).Prefab();
-        GridInteractionHandler.InstantiateObject(new Vector2Int(0, 3), goblinPref, out _);
+        GridInteractionHandler.InstantiateObject(new Vector2Int(0, 4), goblinPref, out _);
         GridInteractionHandler.InstantiateObject(new Vector2Int(0, 2), playerPref, out _);
 
         new GFlow(new(_complicationSettings)).Play();

@@ -10,6 +10,8 @@ namespace BitterECS.Core
         public bool IsAlive => World != null && World.Has(Id);
         public bool IsProviding => IsAlive && World.HasProvider(Id);
 
+        public static EcsEntity Null => new(null, -1);
+
         public EcsEntity(EcsWorld world, int id = -1)
         {
             Id = id;

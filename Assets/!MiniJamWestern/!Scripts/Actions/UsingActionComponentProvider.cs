@@ -10,17 +10,17 @@ public class UsingActionComponent
     public List<TagActionsProvider> abilities = new();
 }
 
-[RequireComponent(typeof(ContainerActionsProvider))]
+[RequireComponent(typeof(AbilityInventoryProvider))]
 public class UsingActionComponentProvider : ProviderEcs<UsingActionComponent>
 {
     protected override void PostRegistration()
     {
-        FillSlotsWithAbilities(GetComponent<ContainerActionsProvider>());
+        FillSlotsWithAbilities(GetComponent<AbilityInventoryProvider>());
     }
 
-    private void FillSlotsWithAbilities(ContainerActionsProvider containerProvider)
+    private void FillSlotsWithAbilities(AbilityInventoryProvider containerProvider)
     {
-        ref var slots = ref containerProvider.Entity.Get<ContainerActions>().listSlot;
+        ref var slots = ref containerProvider.Entity.Get<AbilityInventory>().listSlot;
         ref var abilities = ref Value.abilities;
 
         for (var i = 0; i < abilities.Count && i < slots.Count; i++)
@@ -28,9 +28,9 @@ public class UsingActionComponentProvider : ProviderEcs<UsingActionComponent>
             var abilityPrefab = abilities[i].gameObject;
             var instance = Instantiate(abilityPrefab);
 
-            var provider = instance.GetComponent<DraggableComponentProvider>();
+            var provider = instance.GetComponent<AbilityViewProvider>();
 
-            slots[i].TryAddItem(provider);
+            slots[i].AddItem(provider);
         }
     }
 }

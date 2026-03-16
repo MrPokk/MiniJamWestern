@@ -11,10 +11,9 @@ public class EnterActivationActionSystem : IEcsAutoImplement
 
     private static void OnEnterActing(EcsEntity entity)
     {
-        var ability = entity.Get<IsTargetingActionEnterEvent>().ability;
+        var abilityFromEvent = entity.Get<IsTargetingActionEnterEvent>().ability;
 
         var listComponent = entity.GetOrAdd<ListActionComponent>();
-
-        listComponent.AddAbility(ability);
+        listComponent.AddAbility(abilityFromEvent);
     }
 }

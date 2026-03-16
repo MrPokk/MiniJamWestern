@@ -8,7 +8,7 @@ public class EnemyDeadeningSystem : IEcsAutoImplement
     private EcsEvent _ecsEvent = new EcsEvent().SubscribeWhereEntity<IsDeadEvent>(e => e.Has<TagEnemy>(), added: OnDead);
     private static void OnDead(EcsEntity entity)
     {
-        var container = entity.GetProvider<ProviderEcs>().GetComponent<ContainerActionsProvider>();
+        var container = entity.GetProvider<ProviderEcs>().GetComponent<AbilityInventoryProvider>();
         container.ExtractAll();
 
         entity.Destroy();

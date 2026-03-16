@@ -14,6 +14,7 @@ namespace BitterECS.Core
         public static void AddSystem<T>(T system) where T : class, IEcsSystem => Instance.AddSystem(system);
         public static void Run<T>(Action<T> action) where T : class, IEcsSystem => Instance.Run(action);
         public static T[] GetSystems<T>() where T : class, IEcsSystem => Instance.GetSystems<T>();
+        public static T GetSystem<T>() where T : class, IEcsSystem => Instance.GetSystem<T>();
         public static void Dispose()
         {
             s_instance?.Dispose();
@@ -112,6 +113,12 @@ namespace BitterECS.Core
             var result = filteredList.ToArray();
             _cachedInstanceSystems[type] = (IEcsSystem[])(object)result;
             return result;
+        }
+
+        public T GetSystem<T>() where T : class, IEcsSystem
+        {
+            var systems = GetSystems<T>();
+            return systems.Length > 0 ? systems[0] : null;
         }
 
         public void Dispose()
