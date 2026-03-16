@@ -5,11 +5,11 @@ public class MovingForward : IUpdateTurn
 {
     public Priority Priority => Priority.Medium;
 
-    private EcsFilter<GridComponent, IsActionComponent, TargetToMove> _filter = new();
+    private EcsFilter<GridComponent, ListActionComponent, TargetTo> _filter;
 
     public void RefreshTurn()
     {
-        _filter.For((EcsEntity e, ref GridComponent gridCom, ref IsActionComponent tag, ref TargetToMove target) =>
+        _filter.For((EcsEntity e, ref GridComponent gridCom, ref ListActionComponent tag, ref TargetTo target) =>
         {
             var isType = tag.Is<TagMoveForward>();
             if (!isType)

@@ -16,6 +16,6 @@ public class PlayerTargetingSystem : IUpdateTurn
         }
 
         var gridCom = player.Get<GridComponent>();
-        player.GetOrAdd<TargetToMove>().position = gridCom.currentPosition + Vector2Int.up;
+        player.GetOrAdd<TargetTo>().position = gridCom.currentPosition + Vector2Int.up;
     }
 }

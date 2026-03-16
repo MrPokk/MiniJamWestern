@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public struct TargetToMove
+public struct TargetTo
 {
     public Vector2Int position;
 }

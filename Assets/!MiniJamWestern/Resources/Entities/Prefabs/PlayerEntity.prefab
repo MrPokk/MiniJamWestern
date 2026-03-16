@@ -198,6 +198,8 @@ GameObject:
   - component: {fileID: 7573053278989373654}
   - component: {fileID: 7089066654635992049}
   - component: {fileID: 7174944098443958385}
+  - component: {fileID: 1279824753038048157}
+  - component: {fileID: 1772236563294861262}
   m_Layer: 0
   m_Name: PlayerEntity
   m_TagString: Untagged
@@ -285,5 +287,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ContainerActionsProvider
   _value:
-    listAction:
-    - {fileID: 5764523306017165532}
+    listSlot: []
+--- !u!114 &1279824753038048157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949300816209093632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac707f3dc7cc2f1c7a5f61410573b59d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageConstComponentProvider
+  _value:
+    damage: 1
+--- !u!114 &1772236563294861262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949300816209093632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b0be17851f98e34a52ce5a673b2145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponentProvider
+  _value:
+    _maxHealth: 5
+    _currentHealth: 5

@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using BitterECS.Integration.Unity;
+using UnityEngine;
 
 [Serializable]
 public class ContainerActions
 {
-    public List<DraggableSlot> listAction;
+    public List<DraggableSlot> listSlot;
 }
 
 public class ContainerActionsProvider : ProviderEcs<ContainerActions>
 {
     private void Start()
     {
-        if (Value.listAction == null) return;
+        var childSlots = GetComponentsInChildren<DraggableSlot>();
 
-        foreach (var slot in Value.listAction)
+        Value.listSlot = new List<DraggableSlot>(childSlots);
+
+        foreach (var slot in Value.listSlot)
         {
             if (slot != null)
             {
@@ -26,9 +29,9 @@ public class ContainerActionsProvider : ProviderEcs<ContainerActions>
 
     protected override void OnDestroy()
     {
-        if (Value.listAction == null) return;
+        if (Value.listSlot == null) return;
 
-        foreach (var slot in Value.listAction)
+        foreach (var slot in Value.listSlot)
         {
             if (slot != null)
             {

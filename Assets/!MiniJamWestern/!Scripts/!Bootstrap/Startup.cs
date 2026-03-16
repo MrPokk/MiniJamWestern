@@ -9,9 +9,10 @@ public class Startup : EcsUnityRoot<Startup>
 {
     private CameraObject _cameraObject;
     [SerializeField] private GridConfig _playfieldConfig;
-    [SerializeField] public GameObject gridParent;
+    [SerializeField] private ComplicationSettings _complicationSettings;
 
-    public MonoGridPresenter playfield;
+    [SerializeField] private MonoGridPresenter _playfield;
+    [SerializeField] private GridParentObject _gridParent;
 
     protected override void Bootstrap()
     {
@@ -36,15 +37,16 @@ public class Startup : EcsUnityRoot<Startup>
     {
         var goblinPref = new Loader<TagEnemyProvider>(PrefabObjectsPaths.GOBLIN_ENTITY).Prefab();
         var playerPref = new Loader<TagPlayerProvider>(PrefabObjectsPaths.PLAYER_ENTITY).Prefab();
-        GridInteractionHandler.InstantiateObject(new Vector2Int(0, 5), goblinPref, out _);
-        GridInteractionHandler.InstantiateObject(new Vector2Int(0, 0), playerPref, out _);
+        GridInteractionHandler.InstantiateObject(new Vector2Int(0, 3), goblinPref, out _);
+        GridInteractionHandler.InstantiateObject(new Vector2Int(0, 2), playerPref, out _);
 
-        new GFlow(new(DifficultyTier.Tier1_Base)).Play();
+        new GFlow(new(_complicationSettings)).Play();
     }
 
     private void InitializeGrid()
     {
-        playfield = new MonoGridPresenter(_playfieldConfig);
+        _playfield = new MonoGridPresenter(_playfieldConfig);
+        GridInteractionHandler.Initialize(_playfield, _gridParent.gameObject);
     }
 
     private void InitializeEventSystem()

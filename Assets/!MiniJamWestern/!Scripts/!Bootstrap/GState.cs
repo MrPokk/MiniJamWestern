@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BitterECS.Core;
+using UnityEngine;
 
 public enum DifficultyTier
 {
@@ -12,10 +13,30 @@ public enum DifficultyTier
 
 public class GState
 {
-    public DifficultyTier currentDifficulty;
+    public readonly DifficultyTier CurrentDifficulty;
+    public readonly int TransferProgress;
+    public readonly int TransferProgressMax;
 
-    public GState(DifficultyTier currentDifficulty)
+    public GState(DifficultyTier currentDifficulty, int transferProgress, int transferProgressMax)
     {
-        this.currentDifficulty = currentDifficulty;
+        CurrentDifficulty = currentDifficulty;
+        TransferProgress = transferProgress;
+        TransferProgressMax = transferProgressMax;
+    }
+
+    public GState(ComplicationSettings complicationSettings)
+    {
+        CurrentDifficulty = complicationSettings.difficultyStart;
+        TransferProgress = complicationSettings.transferStart;
+        TransferProgressMax = complicationSettings.transferMax;
+    }
+
+    public GState WithProgress(int newProgress)
+    {
+        return new GState(
+            CurrentDifficulty,
+            Mathf.Clamp(newProgress, 0, TransferProgressMax),
+            TransferProgressMax
+        );
     }
 }

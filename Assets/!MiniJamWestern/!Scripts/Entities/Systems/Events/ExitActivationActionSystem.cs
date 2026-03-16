@@ -7,21 +7,24 @@ public class ExitActivationActionSystem : IEcsAutoImplement
     public Priority Priority => Priority.High;
 
     private EcsEvent _ecsEvent = new EcsEvent()
-    .Subscribe<IsTargetingActionExitEvent>(added: OnExitActing);
+        .Subscribe<IsTargetingActionExitEvent>(added: OnExitActing);
 
     private static void OnExitActing(EcsEntity entity)
     {
         var abilityToRemove = entity.Get<IsTargetingActionExitEvent>().ability;
 
-        if (!entity.Has<IsActionComponent>())
+        if (!entity.Has<ListActionComponent>())
         {
             return;
         }
 
-        var currentComponent = entity.Get<IsActionComponent>();
-        if (currentComponent.ability == abilityToRemove)
+        var listComponent = entity.Get<ListActionComponent>();
+
+        listComponent.RemoveAbility(abilityToRemove);
+
+        if (listComponent.abilities.Count == 0)
         {
-            entity.Remove<IsActionComponent>();
+            entity.Remove<ListActionComponent>();
         }
     }
 }

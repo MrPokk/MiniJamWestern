@@ -96,6 +96,7 @@ namespace BitterECS.Core
             _subscriptions.Add(new ConditionalEvent(CurrentPriority, World, types, check, added, removed));
         }
 
+        public void Unsubscribe() => Dispose();
         public void Dispose()
         {
             if (_subscriptions == null) return;
