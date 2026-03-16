@@ -55,7 +55,11 @@ namespace BitterECS.Integration.Unity
         protected virtual void Awake()
         {
             GetOrUpdateEntity();
+            Registration();
+            PostRegistration();
         }
+        protected virtual void PostRegistration() { }
+        protected virtual void Registration() { }
 
         private EcsEntity GetOrUpdateEntity()
         {

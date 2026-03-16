@@ -11,7 +11,39 @@ public class ContainerActions
 
 public class ContainerActionsProvider : ProviderEcs<ContainerActions>
 {
-    private void Start()
+    protected override void Registration()
+    {
+        FindAllSlot();
+    }
+
+
+    public void Extract(int index)
+    {
+        if (index < 0 || index >= Value.listSlot.Count) return;
+
+        var slot = Value.listSlot[index];
+        ExtractSlot(slot);
+    }
+
+    public void ExtractAll()
+    {
+        foreach (var slot in Value.listSlot)
+        {
+            ExtractSlot(slot);
+        }
+    }
+
+    private void ExtractSlot(DraggableSlot slot)
+    {
+        if (slot == null || slot.currentItem == null) return;
+        var item = slot.currentItem;
+        item.transform.SetParent(null);
+        slot.currentItem = null;
+
+        HandleItemRemoved(item);
+    }
+
+    private void FindAllSlot()
     {
         var childSlots = GetComponentsInChildren<DraggableSlot>();
 

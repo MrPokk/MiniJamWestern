@@ -2,7 +2,7 @@
 
 public class ListActionComponent
 {
-    public List<IActionAbility> abilities = new List<IActionAbility>();
+    public List<IActionAbility> abilities = new();
 
     public ListActionComponent() { }
 

@@ -2,7 +2,7 @@
 using BitterECS.Core;
 using UnityEngine;
 
-public class DamageSystem : IEcsAutoImplement
+public class DamagingSystem : IEcsAutoImplement
 {
     public Priority Priority => Priority.Medium;
 
@@ -24,6 +24,11 @@ public class DamageSystem : IEcsAutoImplement
         ref var health = ref targetEntity.Get<HealthComponent>();
         var deltaHealth = health.GetCurrentHealth() - damageComp.damage;
         health.SetHealth(deltaHealth);
+
+        if (deltaHealth <= 0)
+        {
+            targetEntity.AddFrame<IsDeadEvent>();
+        }
 
         Debug.Log(health.GetCurrentHealth());
 

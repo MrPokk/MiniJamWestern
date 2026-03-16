@@ -13,19 +13,25 @@ public class DraggableSlot : MonoBehaviour, IDropHandler, IPointerDownHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (currentItem != null) return;
-
         if (eventData.pointerDrag == null ||
             !eventData.pointerDrag.TryGetComponent<DraggableComponentProvider>(out var draggable))
         {
             return;
         }
 
-        currentItem = draggable;
+        TryAddItem(draggable);
+    }
+
+    public bool TryAddItem(DraggableComponentProvider item)
+    {
+        if (currentItem != null) return false;
+
+        currentItem = item;
         currentItem.transform.SetParent(transform);
         currentItem.transform.localPosition = Vector3.zero;
 
         OnItemAdded?.Invoke(currentItem);
+        return true;
     }
 
     public void OnPointerDown(PointerEventData eventData)
