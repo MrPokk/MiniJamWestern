@@ -9,6 +9,11 @@ public class PlayerTargetingSystem : IUpdateTurn
 
     public void RefreshTurn()
     {
+        Targeting();
+    }
+
+    public void Targeting()
+    {
         var player = _playerFilter.First();
         if (!player.IsAlive)
         {

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ComplicationSettings
   m_EditorClassIdentifier: Assembly-CSharp::ComplicationSettings
   difficultyStart: 0
-  transferStart: 0
+  transferStart: 1
   transferMax: 3

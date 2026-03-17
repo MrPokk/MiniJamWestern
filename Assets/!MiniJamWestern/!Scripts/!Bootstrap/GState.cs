@@ -39,4 +39,14 @@ public class GState
             TransferProgressMax
         );
     }
+
+    public GState WithMaxProgress(int newMax)
+    {
+        var clampedProgress = Mathf.Clamp(TransferProgress, 0, newMax);
+        return new GState(
+            CurrentDifficulty,
+            clampedProgress,
+            newMax
+        );
+    }
 }

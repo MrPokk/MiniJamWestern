@@ -1,38 +1,35 @@
 ﻿using BitterECS.Core;
 using UnityEngine;
 
-public class AttackingForward : IUpdateTurn
+public class AttackingForwardHandler
+{
+    public static void Execute(EcsEntity entity, GridComponent grid, ListActionComponent list, TargetTo target)
+    {
+        if (!list.Is<TagAttackForward>(out var attackAbility)) return;
+
+        var distance = Mathf.Abs(target.position.x - grid.currentPosition.x) +
+                       Mathf.Abs(target.position.y - grid.currentPosition.y);
+
+        if (distance <= attackAbility.distance)
+        {
+            if (GridInteractionHandler.TryGetEntityAt(target.position, out var entityTo))
+            {
+                entity.AddFrame<IsAttackerTo>(new(entityTo));
+            }
+        }
+    }
+}
+
+public class EnemyAttackingForward : IUpdateTurn
 {
     public Priority Priority => Priority.Medium;
-
-    private EcsFilter<GridComponent, ListActionComponent, TargetTo> _filter = new();
+    private EcsFilter<TagEnemy, GridComponent, ListActionComponent, TargetTo> _filter;
 
     public void RefreshTurn()
     {
-        _filter.For((EcsEntity e, ref GridComponent gridCom, ref ListActionComponent list, ref TargetTo target) =>
+        _filter.For((EcsEntity e, ref TagEnemy enemy, ref GridComponent grid, ref ListActionComponent list, ref TargetTo target) =>
         {
-            if (!list.Is<TagAttackForward>(out var attackAbility))
-            {
-                return;
-            }
-
-            var distanceToTarget = Mathf.Abs(target.position.x - gridCom.currentPosition.x) +
-                                   Mathf.Abs(target.position.y - gridCom.currentPosition.y);
-
-            if (distanceToTarget > attackAbility.distance)
-            {
-                return;
-            }
-
-            var attackPos = target.position;
-            Debug.Log($"Атака по клетке (радиусе): {attackPos}");
-
-            if (!GridInteractionHandler.TryGetEntityAt(attackPos, out var entityTo))
-            {
-                return;
-            }
-
-            e.AddFrame<IsAttackerTo>(new(entityTo));
+            AttackingForwardHandler.Execute(e, grid, list, target);
         });
     }
 }

@@ -1,8 +1,14 @@
-﻿using BitterECS.Integration.Unity;
+﻿using System;
+using BitterECS.Core;
+using BitterECS.Integration.Unity;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class AbilityComponent { }
+[Serializable]
+public struct AbilityComponent
+{
+    public EcsEntity owner;
+}
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class AbilityViewProvider : ProviderEcs<AbilityComponent>,

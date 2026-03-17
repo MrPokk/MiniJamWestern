@@ -35,6 +35,7 @@ public class AbilitySlotProvider : ProviderEcs<AbilitySlotComponent>, IDropHandl
         item.transform.localPosition = Vector3.zero;
 
         var ownerInventory = Value.abilityInventory.Entity;
+
         var system = EcsSystemStatic.GetSystem<AbilitySlotSystem>();
         system.Placing(ownerInventory, item.Entity);
     }

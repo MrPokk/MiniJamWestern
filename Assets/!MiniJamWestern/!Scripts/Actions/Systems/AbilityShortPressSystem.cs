@@ -10,6 +10,26 @@ public class AbilityShortPressSystem : IEcsAutoImplement
 
     private static void OnShortPress(EcsEntity abilityEntity)
     {
-        Debug.Log("Short press on ability");
+        var view = abilityEntity.GetProvider<AbilityViewProvider>();
+        if (view == null) return;
+
+        var slot = view.GetComponentInParent<AbilitySlotProvider>();
+        if (slot == null) return;
+
+        var ownerEntity = slot.Value.abilityInventory.Entity;
+        if (!ownerEntity.Has<TagPlayer>())
+        {
+            return;
+        }
+
+        if (!abilityEntity.TryGet<TagActions>(out var action)) return;
+        if (GFlow.GState.TransferProgress <= 0)
+        {
+            return;
+        }
+
+        EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
+        AbilityLogicRouter.Execute(ownerEntity, action.ability);
+        GFlow.MinusTransferProgress(1);
     }
 }
