@@ -24,6 +24,7 @@ public class AbilitySlotProvider : ProviderEcs<AbilitySlotComponent>, IDropHandl
 
     public void AddItem(AbilityViewProvider item)
     {
+
         if (Value.itemEntity.IsAlive)
             return;
 

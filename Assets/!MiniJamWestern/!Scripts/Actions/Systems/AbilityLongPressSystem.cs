@@ -1,4 +1,5 @@
 ﻿using BitterECS.Core;
+using UnityEngine;
 
 public class AbilityLongPressSystem : IEcsAutoImplement
 {
@@ -21,5 +22,11 @@ public class AbilityLongPressSystem : IEcsAutoImplement
 
         view.EnableCollider(false);
         abilityEntity.Add<IsDraggingAbility>();
+
+        abilityEntity.Add(new PhysicsDragComponent
+        {
+            targetWorldPosition = view.transform.position,
+            currentVelocity = Vector3.zero
+        });
     }
 }

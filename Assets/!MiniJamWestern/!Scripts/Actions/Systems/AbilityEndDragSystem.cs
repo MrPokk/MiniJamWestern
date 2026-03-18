@@ -20,13 +20,14 @@ public class AbilityEndDragSystem : IEcsAutoImplement
 
         if (hit != null && hit.TryGetComponent<AbilitySlotProvider>(out var slot))
         {
-
             slot.AddItem(view);
         }
         else
         {
-            entity.Remove<IsDraggingAbility>();
             view.EnableCollider(true);
         }
+
+        entity.Remove<IsDraggingAbility>();
+        entity.Remove<PhysicsDragComponent>();
     }
 }

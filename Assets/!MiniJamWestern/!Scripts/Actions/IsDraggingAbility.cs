@@ -7,6 +7,12 @@ public struct PointerDownAbility
     public float pressTime;
 }
 
+public struct PhysicsDragComponent
+{
+    public Vector3 targetWorldPosition;
+    public Vector3 currentVelocity;
+}
+
 public struct BeginDragAbilityEvent { }
 public struct DragAbilityEvent { public Vector2 screenPosition; }
 public struct PointerDownAbilityEvent { public float pressTime; }

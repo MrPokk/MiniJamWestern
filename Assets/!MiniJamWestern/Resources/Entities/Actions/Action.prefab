@@ -106,8 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BalatroTiltEffect
   _tiltTowardsPointer: 0
-  _maxTiltAngle: 40
-  _smoothSpeed: 64
+  _maxTiltAngle: 20
+  _smoothSpeed: 5
   _tiltSensitivity: 2
 --- !u!114 &2151743838248292633
 MonoBehaviour:
@@ -232,8 +232,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BalatroTiltEffect
   _tiltTowardsPointer: 1
-  _maxTiltAngle: 40
-  _smoothSpeed: 64
+  _maxTiltAngle: 20
+  _smoothSpeed: 5
   _tiltSensitivity: 2
 --- !u!1 &2594039447500818966
 GameObject:

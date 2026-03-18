@@ -54,10 +54,13 @@ namespace BitterECS.Integration.Unity
 
         protected virtual void Awake()
         {
+            PreRegistration();
             GetOrUpdateEntity();
             Registration();
             PostRegistration();
         }
+
+        protected virtual void PreRegistration() { }
         protected virtual void PostRegistration() { }
         protected virtual void Registration() { }
 

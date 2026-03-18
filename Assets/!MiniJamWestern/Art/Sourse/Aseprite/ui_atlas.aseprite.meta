@@ -254,6 +254,48 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_5
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 67
+      y: 104
+      width: 9
+      height: 8
+    spriteID: 10dd204b1895eeb9d8255179e2fc3beb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_6
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 67
+      y: 94
+      width: 9
+      height: 8
+    spriteID: c27ebfc13679035f2b43a88c2385068e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
   tileSetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -274,7 +316,7 @@ ScriptedImporter:
       cellRect:
         x: 22
         y: 125
-        width: 52
+        width: 72
         height: 110
       spriteId: 2bb75264f8809f086bf45dc6fa673836
     linkedCells: []
@@ -323,4 +365,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 384, y: 256}
-  previousTextureSize: {x: 64, y: 128}
+  previousTextureSize: {x: 128, y: 128}

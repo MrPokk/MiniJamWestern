@@ -25,6 +25,8 @@ public class DamagingSystem : IEcsAutoImplement
         var deltaHealth = health.GetCurrentHealth() - damageComp.damage;
         health.SetHealth(deltaHealth);
 
+        targetEntity.AddFrame<IsDamagedEvent>();
+
         if (deltaHealth <= 0)
         {
             targetEntity.AddFrame<IsDeadEvent>();
@@ -35,4 +37,8 @@ public class DamagingSystem : IEcsAutoImplement
         return;
     }
 
+}
+
+public struct IsDamagedEvent
+{
 }
