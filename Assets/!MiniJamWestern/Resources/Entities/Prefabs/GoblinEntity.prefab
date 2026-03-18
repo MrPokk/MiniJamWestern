@@ -212,7 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UsingActionComponentProvider
   _value:
     abilities:
-    - {fileID: 896809214723962877, guid: a14a570721cc9caeeaa60e97f1e3f7e7, type: 3}
+    - {fileID: 5965930271600435582, guid: 6365a8ded0e59f7df838a5a8b5f4b5d5, type: 3}
 --- !u!1001 &2221906577416416473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,11 +227,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4381046026010018884, guid: a9306811a7e5b21b6a3a74aa706bcef6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.6
+      value: 1.65
       objectReference: {fileID: 0}
     - target: {fileID: 4381046026010018884, guid: a9306811a7e5b21b6a3a74aa706bcef6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3
+      value: 0.5499999
       objectReference: {fileID: 0}
     - target: {fileID: 4381046026010018884, guid: a9306811a7e5b21b6a3a74aa706bcef6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -289,11 +289,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4381046026010018884, guid: a9306811a7e5b21b6a3a74aa706bcef6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.79999995
+      value: 1.65
       objectReference: {fileID: 0}
     - target: {fileID: 4381046026010018884, guid: a9306811a7e5b21b6a3a74aa706bcef6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3
+      value: -0.6000002
       objectReference: {fileID: 0}
     - target: {fileID: 4381046026010018884, guid: a9306811a7e5b21b6a3a74aa706bcef6, type: 3}
       propertyPath: m_LocalPosition.z
