@@ -13,6 +13,11 @@ public class EnemyExecutionSystem : IUpdateTurn
             ref var target = ref entity.GetOrAdd<TargetTo>();
             target.position = intent.targetPosition;
 
+            if (VectorUtility.TryGetStepDirection(grid.currentPosition, target.position, out var dir))
+            {
+                entity.GetOrAdd<FacingComponent>().direction = dir;
+            }
+
             AbilityLogicRouter.Execute(entity, intent.chosenAbility, ref grid, list, ref target);
 
             entity.Remove<IsIntentComponent>();

@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 4042326854495131108}
   - component: {fileID: 1279824753038048157}
   - component: {fileID: 1772236563294861262}
+  - component: {fileID: 9017329876921612687}
   m_Layer: 0
   m_Name: PlayerEntity
   m_TagString: Untagged
@@ -180,3 +181,17 @@ MonoBehaviour:
   _value:
     _maxHealth: 4
     _currentHealth: 4
+--- !u!114 &9017329876921612687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949300816209093632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60a471da651efecf844af454abde458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FacingComponentProvider
+  _value:
+    direction: {x: 0, y: 1}

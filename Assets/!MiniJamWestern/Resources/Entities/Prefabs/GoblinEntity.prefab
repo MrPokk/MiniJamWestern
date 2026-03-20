@@ -630,6 +630,7 @@ GameObject:
   - component: {fileID: 399013292898589628}
   - component: {fileID: 8219956537100477628}
   - component: {fileID: -7509932521959305941}
+  - component: {fileID: 9017329876921612687}
   m_Layer: 0
   m_Name: GoblinEntity
   m_TagString: Untagged
@@ -814,6 +815,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c853c77461dacb5259def95e9f3ea84e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TagBehaviorMeleeProvider
+--- !u!114 &9017329876921612687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949300816209093632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60a471da651efecf844af454abde458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FacingComponentProvider
+  _value:
+    direction: {x: 0, y: 0}
 --- !u!1001 &3867183008139590983
 PrefabInstance:
   m_ObjectHideFlags: 0

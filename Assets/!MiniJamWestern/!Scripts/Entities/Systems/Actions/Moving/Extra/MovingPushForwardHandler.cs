@@ -7,7 +7,7 @@ public class MovingPushForwardHandler
     {
         if (!tag.Is<TagPushForward>()) return;
 
-        if (!MovementUtility.TryGetStepDirection(gridCom.currentPosition, target.position, out var direction)) return;
+        if (!VectorUtility.TryGetStepDirection(gridCom.currentPosition, target.position, out var direction)) return;
 
         var nextPos = gridCom.currentPosition + direction;
 

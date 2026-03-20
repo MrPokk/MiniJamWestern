@@ -6,7 +6,7 @@ using UnityEngine;
 public static class GridInteractionHandler
 {
     private static GridInteractionHandlerInstance _instance;
-    private static GridInteractionHandlerInstance Instance => _instance ?? throw new ArgumentNullException("GridInteractionHandlerInstance is not initialized.");
+    public static GridInteractionHandlerInstance Instance => _instance ?? throw new ArgumentNullException("GridInteractionHandlerInstance is not initialized.");
 
     public static void Initialize(MonoGridPresenter playfield, GameObject playfieldGameObject) => _instance = new GridInteractionHandlerInstance(playfield, playfieldGameObject);
 
@@ -25,9 +25,9 @@ public static class GridInteractionHandler
     public static bool MoveEntity(EcsEntity entity, Vector2Int toIndex) => Instance.MoveEntity(entity, toIndex);
     public static bool MoveEntity(EcsEntity entity, Vector3 toWorldPosition) => Instance.MoveEntity(entity, toWorldPosition);
 
-    private class GridInteractionHandlerInstance
+    public class GridInteractionHandlerInstance
     {
-        private readonly MonoGridPresenter _playfield;
+        public readonly MonoGridPresenter _playfield;
         private readonly GameObject _playfieldGameObject;
 
         public GridInteractionHandlerInstance(MonoGridPresenter playfield, GameObject playfieldGameObject)

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public static class MovementUtility
+public static class VectorUtility
 {
     public static bool TryGetStepDirection(Vector2Int currentPos, Vector2Int targetPos, out Vector2Int direction)
     {

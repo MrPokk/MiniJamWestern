@@ -1,13 +1,13 @@
 ﻿using BitterECS.Core;
 using UnityEngine;
 
-public class PlayerTargetingSystem : IUpdateTurn
+public class PlayerTargetingSystem : IUpdateTurn, IEcsInitSystem
 {
     public Priority Priority => Priority.FIRST_TASK;
-
     private EcsFilter<GridComponent, TagPlayer> _playerFilter;
 
-    public void RefreshTurn()
+    public void RefreshTurn() => Targeting();
+    public void Init()
     {
         Targeting();
     }
@@ -15,12 +15,31 @@ public class PlayerTargetingSystem : IUpdateTurn
     public void Targeting()
     {
         var player = _playerFilter.First();
-        if (!player.IsAlive)
-        {
-            return;
-        }
+        if (!player.IsAlive) return;
 
         var gridCom = player.Get<GridComponent>();
-        player.GetOrAdd<TargetTo>().position = gridCom.currentPosition + Vector2Int.up;
+        var facingDir = player.TryGet<FacingComponent>(out var f) ? f.direction : Vector2Int.up;
+
+        player.GetOrAdd<TargetTo>().position = gridCom.currentPosition + facingDir;
+    }
+
+
+}
+
+public class PlayerTargetingSystemY : IEcsRunSystem
+{
+    public Priority Priority => Priority.High;
+    private EcsFilter<TagSelector> _ecsEntities;
+    private EcsFilter<TagPlayer> _ecsEntitiesP;
+
+    public void Run()
+    {
+        foreach (var item in _ecsEntities)
+        {
+            var provider = item.GetProvider<TagSelectorProvider>();
+            var targetTo = _ecsEntitiesP.First().GetOrAdd<TargetTo>();
+
+            provider.transform.position = GridInteractionHandler.Instance._playfield.ConvertingPosition(targetTo.position);
+        }
     }
 }

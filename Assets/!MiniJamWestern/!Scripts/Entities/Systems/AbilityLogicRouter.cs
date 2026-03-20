@@ -1,6 +1,5 @@
 ﻿using BitterECS.Core;
 
-
 public static class AbilityLogicRouter
 {
     public static void Execute(
@@ -12,6 +11,9 @@ public static class AbilityLogicRouter
     {
         switch (ability)
         {
+            case TagRotation:
+                RotationHandler.Execute(actor, grid, ref target);
+                break;
             case TagMoveForward:
                 MovingForwardHandler.Execute(actor, grid, list, target);
                 break;

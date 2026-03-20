@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BitterECS.Core;
+﻿using BitterECS.Core;
 using UnityEngine;
 
 public class PlayerUsingAbilitySystem : IEcsInitSystem
@@ -18,7 +17,7 @@ public class PlayerUsingAbilitySystem : IEcsInitSystem
         EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
 
         ref var grid = ref player.Get<GridComponent>();
-        ref var target = ref player.Get<TargetTo>();
+        ref var target = ref player.GetOrAdd<TargetTo>();
 
         AbilityLogicRouter.Execute(player, action.ability, ref grid, mainList, ref target);
         ExecuteEffects(player, action.ability, ref grid, ref target);
@@ -47,16 +46,10 @@ public class PlayerUsingAbilitySystem : IEcsInitSystem
     private bool TryGetContext(EcsEntity entity, out EcsEntity player, out TagActions action, out ListActionComponent list)
     {
         player = _playerFilter.First();
-        action = default;
-        list = null;
-
+        action = default; list = null;
         var view = entity.GetProvider<AbilityViewProvider>();
         var slot = view?.GetComponentInParent<AbilitySlotProvider>();
         var owner = slot?.Value.abilityInventory.Entity ?? default;
-
-        return GFlow.GState.TransferProgress > 0 &&
-               player.IsAlive && player.Has<GridComponent>() &&
-               entity.TryGet(out action) &&
-               owner.Has<TagInventoryUsing>() && owner.TryGet(out list);
+        return GFlow.GState.TransferProgress > 0 && player.IsAlive && entity.TryGet(out action) && owner.TryGet(out list);
     }
 }
