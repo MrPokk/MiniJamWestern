@@ -32,8 +32,6 @@ public class DamagingSystem : IEcsAutoImplement
             targetEntity.AddFrame<IsDeadEvent>();
         }
 
-        Debug.Log(health.GetCurrentHealth());
-
         return;
     }
 

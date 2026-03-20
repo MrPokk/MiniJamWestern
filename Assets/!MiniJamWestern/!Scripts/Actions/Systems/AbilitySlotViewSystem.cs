@@ -12,7 +12,10 @@ public class AbilitySlotViewSystem : IEcsAutoImplement
         ref var abilitySlot = ref slotEntity.Get<AbilitySlotComponent>();
 
         if (abilitySlot.itemEntity.IsAlive)
+        {
+            Debug.Log("Slot already occupied by another item.");
             return false;
+        }
 
         item.Entity.Remove<IsDraggingAbility>();
         abilitySlot.itemEntity = item.Entity;
