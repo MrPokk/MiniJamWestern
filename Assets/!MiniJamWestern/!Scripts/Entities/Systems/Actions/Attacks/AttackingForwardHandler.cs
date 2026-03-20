@@ -1,6 +1,7 @@
 ﻿using BitterECS.Core;
 using UnityEngine;
 
+
 public class AttackingForwardHandler
 {
     public static void Execute(EcsEntity entity, GridComponent grid, ListActionComponent list, TargetTo target)
@@ -17,19 +18,5 @@ public class AttackingForwardHandler
                 entity.AddFrame<IsAttackerTo>(new(entityTo));
             }
         }
-    }
-}
-
-public class EnemyAttackingForward : IUpdateTurn
-{
-    public Priority Priority => Priority.Medium;
-    private EcsFilter<TagEnemy, GridComponent, ListActionComponent, TargetTo> _filter;
-
-    public void RefreshTurn()
-    {
-        _filter.For((EcsEntity e, ref TagEnemy enemy, ref GridComponent grid, ref ListActionComponent list, ref TargetTo target) =>
-        {
-            AttackingForwardHandler.Execute(e, grid, list, target);
-        });
     }
 }

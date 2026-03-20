@@ -51,12 +51,12 @@ public class AbilityViewProvider : ProviderEcs<AbilityComponent>,
         Vector3 size = boxCollider.size;
         Vector3 center = boxCollider.offset;
 
-        Color fillColor = _gizmoColor;
+        var fillColor = _gizmoColor;
         fillColor.a = 0.2f;
         Gizmos.color = fillColor;
         Gizmos.DrawCube(center, size);
 
-        Color edgeColor = _gizmoColor;
+        var edgeColor = _gizmoColor;
         edgeColor.a = 1.0f;
         Gizmos.color = edgeColor;
         Gizmos.DrawWireCube(center, size);

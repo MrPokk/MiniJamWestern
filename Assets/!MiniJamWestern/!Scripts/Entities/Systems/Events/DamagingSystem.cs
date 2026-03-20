@@ -12,19 +12,31 @@ public class DamagingSystem : IEcsAutoImplement
     private static void OnTarget(EcsEntity entity)
     {
         if (!entity.Has<DamageConstComponent>())
+        {
             return;
+        }
 
         var damageComp = entity.Get<DamageConstComponent>();
+        ref var attackerTo = ref entity.Get<IsAttackerTo>();
+        ref var targetEntity = ref attackerTo.targetEntity;
 
-        ref var targetEntity = ref entity.Get<IsAttackerTo>().targetEntity;
-
-        if (!targetEntity.IsAlive || !targetEntity.Has<HealthComponent>())
+        if (!targetEntity.IsAlive)
+        {
             return;
+        }
+
+        if (!targetEntity.Has<HealthComponent>())
+        {
+            return;
+        }
 
         ref var health = ref targetEntity.Get<HealthComponent>();
-        var deltaHealth = health.GetCurrentHealth() - damageComp.damage;
-        health.SetHealth(deltaHealth);
 
+        var oldHealth = health.GetCurrentHealth();
+        var damageTaken = damageComp.damage;
+        var deltaHealth = oldHealth - damageTaken;
+
+        health.SetHealth(deltaHealth);
         targetEntity.AddFrame<IsDamagedEvent>();
 
         if (deltaHealth <= 0)
@@ -34,7 +46,6 @@ public class DamagingSystem : IEcsAutoImplement
 
         return;
     }
-
 }
 
 public struct IsDamagedEvent

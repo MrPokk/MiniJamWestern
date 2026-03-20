@@ -1,53 +1,62 @@
-﻿using BitterECS.Core;
+﻿using System.Collections.Generic;
+using BitterECS.Core;
 using UnityEngine;
 
 public class PlayerUsingAbilitySystem : IEcsInitSystem
 {
     public Priority Priority => Priority.Low;
-
     private EcsEvent _ecsEvent;
-    private EcsFilter<TagPlayer> _ecsEntities;
+    private EcsFilter<TagPlayer> _playerFilter;
+    private EcsFilter<TagInventoryEffects> _effectsFilter;
 
-    public void Init()
-    {
-        _ecsEvent.Subscribe<ShortPressAbilityEvent>(added: OnShortPress);
-    }
+    public void Init() => _ecsEvent.Subscribe<ShortPressAbilityEvent>(OnShortPress);
 
     private void OnShortPress(EcsEntity abilityEntity)
     {
-        var view = abilityEntity.GetProvider<AbilityViewProvider>();
-        if (view == null) return;
-
-        var slot = view.GetComponentInParent<AbilitySlotProvider>();
-        if (slot == null) return;
-
-        var ownerEntity = slot.Value.abilityInventory.Entity;
-
-        if (!ownerEntity.Has<TagInventoryUsing>()) return;
-        if (!abilityEntity.TryGet<TagActions>(out var action)) return;
-        if (GFlow.GState.TransferProgress <= 0) return;
-
+        if (!TryGetContext(abilityEntity, out var player, out var action, out var mainList)) return;
 
         EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
 
-        var player = _ecsEntities.First();
-        if (!player.IsAlive) return;
-
-        if (!player.Has<GridComponent>() ||
-            !player.Has<TargetTo>() ||
-            !ownerEntity.Has<ListActionComponent>())
-        {
-            Debug.LogWarning("Missing required components for Ability Execution");
-            return;
-        }
-
-
         ref var grid = ref player.Get<GridComponent>();
         ref var target = ref player.Get<TargetTo>();
-        var list = ownerEntity.Get<ListActionComponent>();
 
-        AbilityLogicRouter.Execute(player, action.ability, ref grid, list, ref target);
+        AbilityLogicRouter.Execute(player, action.ability, ref grid, mainList, ref target);
+        ExecuteEffects(player, action.ability, ref grid, ref target);
 
         GFlow.MinusTransferProgress(1);
+    }
+
+    private void ExecuteEffects(EcsEntity player, IActionAbility primary, ref GridComponent grid, ref TargetTo target)
+    {
+        foreach (var invEntity in _effectsFilter)
+        {
+            var inv = invEntity.GetProvider<AbilityInventoryProvider>();
+            if (inv == null) continue;
+
+            foreach (var slot in inv.Value.listSlot)
+            {
+                if (slot.Entity.TryGet<AbilitySlotLimitComponent>(out var limit) && !limit.IsAllowed(primary)) continue;
+                if (!slot.Value.itemEntity.TryGet<TagActions>(out var action) || action.ability == null) continue;
+
+                var tempList = new ListActionComponent { abilities = new() { action } };
+                AbilityLogicRouter.Execute(player, action.ability, ref grid, tempList, ref target);
+            }
+        }
+    }
+
+    private bool TryGetContext(EcsEntity entity, out EcsEntity player, out TagActions action, out ListActionComponent list)
+    {
+        player = _playerFilter.First();
+        action = default;
+        list = null;
+
+        var view = entity.GetProvider<AbilityViewProvider>();
+        var slot = view?.GetComponentInParent<AbilitySlotProvider>();
+        var owner = slot?.Value.abilityInventory.Entity ?? default;
+
+        return GFlow.GState.TransferProgress > 0 &&
+               player.IsAlive && player.Has<GridComponent>() &&
+               entity.TryGet(out action) &&
+               owner.Has<TagInventoryUsing>() && owner.TryGet(out list);
     }
 }

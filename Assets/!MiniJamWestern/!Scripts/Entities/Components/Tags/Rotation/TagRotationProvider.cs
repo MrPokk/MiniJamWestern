@@ -2,7 +2,7 @@
 using BitterECS.Integration.Unity;
 
 [Serializable]
-public struct TagRotation : IActionAbility
+public struct TagRotation : IActionAbility, IRotationAbility
 { }
 
 public class TagRotationProvider : ProviderEcs<TagRotation> { }

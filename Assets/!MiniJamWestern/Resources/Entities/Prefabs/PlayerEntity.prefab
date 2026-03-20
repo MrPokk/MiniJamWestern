@@ -178,5 +178,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponentProvider
   _value:
-    _maxHealth: 5
-    _currentHealth: 5
+    _maxHealth: 4
+    _currentHealth: 4

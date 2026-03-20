@@ -2,7 +2,7 @@
 using BitterECS.Integration.Unity;
 
 [Serializable]
-public struct TagAttackForward : IActionAbility
+public struct TagAttackForward : IActionAbility, IAttackAbility
 {
     public int distance;
 }

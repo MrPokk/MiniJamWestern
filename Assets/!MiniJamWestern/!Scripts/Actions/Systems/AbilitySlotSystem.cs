@@ -4,23 +4,28 @@ public class AbilitySlotSystem : IEcsAutoImplement
 {
     public Priority Priority => Priority.High;
 
-    public bool Placing(EcsEntity ownerEntity, EcsEntity slotEntity, EcsEntity addedItemEntity)
+    public bool Placing(EcsEntity ownerInventory, EcsEntity slotEntity, EcsEntity itemEntity)
     {
-        if (ownerEntity.Has<IsNotPlace>() || slotEntity.Has<IsNotPlace>()) return false;
+        if (ownerInventory.Has<IsNotPlace>() || slotEntity.Has<IsNotPlace>()) return false;
 
-        if (!addedItemEntity.TryGet<TagActions>(out var action)) return false;
+        if (!itemEntity.TryGet<TagActions>(out var action)) return false;
 
-        addedItemEntity.Add<IsPlace>();
-        addedItemEntity.Remove<IsExtract>();
-        AddAbilityToOwner(ownerEntity, action);
+        if (slotEntity.TryGet<AbilitySlotLimitComponent>(out var limit))
+        {
+            if (!limit.IsAllowed(action)) return false;
+        }
+
+        itemEntity.Add<IsPlace>();
+        itemEntity.Remove<IsExtract>();
+        AddAbilityToOwner(ownerInventory, action);
+
         return true;
     }
 
     private static void AddAbilityToOwner(EcsEntity ownerEntity, TagActions action)
     {
-        var abilityFromEvent = action.ability;
         var listComponent = ownerEntity.GetOrAdd<ListActionComponent>();
-        listComponent.AddAbility(abilityFromEvent);
+        listComponent.AddAbility(action);
     }
 
     public bool Extract(EcsEntity ownerEntity, EcsEntity slotEntity, EcsEntity removedItemEntity)
@@ -36,14 +41,13 @@ public class AbilitySlotSystem : IEcsAutoImplement
 
     private static bool RemoveAbilityToOwner(EcsEntity ownerEntity, TagActions action)
     {
-        var abilityToRemove = action.ability;
         if (!ownerEntity.Has<ListActionComponent>())
         {
             return false;
         }
 
         var listComponent = ownerEntity.Get<ListActionComponent>();
-        listComponent.RemoveAbility(abilityToRemove);
+        listComponent.RemoveAbility(action);
         if (listComponent.abilities.Count == 0)
         {
             ownerEntity.Remove<ListActionComponent>();

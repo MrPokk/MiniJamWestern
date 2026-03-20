@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerTargetingSystem : IUpdateTurn
 {
-    public Priority Priority => Priority.High;
+    public Priority Priority => Priority.FIRST_TASK;
 
     private EcsFilter<GridComponent, TagPlayer> _playerFilter;
 

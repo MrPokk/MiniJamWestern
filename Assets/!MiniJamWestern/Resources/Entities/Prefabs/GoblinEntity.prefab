@@ -195,9 +195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e16b937ce94edaa48ae33cfc4f74f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthElementProvider
-  _value:
-    healthDisplay: {fileID: 0}
-  icon: {fileID: 0}
 --- !u!1 &4646854721508329108
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,9 +299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e16b937ce94edaa48ae33cfc4f74f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthElementProvider
-  _value:
-    healthDisplay: {fileID: 0}
-  icon: {fileID: 0}
 --- !u!1 &4916415903596530750
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,9 +403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e16b937ce94edaa48ae33cfc4f74f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthElementProvider
-  _value:
-    healthDisplay: {fileID: 0}
-  icon: {fileID: 0}
 --- !u!1 &7140639391113039080
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,9 +507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e16b937ce94edaa48ae33cfc4f74f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthElementProvider
-  _value:
-    healthDisplay: {fileID: 0}
-  icon: {fileID: 0}
 --- !u!1 &7142303236686005306
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,9 +611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e16b937ce94edaa48ae33cfc4f74f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthElementProvider
-  _value:
-    healthDisplay: {fileID: 0}
-  icon: {fileID: 0}
 --- !u!1 &8949300816209093632
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,6 +628,8 @@ GameObject:
   - component: {fileID: 912863783064651641}
   - component: {fileID: 4666372572243402185}
   - component: {fileID: 399013292898589628}
+  - component: {fileID: 8219956537100477628}
+  - component: {fileID: -7509932521959305941}
   m_Layer: 0
   m_Name: GoblinEntity
   m_TagString: Untagged
@@ -754,8 +741,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UsingActionComponentProvider
   _value:
     abilities:
-    - {fileID: 5965930271600435582, guid: 6365a8ded0e59f7df838a5a8b5f4b5d5, type: 3}
-    - {fileID: 5965930271600435582, guid: 05c5bd74a398ea748b09be8d610f5c23, type: 3}
+    - {fileID: 5965930271600435582, guid: 58706355cdfb379b3b7226e3b8f62712, type: 3}
 --- !u!114 &4666372572243402185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -771,7 +757,6 @@ MonoBehaviour:
   _value:
     full: {fileID: -8973585378649061070, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
     empty: {fileID: -1549259546331813239, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
-    listSlot: []
 --- !u!114 &399013292898589628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,6 +769,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f46b72222db1144388d7beeffd46bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IsNotDraggingProvider
+--- !u!114 &8219956537100477628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949300816209093632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a734a6d01deefdb8983fcbd0b969da62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ListActionComponentProvider
+  _value:
+    abilities:
+    - ability:
+        rid: 4048788208872849485
+    - ability:
+        rid: 4048788208872849486
+    - ability:
+        rid: 4048788208872849490
+  references:
+    version: 2
+    RefIds:
+    - rid: 4048788208872849485
+      type: {class: TagAttackForward, ns: , asm: Assembly-CSharp}
+      data:
+        distance: 1
+    - rid: 4048788208872849486
+      type: {class: TagMoveForward, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 4048788208872849490
+      type: {class: TagRotation, ns: , asm: Assembly-CSharp}
+      data: 
+--- !u!114 &-7509932521959305941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949300816209093632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c853c77461dacb5259def95e9f3ea84e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TagBehaviorMeleeProvider
 --- !u!1001 &3867183008139590983
 PrefabInstance:
   m_ObjectHideFlags: 0

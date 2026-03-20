@@ -10,9 +10,7 @@ public class HealthVisualSystem : IEcsAutoImplement, IEcsInitSystem
 
     private EcsEvent _genericEvent;
     private EcsEvent _playerUIFilterEvent;
-    private EcsFilter<UITagPlayerHealth> _playerUIFilter;
-    private EcsFilter<TagPlayer> _player;
-
+    private EcsFilter<TagPlayer> _playerFilter;
 
     public void Init()
     {
@@ -22,13 +20,16 @@ public class HealthVisualSystem : IEcsAutoImplement, IEcsInitSystem
 
     private void OnUpdateUIPlayer(EcsEntity entity)
     {
-        var playerEntity = _player.First();
-        PlayerUpdateUI(playerEntity);
+        NotifyPlayerUI();
     }
 
     private void OnUpdateUI(EcsEntity entity)
     {
-        PlayerUpdateUI(entity);
+        if (entity.Has<TagPlayer>())
+        {
+            NotifyPlayerUI();
+            return;
+        }
 
         if (entity.TryGet<HealthComponent>(out var health) &&
             entity.TryGet<HealthDisplayComponent>(out var display))
@@ -37,27 +38,21 @@ public class HealthVisualSystem : IEcsAutoImplement, IEcsInitSystem
         }
     }
 
-    private void PlayerUpdateUI(EcsEntity entity)
+    private void NotifyPlayerUI()
     {
-        if (!entity.Has<TagPlayer>())
-            return;
-
-        if (!entity.TryGet<HealthComponent>(out var healthPlayer))
-            return;
-
-        var current = healthPlayer.GetCurrentHealth();
-        var max = healthPlayer.GetMaxHealth();
-        var uiPlayer = _playerUIFilter.First();
-
-        SetHealth(uiPlayer.Get<HealthDisplayComponent>(), current, max);
-
-        return;
+        var player = _playerFilter.First();
+        if (player.IsAlive)
+        {
+            if (player.TryGet<HealthComponent>(out var health))
+            {
+                UIChamberPopup.OnPlayerHealthChanged?.Invoke(health.GetCurrentHealth(), health.GetMaxHealth());
+            }
+        }
     }
 
     private static void SetHealth(HealthDisplayComponent display, int current, int max)
     {
-        if (display.slots == null)
-            return;
+        if (display.slots == null) return;
 
         for (var i = 0; i < display.slots.Count; i++)
         {

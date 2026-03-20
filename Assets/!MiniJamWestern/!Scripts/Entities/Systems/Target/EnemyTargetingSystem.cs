@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyAttackTargetingSystem : IUpdateTurn
 {
-    public Priority Priority => Priority.High;
+    public Priority Priority => Priority.FIRST_TASK;
 
     private EcsFilter<GridComponent, TagPlayer> _playerFilter = new();
     private EcsFilter<GridComponent, TagEnemy> _enemyFilter = new();
