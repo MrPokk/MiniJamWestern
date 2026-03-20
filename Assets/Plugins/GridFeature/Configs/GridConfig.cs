@@ -21,6 +21,13 @@ public sealed class GridConfig : ScriptableObject
     [SerializeField] private Vector2 _cellOffset;
 
     [Header("Visual Settings")]
+    [SerializeField] private bool _isVisualEnable = false;
+    [Header("Visual Settings")]
+    [SerializeField] private Color _fillColor = new(1, 1, 1, 0.1f);
+    [SerializeField] private Color _borderColor = new(1, 1, 1, 1.0f);
+    [Range(0.01f, 0.5f)]
+    [SerializeField] private float _nodeLineWidth = 0.05f;
+
     [Tooltip("Prefab to use for grid node visualization")]
     [SerializeField] private GameObject _nodePrefab;
 
@@ -36,6 +43,10 @@ public sealed class GridConfig : ScriptableObject
     public IReadOnlyList<Vector2Int> Cells => _cells.AsReadOnly();
     public IReadOnlyList<Vector3> CellsWorld => GetCellsWorldPositions();
     public Quaternion RotationQuaternion => Quaternion.Euler(_rotation);
+    public Color FillColor => _fillColor;
+    public Color BorderColor => _borderColor;
+    public float NodeLineWidth => _nodeLineWidth;
+    public bool IsVisualEnable => _isVisualEnable;
 
     public List<Vector3> GetCellsWorldPositions()
     {

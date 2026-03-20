@@ -11,7 +11,8 @@ public class GridPresenter<T>
     public GridPresenter(GridConfig gridConfig)
     {
         _grid = new GridModel<T>(gridConfig);
-        if (gridConfig.NodePrefab != null)
+
+        if (gridConfig.IsVisualEnable)
         {
             _gridView = new GameObject("GridView").AddComponent<GridView>();
             _gridView.Instantiate(gridConfig);
