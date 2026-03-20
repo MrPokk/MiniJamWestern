@@ -2,20 +2,14 @@
 using BitterECS.Integration.Unity;
 using UnityEngine;
 
-[Serializable]
-public struct HealthElementComponent
-{
-    public HealthDisplayProvider healthDisplay;
-}
-
 [RequireComponent(typeof(SpriteRenderer))]
-public class HealthElementProvider : ProviderEcs<HealthElementComponent>
+public class HealthElementProvider : ProviderEcs<HealthElementComponent>, IHealthSlot
 {
-    [HideInInspector] public SpriteRenderer icon;
+    private SpriteRenderer _renderer;
+    protected override void Registration() => _renderer = GetComponent<SpriteRenderer>();
 
-    protected override void Registration()
-    {
-        icon = GetComponent<SpriteRenderer>();
-
-    }
+    public void SetActive(bool active) => gameObject.SetActive(active);
+    public void SetSprite(Sprite sprite) => _renderer.sprite = sprite;
 }
+
+[Serializable] public struct HealthElementComponent { }

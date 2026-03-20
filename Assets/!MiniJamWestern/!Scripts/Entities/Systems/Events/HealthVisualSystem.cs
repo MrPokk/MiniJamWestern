@@ -1,56 +1,77 @@
-﻿using BitterECS.Core;
+﻿using System;
+using BitterECS.Core;
 
 public struct UpdateHealthUIEvent { }
+public struct PlayerUpdateHealthUIEvent { }
 
-public class HealthVisualSystem : IEcsAutoImplement
+public class HealthVisualSystem : IEcsAutoImplement, IEcsInitSystem
 {
     public Priority Priority => Priority.Medium;
 
-    private EcsEvent _ecsEvent = new EcsEvent()
-        .SubscribeAny<UpdateHealthUIEvent, IsDamagedEvent>(added: OnUpdateUI);
+    private EcsEvent _genericEvent;
+    private EcsEvent _playerUIFilterEvent;
+    private EcsFilter<UITagPlayerHealth> _playerUIFilter;
+    private EcsFilter<TagPlayer> _player;
 
-    private static void OnUpdateUI(EcsEntity entity)
+
+    public void Init()
     {
-        // Убеждаемся, что у сущности есть и здоровье, и дисплей
-        if (!entity.Has<HealthComponent>() || !entity.Has<HealthDisplay>())
+        _genericEvent.SubscribeAny<UpdateHealthUIEvent, IsDamagedEvent>(added: OnUpdateUI);
+        _playerUIFilterEvent.Subscribe<PlayerUpdateHealthUIEvent>(added: OnUpdateUIPlayer);
+    }
+
+    private void OnUpdateUIPlayer(EcsEntity entity)
+    {
+        var playerEntity = _player.First();
+        PlayerUpdateUI(playerEntity);
+    }
+
+    private void OnUpdateUI(EcsEntity entity)
+    {
+        PlayerUpdateUI(entity);
+
+        if (entity.TryGet<HealthComponent>(out var health) &&
+            entity.TryGet<HealthDisplayComponent>(out var display))
+        {
+            SetHealth(display, health.GetCurrentHealth(), health.GetMaxHealth());
+        }
+    }
+
+    private void PlayerUpdateUI(EcsEntity entity)
+    {
+        if (!entity.Has<TagPlayer>())
             return;
 
-        var health = entity.Get<HealthComponent>();
-        var display = entity.Get<HealthDisplay>();
+        if (!entity.TryGet<HealthComponent>(out var healthPlayer))
+            return;
 
-        int currentHealth = health.GetCurrentHealth();
+        var current = healthPlayer.GetCurrentHealth();
+        var max = healthPlayer.GetMaxHealth();
+        var uiPlayer = _playerUIFilter.First();
 
-        // ВАЖНО: Замените GetMaxHealth() на ваш метод/переменную из HealthComponent
-        // Если у вас нет максимального хп, и вы хотите просто выключать пустые сердечки, 
-        // то используйте: int maxHealth = currentHealth;
-        int maxHealth = (int)health.GetMaxHealth();
+        SetHealth(uiPlayer.Get<HealthDisplayComponent>(), current, max);
 
-        for (int i = 0; i < display.listSlot.Count; i++)
+        return;
+    }
+
+    private static void SetHealth(HealthDisplayComponent display, int current, int max)
+    {
+        if (display.slots == null)
+            return;
+
+        for (var i = 0; i < display.slots.Count; i++)
         {
-            var element = display.listSlot[i];
+            var slot = display.slots[i];
+            if (slot == null) continue;
 
-            if (element == null)
-                continue;
-
-            // Если индекс слота меньше максимального ХП — он должен быть включен
-            if (i < maxHealth)
+            if (i < max)
             {
-                element.gameObject.SetActive(true);
-
-                // Если индекс меньше текущего ХП — сердечко полное, иначе пустое
-                if (i < currentHealth)
-                {
-                    element.icon.sprite = display.full;
-                }
-                else
-                {
-                    element.icon.sprite = display.empty;
-                }
+                slot.SetActive(true);
+                slot.SetSprite(i < current ? display.full : display.empty);
             }
             else
             {
-                // Если индекс больше максимального ХП (лишние слоты) — выключаем объект полностью
-                element.gameObject.SetActive(false);
+                slot.SetActive(false);
             }
         }
     }

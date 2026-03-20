@@ -303,6 +303,11 @@ namespace BitterECS.Core
                 action(current, ref current.Get<T1>());
             }
         }
+
+        public void Subscribe<T>(object added)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public struct EcsFilter<T1, T2> where T1 : new() where T2 : new()

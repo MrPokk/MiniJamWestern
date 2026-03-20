@@ -1,36 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BitterECS.Core;
 using BitterECS.Integration.Unity;
 using UnityEngine;
 
+
 [Serializable]
-public class HealthDisplay
+public struct HealthDisplayComponent
 {
     public Sprite full;
     public Sprite empty;
-    public List<HealthElementProvider> listSlot;
+    public List<IHealthSlot> slots;
 }
 
-public class HealthDisplayProvider : ProviderEcs<HealthDisplay>
+public class HealthDisplayProvider : ProviderEcs<HealthDisplayComponent>
 {
     protected override void PostRegistration()
     {
-        FindAllSlot();
+        Value.slots = GetComponentsInChildren<IHealthSlot>(true).ToList();
     }
-
     private void Start()
     {
         Entity.AddFrame<UpdateHealthUIEvent>();
     }
-
-    private void FindAllSlot()
-    {
-        Value.listSlot = new List<HealthElementProvider>(GetComponentsInChildren<HealthElementProvider>());
-        foreach (var element in Value.listSlot)
-        {
-            element.Entity.Get<HealthElementComponent>().healthDisplay = this;
-        }
-    }
-
 }

@@ -212,27 +212,6 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: ui_atlas_5
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 39
-      width: 23
-      height: 26
-    spriteID: 434320c1558a86473a4507aacf5fdf94
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
   - name: ui_atlas_8
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -393,6 +372,27 @@ ScriptedImporter:
       width: 4
       height: 9
     spriteID: bc0080abf7e91ca218899177873ec142
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_7
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 58
+      y: 34
+      width: 54
+      height: 48
+    spriteID: 8f64ea285fdd19a7b8d240bedfc52524
     spriteBone: []
     spriteOutline: []
     vertices: []
