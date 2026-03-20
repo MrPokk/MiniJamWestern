@@ -2,23 +2,24 @@
 
 public static class AbilityLogicRouter
 {
-    public static void Execute(EcsEntity actor, IActionAbility ability)
+    public static void Execute(
+        EcsEntity actor,
+        IActionAbility ability,
+        ref GridComponent grid,
+        ListActionComponent list,
+        ref TargetTo target)
     {
-        if (!actor.TryGet<GridComponent>(out var grid) ||
-            !actor.TryGet<ListActionComponent>(out var list) ||
-            !actor.TryGet<TargetTo>(out var target)) return;
-
-        if (ability is TagMoveForward)
+        switch (ability)
         {
-            MovingForwardHandler.Execute(actor, grid, list, target);
-        }
-        else if (ability is TagAttackForward)
-        {
-            AttackingForwardHandler.Execute(actor, grid, list, target);
-        }
-        else if (ability is TagPushForward)
-        {
-            PushForwardHandler.Execute(actor, grid, list, target);
+            case TagMoveForward:
+                MovingForwardHandler.Execute(actor, grid, list, target);
+                break;
+            case TagAttackForward:
+                AttackingForwardHandler.Execute(actor, grid, list, target);
+                break;
+            case TagPushForward:
+                PushForwardHandler.Execute(actor, grid, list, target);
+                break;
         }
     }
 }

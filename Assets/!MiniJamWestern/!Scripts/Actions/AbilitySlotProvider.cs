@@ -22,48 +22,38 @@ public class AbilitySlotProvider : ProviderEcs<AbilitySlotComponent>, IDropHandl
         }
     }
 
-    public void AddItem(AbilityViewProvider item)
+    public bool AddItem(AbilityViewProvider item)
     {
-
-        if (Value.itemEntity.IsAlive)
-            return;
-
-        item.Entity.Remove<IsDraggingAbility>();
-        item.EnableCollider(true);
-
-        Value.itemEntity = item.Entity;
-        item.transform.SetParent(transform);
-        item.transform.localPosition = Vector3.zero;
+        if (Value.itemEntity.IsAlive) return false;
 
         var ownerInventory = Value.abilityInventory.Entity;
-
+        var systemView = EcsSystemStatic.GetSystem<AbilitySlotViewSystem>();
         var system = EcsSystemStatic.GetSystem<AbilitySlotSystem>();
-        system.Placing(ownerInventory, item.Entity);
+
+        if (system.Placing(ownerInventory, Entity, item.Entity))
+        {
+            return systemView.Placing(item, this);
+        }
+
+        return false;
     }
 
     public bool TryRemoveItem()
     {
-        if (!Value.itemEntity.IsAlive)
-            return false;
+        var removedItem = Value.itemEntity;
+        if (!removedItem.IsAlive) return false;
 
         var ownerInventory = Value.abilityInventory.Entity;
-        var removedItem = Value.itemEntity;
+        var systemView = EcsSystemStatic.GetSystem<AbilitySlotViewSystem>();
+        var system = EcsSystemStatic.GetSystem<AbilitySlotSystem>();
 
-        var provider = removedItem.GetProvider<ProviderEcs>();
-        if (provider != null)
+        if (system.Extract(ownerInventory, Entity, removedItem))
         {
-            provider.transform.SetParent(null);
+            return systemView.Extract(this);
         }
 
-        Value.itemEntity = EcsEntity.Null;
-
-        var system = EcsSystemStatic.GetSystem<AbilitySlotSystem>();
-        system.Extract(ownerInventory, removedItem);
-
-        return true;
+        return false;
     }
-
-    public void RemoveItem() => TryRemoveItem();
 
     private void OnDrawGizmos()
     {
@@ -73,13 +63,13 @@ public class AbilitySlotProvider : ProviderEcs<AbilitySlotComponent>, IDropHandl
         Vector3 size = boxCollider.size;
         Vector3 center = boxCollider.offset;
 
-        Color gizmoColor = Color.green;
-        Color fillColor = gizmoColor;
+        var gizmoColor = Color.green;
+        var fillColor = gizmoColor;
         fillColor.a = 0.2f;
         Gizmos.color = fillColor;
         Gizmos.DrawCube(center, size);
 
-        Color edgeColor = gizmoColor;
+        var edgeColor = gizmoColor;
         edgeColor.a = 1.0f;
         Gizmos.color = edgeColor;
         Gizmos.DrawWireCube(center, size);

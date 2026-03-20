@@ -4,22 +4,52 @@ public class AbilitySlotSystem : IEcsAutoImplement
 {
     public Priority Priority => Priority.High;
 
-    public void Placing(EcsEntity ownerEntity, EcsEntity addedItemEntity)
+    public bool Placing(EcsEntity ownerEntity, EcsEntity slotEntity, EcsEntity addedItemEntity)
     {
-        if (!addedItemEntity.TryGet<TagActions>(out var action)) return;
+        if (ownerEntity.Has<IsNotPlace>() || slotEntity.Has<IsNotPlace>()) return false;
+
+        if (!addedItemEntity.TryGet<TagActions>(out var action)) return false;
 
         addedItemEntity.Add<IsPlace>();
         addedItemEntity.Remove<IsExtract>();
-
-        ownerEntity.AddFrame<IsTargetingActionEnterEvent>(new(action.ability));
+        AddAbilityToOwner(ownerEntity, action);
+        return true;
     }
 
-    public void Extract(EcsEntity ownerEntity, EcsEntity removedItemEntity)
+    private static void AddAbilityToOwner(EcsEntity ownerEntity, TagActions action)
     {
-        if (!removedItemEntity.TryGet<TagActions>(out var action)) return;
+        var abilityFromEvent = action.ability;
+        var listComponent = ownerEntity.GetOrAdd<ListActionComponent>();
+        listComponent.AddAbility(abilityFromEvent);
+    }
+
+    public bool Extract(EcsEntity ownerEntity, EcsEntity slotEntity, EcsEntity removedItemEntity)
+    {
+        if (ownerEntity.Has<IsNotExtract>() || slotEntity.Has<IsNotExtract>()) return false;
+
+        if (!removedItemEntity.TryGet<TagActions>(out var action)) return false;
+
         removedItemEntity.Add<IsExtract>();
         removedItemEntity.Remove<IsPlace>();
-        ownerEntity.AddFrame<IsTargetingActionExitEvent>(new(action.ability));
+        return RemoveAbilityToOwner(ownerEntity, action);
+    }
+
+    private static bool RemoveAbilityToOwner(EcsEntity ownerEntity, TagActions action)
+    {
+        var abilityToRemove = action.ability;
+        if (!ownerEntity.Has<ListActionComponent>())
+        {
+            return false;
+        }
+
+        var listComponent = ownerEntity.Get<ListActionComponent>();
+        listComponent.RemoveAbility(abilityToRemove);
+        if (listComponent.abilities.Count == 0)
+        {
+            ownerEntity.Remove<ListActionComponent>();
+        }
+
+        return true;
     }
 }
 

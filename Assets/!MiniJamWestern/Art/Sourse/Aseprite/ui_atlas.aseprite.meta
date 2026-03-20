@@ -33,7 +33,7 @@ ScriptedImporter:
     sRGBTexture: 1
     spriteMode: 2
     spriteExtrude: 1
-    spriteMeshType: 1
+    spriteMeshType: 0
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
     spritePixelsToUnits: 16
@@ -102,7 +102,7 @@ ScriptedImporter:
     generateIndividualEvents: 1
     generateSpriteAtlas: 1
   importFileNodeState: 1
-  platformSettingsDirtyTick: 639092092354970660
+  platformSettingsDirtyTick: 639094781778608620
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -157,10 +157,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 4
-      y: 91
-      width: 21
-      height: 23
+      x: 3
+      y: 97
+      width: 25
+      height: 28
     spriteID: f4d3aa34fca7f82ebb6e1cf4dc4b4527
     spriteBone: []
     spriteOutline: []
@@ -178,53 +178,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 35
-      y: 91
-      width: 21
-      height: 23
+      x: 34
+      y: 93
+      width: 24
+      height: 28
     spriteID: d8fb6006048e6c9fdb93679b240035e6
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: ui_atlas_2
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 63
-      width: 21
-      height: 23
-    spriteID: 19094641e4a3bb97f971d3afae32a98d
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: ui_atlas_3
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 34
-      width: 21
-      height: 23
-    spriteID: 070ca48ed7ef3884d99901a56c46c935
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -241,11 +199,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 4
-      y: 4
-      width: 21
-      height: 23
-    spriteID: 5876b6de34c1c4ab6a2aa446d704044d
+      x: 3
+      y: 68
+      width: 25
+      height: 28
+    spriteID: 31b5fa17c7d79e32f8c42accb028e771
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -262,11 +220,137 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 67
-      y: 104
+      x: 4
+      y: 39
+      width: 23
+      height: 26
+    spriteID: 434320c1558a86473a4507aacf5fdf94
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_8
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 3
+      y: 125
+      width: 25
+      height: 28
+    spriteID: 61e628a2a3a14b63b84dc71b5db31284
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_9
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 34
+      y: 125
+      width: 25
+      height: 28
+    spriteID: 91e1ae174dfb917e0b3f290b4e98c21f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_10
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 68
+      y: 141
       width: 9
       height: 8
-    spriteID: 10dd204b1895eeb9d8255179e2fc3beb
+    spriteID: e0b5710d7c9badaff9ad2fddcab04084
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_11
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 68
+      y: 131
+      width: 9
+      height: 8
+    spriteID: 986e1a22b977a9d059471f64c4e40ce2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_12
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 3
+      y: 3
+      width: 109
+      height: 29
+    spriteID: 3b0787308e9f08dd19d6e1010b3f08c3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 60
+      y: 97
+      width: 19
+      height: 22
+    spriteID: b83bb0da2f1cdb3b9be65bb5a08e2799
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -283,11 +367,32 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 67
-      y: 94
-      width: 9
-      height: 8
-    spriteID: c27ebfc13679035f2b43a88c2385068e
+      x: 80
+      y: 101
+      width: 13
+      height: 14
+    spriteID: 30cb7072364ed02789e9ffd0c15f1448
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_3
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 84
+      y: 135
+      width: 4
+      height: 9
+    spriteID: bc0080abf7e91ca218899177873ec142
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -314,10 +419,10 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 22
-        y: 125
-        width: 72
-        height: 110
+        x: 21
+        y: 88
+        width: 106
+        height: 148
       spriteId: 2bb75264f8809f086bf45dc6fa673836
     linkedCells: []
     tileCells: []
@@ -361,8 +466,8 @@ ScriptedImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
-  generatePhysicsShape: 0
+  generatePhysicsShape: 1
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 384, y: 256}
-  previousTextureSize: {x: 128, y: 128}
+  previousTextureSize: {x: 128, y: 256}

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace BitterECS.Core
 {
@@ -9,8 +9,7 @@ namespace BitterECS.Core
         public static Predicate<T> EqualTo<T>(T value) where T : IEquatable<T> => c => c.Equals(value);
         public static Predicate<T> NotNull<T>() where T : class => c => c != null;
 
-        public static bool HasProvider<T>(EcsEntity e) where T : ILinkableProvider => e.HasProvider<T>();
-
+        public static bool HasProvider<T>(EcsEntity e) where T : class, ILinkableProvider => e.HasProvider<T>();
         public static bool Has<T1>(EcsEntity e) where T1 : new() => e.Has<T1>();
         public static bool Has<T1, T2>(EcsEntity e) where T1 : new() where T2 : new() => Has<T1>(e) && e.Has<T2>();
         public static bool Has<T1, T2, T3>(EcsEntity e) where T1 : new() where T2 : new() where T3 : new() => Has<T1, T2>(e) && e.Has<T3>();

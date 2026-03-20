@@ -12,7 +12,8 @@ namespace BitterECS.Core
         private Action<EcsEntity> _preInitCallback;
         private ComponentAddOperations _componentAddOps;
         private ComponentAddedCallbacks _componentAddedCallbacks;
-        private ILinkableProvider _linkableProvider;
+        private ILinkableProvider[] _linkableProviders;
+        private int _linkCount;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public EcsBuilder(EcsWorld world = default)
@@ -22,13 +23,16 @@ namespace BitterECS.Core
             _preInitCallback = null;
             _componentAddOps = default;
             _componentAddedCallbacks = default;
-            _linkableProvider = null;
+            _linkableProviders = null;
+            _linkCount = 0;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public EcsBuilder WithLink(ILinkableProvider provider)
         {
-            _linkableProvider = provider;
+            if (_linkableProviders == null) _linkableProviders = new ILinkableProvider[4];
+            else if (_linkCount == _linkableProviders.Length) Array.Resize(ref _linkableProviders, _linkCount * 2);
+            _linkableProviders[_linkCount++] = provider;
             return this;
         }
 
@@ -67,9 +71,9 @@ namespace BitterECS.Core
             _preInitCallback?.Invoke(entity);
             _componentAddOps.Execute(entity, World, ref _componentAddedCallbacks);
 
-            if (_linkableProvider != null)
+            for (var i = 0; i < _linkCount; i++)
             {
-                World.Link(entity, _linkableProvider);
+                World.Link(entity, _linkableProviders[i]);
             }
 
             _postInitCallback?.Invoke(entity);

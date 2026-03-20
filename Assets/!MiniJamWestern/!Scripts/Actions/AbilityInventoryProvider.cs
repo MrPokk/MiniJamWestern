@@ -4,7 +4,7 @@ using BitterECS.Core;
 using BitterECS.Integration.Unity;
 
 [Serializable]
-public class AbilityInventory
+public struct AbilityInventory
 {
     public List<AbilitySlotProvider> listSlot;
 }
@@ -14,6 +14,17 @@ public class AbilityInventoryProvider : ProviderEcs<AbilityInventory>
     protected override void Registration()
     {
         FindAllSlot();
+    }
+
+    public void AddFirstEmpty(AbilityViewProvider item)
+    {
+        foreach (var slot in Value.listSlot)
+        {
+            if (slot.AddItem(item))
+            {
+                return;
+            }
+        }
     }
 
     private void FindAllSlot()
@@ -29,7 +40,7 @@ public class AbilityInventoryProvider : ProviderEcs<AbilityInventory>
     {
         foreach (var slot in Value.listSlot)
         {
-            slot.RemoveItem();
+            slot.TryRemoveItem();
         }
     }
 }

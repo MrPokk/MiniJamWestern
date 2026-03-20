@@ -77,13 +77,10 @@ namespace BitterECS.Core
         }
 
         public void Destroy() => World.Remove(this);
-        public T GetProvider<T>() where T : class, ILinkableProvider => World.GetProvider(this) as T;
-
+        public T GetProvider<T>() where T : class, ILinkableProvider => World.GetProvider<T>(this);
         public bool TryGetProvider<T>(out T provider) where T : class, ILinkableProvider
-        { provider = GetProvider<T>(); return HasProvider<T>(); }
-
-        public bool HasProvider<T>() where T : ILinkableProvider => World.GetProvider(this) is not null and T;
-
+        { provider = GetProvider<T>(); return provider != null; }
+        public bool HasProvider<T>() where T : class, ILinkableProvider => GetProvider<T>() != null;
         public bool Equals(EcsEntity other) => Id == other.Id && World == other.World;
         public override bool Equals(object obj) => obj is EcsEntity other && Equals(other);
         public override int GetHashCode() => HashCode.Combine(Id, World);

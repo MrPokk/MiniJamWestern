@@ -13,7 +13,7 @@ public class UsingActionComponent
 [RequireComponent(typeof(AbilityInventoryProvider))]
 public class UsingActionComponentProvider : ProviderEcs<UsingActionComponent>
 {
-    protected override void PostRegistration()
+    private void Start()
     {
         FillSlotsWithAbilities(GetComponent<AbilityInventoryProvider>());
     }

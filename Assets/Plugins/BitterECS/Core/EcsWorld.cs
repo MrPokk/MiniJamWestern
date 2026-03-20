@@ -43,8 +43,7 @@ namespace BitterECS.Core
         private readonly Stack<int> _freeEntityIds;
         private object[] _poolsFast;
         private readonly Dictionary<Type, Func<EcsWorld, object>> _poolFactories;
-        private readonly Dictionary<int, ILinkableProvider> _linkedProviders;
-
+        private readonly Dictionary<int, List<ILinkableProvider>> _linkedProviders;
         public int CountEntity => _aliveCount;
 
         public EcsWorld()
@@ -60,7 +59,7 @@ namespace BitterECS.Core
             _freeEntityIds = new Stack<int>(capacity);
             _poolsFast = new object[64];
             _poolFactories = new Dictionary<Type, Func<EcsWorld, object>>();
-            _linkedProviders = new Dictionary<int, ILinkableProvider>(EcsDefinitions.InitialLinkedEntitiesCapacity);
+            _linkedProviders = new Dictionary<int, List<ILinkableProvider>>(EcsDefinitions.InitialLinkedEntitiesCapacity);
         }
 
         public void AddCheckEvent<T>() where T : new()
@@ -156,15 +155,42 @@ namespace BitterECS.Core
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Has(int id) => id >= 0 && id < _idToIndex.Length && _idToIndex[id] != -1;
 
-        public bool HasProvider(int id) => _linkedProviders.TryGetValue(id, out _);
+        public bool HasProvider(int id) => _linkedProviders.TryGetValue(id, out var list) && list.Count > 0;
+        public ILinkableProvider GetProvider(EcsEntity entity) => _linkedProviders.TryGetValue(entity.Id, out var list) && list.Count > 0 ? list[0] : null;
 
-        public ILinkableProvider GetProvider(EcsEntity entity) => _linkedProviders.TryGetValue(entity.Id, out var w) ? w : null;
+        public T GetProvider<T>(EcsEntity entity) where T : class, ILinkableProvider
+        {
+            if (!_linkedProviders.TryGetValue(entity.Id, out var list))
+            {
+                return null;
+            }
 
-        public void Link(EcsEntity entity, ILinkableProvider provider) =>
-         (_linkedProviders[entity.Id] = provider).Init(new EcsProperty(this, entity.Id));
+            for (var i = 0; i < list.Count; i++)
+            {
+                if (list[i] is T typedProvider) return typedProvider;
+            }
+            return null;
+        }
+
+        public void Link(EcsEntity entity, ILinkableProvider provider)
+        {
+            if (!_linkedProviders.TryGetValue(entity.Id, out var list))
+            {
+                list = new List<ILinkableProvider>(4);
+                _linkedProviders[entity.Id] = list;
+            }
+            list.Add(provider);
+            provider.Init(new EcsProperty(this, entity.Id));
+        }
 
         public void Unlink(EcsEntity entity)
-        { if (_linkedProviders.Remove(entity.Id, out var provider)) provider.Dispose(); }
+        {
+            if (_linkedProviders.Remove(entity.Id, out var list))
+            {
+                for (var i = 0; i < list.Count; i++)
+                    list[i].Dispose();
+            }
+        }
 
         public EcsEntity Get(int id) => Has(id) ? new EcsEntity(this, id) : new EcsEntity(null, -1);
 
@@ -174,22 +200,37 @@ namespace BitterECS.Core
         public void Dispose()
         {
             for (var i = 0; i < _poolsFast.Length; i++)
-                if (_poolsFast[i] is IDisposable d) d.Dispose();
-
-            if (_linkedProviders.Values.Any())
             {
-                for (var i = 0; i < _linkedProviders.Values.Count; i++)
+                if (_poolsFast[i] is IDisposable d) d.Dispose();
+            }
+
+            if (_linkedProviders.Count > 0)
+            {
+                var allLists = new List<ILinkableProvider>[_linkedProviders.Count];
+                _linkedProviders.Values.CopyTo(allLists, 0);
+
+                _linkedProviders.Clear();
+
+                for (var i = 0; i < allLists.Length; i++)
                 {
-                    if (_linkedProviders.TryGetValue(i, out var provider))
-                        provider.Dispose();
+                    var list = allLists[i];
+                    if (list == null) continue;
+
+                    for (var j = 0; j < list.Count; j++)
+                    {
+                        list[j]?.Dispose();
+                    }
+                    list.Clear();
                 }
             }
 
-            _linkedProviders.Clear();
             _freeEntityIds.Clear();
-            _aliveCount = _entitiesCount = 0;
-            _aliveIds = _idToIndex = Array.Empty<int>();
+            _aliveCount = 0;
+            _entitiesCount = 0;
+            _aliveIds = Array.Empty<int>();
+            _idToIndex = Array.Empty<int>();
             _entityMasks = Array.Empty<EcsComponentMask>();
+            _version = new RefWorldVersion(0);
         }
     }
 }

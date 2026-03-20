@@ -1,6 +1,43 @@
 ﻿using BitterECS.Core;
 using UnityEngine;
 
+public class AbilityLongPressSystem : IEcsAutoImplement
+{
+    public Priority Priority => Priority.High;
+
+    private EcsEvent _ecsEvent = new EcsEvent()
+        .Subscribe<LongPressAbilityEvent>(added: OnLongPress);
+
+    private static void OnLongPress(EcsEntity abilityEntity)
+    {
+        var view = abilityEntity.GetProvider<AbilityViewProvider>();
+        if (view == null) return;
+
+        var parentSlot = view.GetComponentInParent<AbilitySlotProvider>();
+        if (parentSlot == null) return;
+
+        var ownerEntity = parentSlot.Value.abilityInventory.Entity;
+        if (ownerEntity.Has<IsNotDragging>() || parentSlot.Entity.Has<IsNotDragging>())
+        {
+            Debug.Log($"Ability is already being dragged or is not allowed to be dragged: {ownerEntity}");
+            return;
+        }
+
+        if (parentSlot.Value.itemEntity == abilityEntity)
+        {
+            if (!parentSlot.TryRemoveItem()) return;
+        }
+
+        view.EnableCollider(false);
+        abilityEntity.Add<IsDraggingAbility>();
+
+        abilityEntity.Add(new PhysicsDragComponent
+        {
+            targetWorldPosition = view.transform.position,
+            currentVelocity = Vector3.zero
+        });
+    }
+}
 public class AbilityPressSystem : IEcsAutoImplement, IEcsRunSystem
 {
     public Priority Priority => Priority.High;
@@ -10,7 +47,7 @@ public class AbilityPressSystem : IEcsAutoImplement, IEcsRunSystem
         .Subscribe<PointerDownAbilityEvent>(added: OnPointerDown)
         .Subscribe<PointerUpAbilityEvent>(added: OnPointerUp);
 
-    private const float HOLD_DURATION = 0.5f;
+    private const float HOLD_DURATION = 0.3f;
 
     private static void OnPointerDown(EcsEntity entity)
     {

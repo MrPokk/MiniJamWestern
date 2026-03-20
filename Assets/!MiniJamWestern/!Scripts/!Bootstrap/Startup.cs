@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class Startup : EcsUnityRoot<Startup>
 {
-    private CameraObject _cameraObject;
+    [SerializeField] private CameraObject _cameraObject;
     [SerializeField] private GridConfig _playfieldConfig;
     [SerializeField] private ComplicationSettings _complicationSettings;
 
@@ -16,20 +16,16 @@ public class Startup : EcsUnityRoot<Startup>
 
     protected override void Bootstrap()
     {
-        InitializeCamera();
         InitializeUI();
         InitializeGrid();
         InitializeEventSystem();
         InitializePlaying();
     }
 
-    private void InitializeCamera()
-    {
-        DontDestroyOnLoad(_cameraObject = new Loader<CameraObject>(EnvironmentPaths.CAMERA_OBJECT).New());
-    }
-
     private void InitializeUI()
     {
+        DontDestroyOnLoad(_cameraObject);
+
         UIInit.Initialize("UI", _cameraObject.CameraTarget);
     }
 
