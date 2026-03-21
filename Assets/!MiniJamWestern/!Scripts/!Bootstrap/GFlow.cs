@@ -7,6 +7,7 @@ public class GFlow
 {
     public static GState GState;
     public static event Action<int, int> OnTransferProgressChanged;
+    public static event Action<DifficultyTier> OnDifficultyChanged;
 
     public GFlow(GState gStat)
     {
@@ -43,6 +44,22 @@ public class GFlow
     public static void MinusTransferProgress(int amount) =>
         SetTransferProgress(GState.TransferProgress - amount);
 
+    public static void IncreaseToLastDifficulty()
+    {
+        if (GState == null) return;
+
+        var values = (DifficultyTier[])Enum.GetValues(typeof(DifficultyTier));
+        var lastDifficulty = values[^1];
+
+        var current = GState.CurrentDifficulty;
+        while (current < lastDifficulty)
+        {
+            current++;
+            GState = GState.WithDifficulty(current);
+            OnDifficultyChanged?.Invoke(current);
+        }
+    }
+
     public static void SetTransferProgress(int value)
     {
         if (GState == null) return;
@@ -57,7 +74,6 @@ public class GFlow
             RefreshTurn();
         }
     }
-
 
     public static void SetTransferProgressMax(int value)
     {

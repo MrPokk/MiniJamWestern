@@ -31,6 +31,11 @@ public class GState
         TransferProgressMax = complicationSettings.transferMax;
     }
 
+    public GState WithDifficulty(DifficultyTier newDifficulty)
+    {
+        return new GState(newDifficulty, TransferProgress, TransferProgressMax);
+    }
+
     public GState WithProgress(int newProgress)
     {
         return new GState(
