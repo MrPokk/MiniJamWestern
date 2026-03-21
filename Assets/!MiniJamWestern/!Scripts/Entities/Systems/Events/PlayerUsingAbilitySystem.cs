@@ -12,13 +12,14 @@ public class PlayerUsingAbilitySystem : IEcsInitSystem
 
     private void OnShortPress(EcsEntity abilityEntity)
     {
+
         if (!TryGetContext(abilityEntity, out var player, out var action, out var mainList)) return;
 
         EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
 
 
         var playerFilter = _playerFilter.First();
-        Debug.Log($"{playerFilter.Has<TagPlayer>()} {playerFilter.Has<GridComponent>()} ");
+        Debug.Log($"{playerFilter.Id} {playerFilter.Has<TagPlayer>()} {playerFilter.Has<GridComponent>()} ");
         ref var grid = ref playerFilter.GetOrAdd<GridComponent>();
         ref var target = ref playerFilter.GetOrAdd<TargetTo>();
 
@@ -49,7 +50,8 @@ public class PlayerUsingAbilitySystem : IEcsInitSystem
     private bool TryGetContext(EcsEntity entity, out EcsEntity player, out TagActions action, out ListActionComponent list)
     {
         player = _playerFilter.First();
-        action = default; list = null;
+        action = default;
+        list = default;
         var view = entity.GetProvider<AbilityViewProvider>();
         var slot = view?.GetComponentInParent<AbilitySlotProvider>();
         var owner = slot?.Value.abilityInventory.Entity ?? default;

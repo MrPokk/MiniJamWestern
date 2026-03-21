@@ -94,8 +94,7 @@ public static class GridInteractionHandler
             }
 
             instantiateObject.Entity.Add<GridComponent>(new(index, _playfield));
-            Debug.Log($"{instantiateObject.Entity.Has<GridComponent>()} and {instantiateObject.GetType()}");
-
+            Debug.Log($"{instantiateObject.Entity.Id} {instantiateObject.Entity.Has<GridComponent>()} and {instantiateObject.GetType()}");
             instantiateObject.Entity.AddFrame<IsInstantiateEvent>();
             instantiateObject.Entity.AddFrame<IsActivatingEvent>();
         }

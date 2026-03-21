@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace BitterECS.Core
 {
@@ -22,7 +23,7 @@ namespace BitterECS.Core
 
     public static class EcsComponentTypeId<T>
     {
-        public static readonly int Id = EcsComponentTypes.NextId++;
+        public static readonly int Id = Interlocked.Increment(ref EcsComponentTypes.NextId) - 1;
     }
 
     public struct EcsComponentMask
