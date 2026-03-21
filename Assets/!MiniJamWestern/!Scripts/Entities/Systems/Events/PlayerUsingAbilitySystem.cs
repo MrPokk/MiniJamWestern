@@ -5,7 +5,7 @@ public class PlayerUsingAbilitySystem : IEcsInitSystem
 {
     public Priority Priority => Priority.Low;
     private EcsEvent _ecsEvent;
-    private EcsFilter<TagPlayer> _playerFilter;
+    private EcsFilter<TagPlayer, GridComponent> _playerFilter;
     private EcsFilter<TagInventoryEffects> _effectsFilter;
 
     public void Init() => _ecsEvent.Subscribe<ShortPressAbilityEvent>(OnShortPress);

@@ -20,51 +20,20 @@ namespace BitterECS.Core
 
     internal static class EcsComponentTypes
     {
-        private static int _nextId = 0;
-        private static readonly object _lock = new object();
-        private static readonly Dictionary<Type, int> _typeIds = new Dictionary<Type, int>();
+        private static int s_nextId = 0;
+        private static readonly object s_lock = new();
+        public static readonly Dictionary<int, int> HashToLocalId = new();
 
-        public static void Warmup()
+        public static int RegisterAndGetLocalId(int globalHash)
         {
-            var componentTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => !a.IsDynamic &&
-                            !a.GetName().Name.StartsWith("System") &&
-                            !a.GetName().Name.StartsWith("UnityEngine") &&
-                            !a.GetName().Name.StartsWith("UnityEditor") &&
-                            !a.GetName().Name.StartsWith("Unity.") &&
-                            !a.GetName().Name.StartsWith("mscorlib") &&
-                            !a.GetName().Name.StartsWith("Mono"))
-                .SelectMany(a => a.GetTypes())
-                .Where(t => !t.IsAbstract && !t.IsInterface && !t.IsEnum && !t.IsGenericTypeDefinition)
-                .Where(t => t.IsValueType || t.GetConstructor(Type.EmptyTypes) != null)
-                .Where(t => !t.IsDefined(typeof(CompilerGeneratedAttribute), false))
-
-                .OrderBy(t => t.FullName)
-                .ToArray();
-
-            lock (_lock)
+            lock (s_lock)
             {
-                foreach (var type in componentTypes)
+                if (!HashToLocalId.TryGetValue(globalHash, out var localId))
                 {
-                    if (!_typeIds.ContainsKey(type))
-                    {
-                        _typeIds[type] = _nextId++;
-                    }
+                    localId = s_nextId++;
+                    HashToLocalId[globalHash] = localId;
                 }
-            }
-        }
-
-        public static int GetId(Type type)
-        {
-            lock (_lock)
-            {
-                // Если тип почему-то не попал в Warmup (например он из плагина), выдаем ID потокобезопасно на лету
-                if (!_typeIds.TryGetValue(type, out var id))
-                {
-                    id = _nextId++;
-                    _typeIds[type] = id;
-                }
-                return id;
+                return localId;
             }
         }
     }
@@ -72,7 +41,25 @@ namespace BitterECS.Core
 
     public static class EcsComponentTypeId<T>
     {
-        public static readonly int Id = EcsComponentTypes.GetId(typeof(T));
+        public static readonly int Hash = GetStableHash(typeof(T).FullName);
+
+        public static readonly int Id = EcsComponentTypes.RegisterAndGetLocalId(Hash);
+
+        private static int GetStableHash(string str)
+        {
+            unchecked
+            {
+                var hash1 = 5381;
+                var hash2 = hash1;
+                for (var i = 0; i < str.Length && str[i] != '\0'; i += 2)
+                {
+                    hash1 = ((hash1 << 5) + hash1) ^ str[i];
+                    if (i == str.Length - 1 || str[i + 1] == '\0') break;
+                    hash2 = ((hash2 << 5) + hash2) ^ str[i + 1];
+                }
+                return hash1 + (hash2 * 1566083941);
+            }
+        }
     }
 
     public struct EcsComponentMask
