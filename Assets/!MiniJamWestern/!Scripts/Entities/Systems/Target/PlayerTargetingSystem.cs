@@ -30,7 +30,7 @@ public class PlayerTargetingSystemY : IEcsRunSystem
 {
     public Priority Priority => Priority.High;
     private EcsFilter<TagSelector> _ecsEntities;
-    private EcsFilter<TagPlayer> _ecsEntitiesP;
+    private EcsFilter<TagPlayer, GridComponent> _ecsEntitiesP;
 
     public void Run()
     {
