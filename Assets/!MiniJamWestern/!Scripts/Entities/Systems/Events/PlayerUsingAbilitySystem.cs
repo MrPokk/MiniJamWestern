@@ -17,12 +17,13 @@ public class PlayerUsingAbilitySystem : IEcsInitSystem
         EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
 
 
-        Debug.Log($"{player.Has<TagPlayer>()} {player.Has<GridComponent>()} ");
-        ref var grid = ref player.GetOrAdd<GridComponent>();
-        ref var target = ref player.GetOrAdd<TargetTo>();
+        var playerFilter = _playerFilter.First();
+        Debug.Log($"{playerFilter.Has<TagPlayer>()} {playerFilter.Has<GridComponent>()} ");
+        ref var grid = ref playerFilter.GetOrAdd<GridComponent>();
+        ref var target = ref playerFilter.GetOrAdd<TargetTo>();
 
-        AbilityLogicRouter.Execute(player, action.ability, ref grid, mainList, ref target);
-        ExecuteEffects(player, action.ability, ref grid, ref target);
+        AbilityLogicRouter.Execute(playerFilter, action.ability, ref grid, mainList, ref target);
+        ExecuteEffects(playerFilter, action.ability, ref grid, ref target);
 
         GFlow.MinusTransferProgress(1);
     }
