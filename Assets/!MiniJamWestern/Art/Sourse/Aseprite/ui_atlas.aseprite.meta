@@ -367,10 +367,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 93
+      x: 94
       y: 104
-      width: 4
-      height: 8
+      width: 3
+      height: 7
     spriteID: bc0080abf7e91ca218899177873ec142
     spriteBone: []
     spriteOutline: []
@@ -414,6 +414,27 @@ ScriptedImporter:
       width: 51
       height: 33
     spriteID: c2b06d2b933dd43ee9ee87975a3fd1ea
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_13
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 94
+      width: 27
+      height: 27
+    spriteID: cc1d414ec8b04fa6282b7efe67dda661
     spriteBone: []
     spriteOutline: []
     vertices: []

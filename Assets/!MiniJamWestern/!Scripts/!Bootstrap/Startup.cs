@@ -1,6 +1,4 @@
-﻿using System;
-using BitterECS.Core;
-using BitterECS.Integration.Unity;
+﻿using BitterECS.Integration.Unity;
 using UINotDependence.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;

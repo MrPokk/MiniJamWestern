@@ -416,9 +416,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 531005485}
-    - targetCorrespondingSourceObject: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 531005487}
   m_SourcePrefab: {fileID: 100100000, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
 --- !u!4 &392699967 stripped
 Transform:
@@ -497,8 +494,8 @@ GameObject:
   m_Component:
   - component: {fileID: 427512584}
   - component: {fileID: 427512582}
-  - component: {fileID: 427512581}
   - component: {fileID: 427512585}
+  - component: {fileID: 427512586}
   m_Layer: 0
   m_Name: InventoryEffects
   m_TagString: Untagged
@@ -506,20 +503,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &427512581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427512580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b808623060efebd16950864ecb90143d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UsingActionComponentProvider
-  _value:
-    abilities: []
 --- !u!114 &427512582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,6 +550,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53616986ff88de2e78a590dbfbaaabd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TagInventoryEffectsProvider
+--- !u!114 &427512586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427512580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b808623060efebd16950864ecb90143d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UsingActionComponentProvider
+  _value:
+    abilities: []
 --- !u!1 &441169459
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,8 +575,10 @@ GameObject:
   - component: {fileID: 441169462}
   - component: {fileID: 441169461}
   - component: {fileID: 441169460}
+  - component: {fileID: 441169463}
+  - component: {fileID: 441169464}
   m_Layer: 0
-  m_Name: TempSelector
+  m_Name: UISelector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -646,7 +645,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -5804788463741173438, guid: ae4db1a08cf1821b79aeefe5b0ac4ecd, type: 3}
+  m_Sprite: {fileID: -7535889746107744141, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -671,6 +670,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &441169463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441169459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fa005b876ba02513b3ce599e08b26e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RenderSpriteComponentProvider
+  _value:
+    renderer: {fileID: 0}
+--- !u!114 &441169464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441169459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad29135e9a61d21bbc528f24707d154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DisableComponentProvider
 --- !u!1001 &529659689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -767,20 +792,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySlotLimitProvider
   _value:
     allowedTypes: 1
---- !u!114 &531005487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531005481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b937e52d12f6a85ddb2b5ffb2d27c1ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AbilityInventoryProvider
-  _value:
-    listSlot: []
 --- !u!1 &560022543
 GameObject:
   m_ObjectHideFlags: 0

@@ -740,8 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UsingActionComponentProvider
   _value:
-    abilities:
-    - {fileID: 5965930271600435582, guid: 58706355cdfb379b3b7226e3b8f62712, type: 3}
+    abilities: []
 --- !u!114 &4666372572243402185
 MonoBehaviour:
   m_ObjectHideFlags: 0

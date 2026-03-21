@@ -4,7 +4,7 @@ using BitterECS.Integration.Unity;
 using UnityEngine;
 
 [Serializable]
-public struct TagAttackPush : IActionAbility, IAttackAbility, IComponentPush
+public struct TagMovePushForward : IActionAbility, IMoveAbility, IComponentPush
 {
     [SerializeField] private int _distance;
 
@@ -16,11 +16,6 @@ public struct TagAttackPush : IActionAbility, IAttackAbility, IComponentPush
 
     public void Execute(EcsEntity actor, ref GridComponent grid, ListActionComponent list, ref TargetTo target)
     {
-        AttackingPushHandler.Execute(actor, grid, list, target);
+        MovingPushForwardHandler.Execute(actor, grid, list, target);
     }
-}
-
-public interface IComponentPush
-{
-    public int distance { get; set; }
 }

@@ -1,31 +1,44 @@
 ﻿using BitterECS.Core;
-using UnityEngine;
 
 public class MovingPushForwardHandler
 {
-    public static void Execute(EcsEntity entity, GridComponent gridCom, ListActionComponent tag, TargetTo target)
+    public static void Execute(EcsEntity actor, GridComponent gridCom, ListActionComponent list, TargetTo target)
     {
-        if (!tag.Is<TagPushForward>()) return;
+        if (!list.Is<TagMovePushForward>(out var movePush)) return;
 
-        if (!VectorUtility.TryGetStepDirection(gridCom.currentPosition, target.position, out var direction)) return;
+        PushUtility.PushEntity(gridCom, target, movePush);
 
-        var nextPos = gridCom.currentPosition + direction;
+        if (!VectorUtility.TryGetStepDirection(gridCom.currentPosition, target.position, out var dir)) return;
 
-        if (GridInteractionHandler.TryGetEntityAt(nextPos, out var pushedEntity))
+        var nextPos = gridCom.currentPosition + dir;
+        if (GridInteractionHandler.IsPlacing(nextPos))
         {
-            var pushTarget = nextPos + direction;
-            if (GridInteractionHandler.IsPlacing(pushTarget))
-            {
-                GridInteractionHandler.MoveEntity(pushedEntity, pushTarget);
-            }
-            else
-            {
-                return;
-            }
+            GridInteractionHandler.MoveEntity(actor, nextPos);
         }
+    }
+}
 
-        if (!GridInteractionHandler.IsPlacing(nextPos)) return;
+public class MovingPushForwardAuto : IEcsAutoImplement
+{
+    public Priority Priority => Priority.Medium;
 
-        GridInteractionHandler.MoveEntity(entity, nextPos);
+    private EcsEvent _ecsEvent = new EcsEvent()
+        .SubscribeWhereEntity<IsAttackerTo>(e => !e.Has<TagPlayer>(), added: OnAttack);
+
+    private static void OnAttack(EcsEntity attacker)
+    {
+        if (!attacker.TryGet<GridComponent>(out var grid)) return;
+        if (!attacker.TryGet<ListActionComponent>(out var list)) return;
+
+        if (!list.Is<TagMovePushForward>(out _)) return;
+
+        if (!attacker.TryGet<IsAttackerTo>(out var attackInfo)) return;
+
+        var targetEntity = attackInfo.targetEntity;
+        if (!targetEntity.IsAlive || !targetEntity.Has<GridComponent>()) return;
+
+        var targetData = new TargetTo { position = targetEntity.Get<GridComponent>().currentPosition };
+
+        MovingPushForwardHandler.Execute(attacker, grid, list, targetData);
     }
 }

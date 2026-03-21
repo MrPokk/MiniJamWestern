@@ -1,4 +1,5 @@
 ﻿using System;
+using BitterECS.Core;
 using BitterECS.Integration.Unity;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ public struct TagActions
     public IActionAbility ability;
 }
 
-public interface IActionAbility { }
+public interface IActionAbility
+{
+    void Execute(EcsEntity actor, ref GridComponent grid, ListActionComponent list, ref TargetTo target);
+}
 
 public class TagActionsProvider : ProviderEcs<TagActions> { }

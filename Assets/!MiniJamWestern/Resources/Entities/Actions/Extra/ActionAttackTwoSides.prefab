@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: _value.ability
-      value: 4048788208872849489
+      value: 4048788235717443661
       objectReference: {fileID: 0}
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: 'managedReferences[4048788162374008910]'
@@ -33,6 +33,10 @@ PrefabInstance:
       value: Assembly-CSharp TagAttackPush
       objectReference: {fileID: 0}
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: 'managedReferences[4048788235717443661]'
+      value: Assembly-CSharp TagAttackTwoSides
+      objectReference: {fileID: 0}
+    - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: managedReferences[4048788162374008910].distance
       value: 1
       objectReference: {fileID: 0}
@@ -45,16 +49,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
-      propertyPath: managedReferences[4048788208872849489]._distance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
-      propertyPath: managedReferences[4048788208872849489].<distance>k__BackingField
+      propertyPath: managedReferences[4048788235717443661].distance
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2594039447500818966, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: m_Name
-      value: ActionAttackPush
+      value: ActionAttackTwoSides
       objectReference: {fileID: 0}
     - target: {fileID: 7293824242705219342, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: m_Sprite

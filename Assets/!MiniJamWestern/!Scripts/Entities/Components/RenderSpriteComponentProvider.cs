@@ -11,5 +11,8 @@ public struct RenderSpriteComponent
 
 public class RenderSpriteComponentProvider : ProviderEcs<RenderSpriteComponent>
 {
-
+    protected override void Registration()
+    {
+        Value.renderer = Value.renderer != null ? Value.renderer : GetComponent<SpriteRenderer>();
+    }
 }

@@ -16,8 +16,6 @@ public class PlayerUsingAbilitySystem : IEcsInitSystem
 
         EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
 
-
-        Debug.Log($"{player.Id} {player.Has<TagPlayer>()} {player.Has<GridComponent>()} ");
         ref var grid = ref player.GetOrAdd<GridComponent>();
         ref var target = ref player.GetOrAdd<TargetTo>();
 

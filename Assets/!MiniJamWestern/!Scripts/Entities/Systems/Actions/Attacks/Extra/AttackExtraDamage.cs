@@ -1,35 +1,48 @@
 ﻿using BitterECS.Core;
 using UnityEngine;
 
-public class AttackExtraDamage : IEcsAutoImplement
+public class AttackExtraDamage
 {
-    public Priority Priority => Priority.Medium;
-
-    private EcsEvent _ecsEvent = new EcsEvent()
-        .Subscribe<IsAttackerTo>(added: OnAttack);
-
-    private static void OnAttack(EcsEntity entity)
+    public static void Execute(EcsEntity _, ListActionComponent list, TargetTo target)
     {
-        if (!entity.Has<TagAttackExtraDamage>()) return;
+        if (!list.Is<TagAttackExtraDamage>(out var attackAbility)) return;
+        if (!GridInteractionHandler.TryGetEntityAt(target.position, out var targetEntity)) return;
 
-        var extraDamage = entity.Get<TagAttackExtraDamage>().value;
-        ref var targetEntity = ref entity.Get<IsAttackerTo>().targetEntity;
+        ApplyEffect(targetEntity, attackAbility.value);
+    }
 
-        if (!targetEntity.IsAlive || !targetEntity.Has<HealthComponent>()) return;
+    public static void ApplyEffect(EcsEntity target, int damageValue)
+    {
+        if (!target.IsAlive || !target.Has<HealthComponent>()) return;
 
-        ref var health = ref targetEntity.Get<HealthComponent>();
-        var currentHealth = health.GetCurrentHealth();
-        var newHealth = currentHealth - extraDamage;
+        ref var health = ref target.Get<HealthComponent>();
+        var newHealth = health.GetCurrentHealth() - damageValue;
 
         health.SetHealth(newHealth);
-        targetEntity.AddFrame<IsDamagedEvent>();
+        target.AddFrame<IsDamagedEvent>();
 
-        Debug.Log($"[ExtraDamage] Attacker {entity.Id} applied +{extraDamage} bonus. Target {targetEntity.Id} HP: {newHealth}");
-
-        if (newHealth <= 0 && !targetEntity.Has<IsDeadEvent>())
+        if (newHealth <= 0 && !target.Has<IsDeadEvent>())
         {
-            targetEntity.AddFrame<IsDeadEvent>();
-            Debug.Log($"[ExtraDamage] Target {targetEntity.Id} killed by bonus damage.");
+            target.AddFrame<IsDeadEvent>();
         }
+    }
+}
+
+
+public class AttackExtraDamageAuto : IEcsAutoImplement
+{
+    public Priority Priority => Priority.High;
+
+    private EcsEvent _ecsEvent = new EcsEvent()
+        .SubscribeWhereEntity<IsAttackerTo>(e => !e.Has<TagPlayer>(), added: OnAttack);
+
+    private static void OnAttack(EcsEntity attacker)
+    {
+        if (!attacker.TryGet<ListActionComponent>(out var list)) return;
+        if (!list.Is<TagAttackExtraDamage>(out var tag)) return;
+
+        if (!attacker.TryGet<IsAttackerTo>(out var attackInfo)) return;
+
+        AttackExtraDamage.ApplyEffect(attackInfo.targetEntity, tag.value);
     }
 }

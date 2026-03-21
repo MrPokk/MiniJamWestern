@@ -20,9 +20,33 @@ PrefabInstance:
       propertyPath: managedReferences[4048788162374008910].distance
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1066741636676043921, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _value.color.b
+      value: 0.12941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066741636676043921, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _value.color.g
+      value: 0.11764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066741636676043921, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _value.color.r
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 2106185134255715517, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _gizmoColor.b
+      value: 0.3529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 2106185134255715517, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _gizmoColor.g
+      value: 0.7607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 2106185134255715517, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _gizmoColor.r
+      value: 0.6117647
+      objectReference: {fileID: 0}
     - target: {fileID: 2594039447500818966, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: m_Name
-      value: ActionAttackForward
+      value: ActionAttack
       objectReference: {fileID: 0}
     - target: {fileID: 7293824242705219342, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: m_Sprite

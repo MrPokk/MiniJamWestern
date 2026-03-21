@@ -22,8 +22,6 @@ public class PlayerTargetingSystem : IUpdateTurn, IEcsInitSystem
 
         player.GetOrAdd<TargetTo>().position = gridCom.currentPosition + facingDir;
     }
-
-
 }
 
 public class PlayerTargetingSystemY : IEcsRunSystem
@@ -36,6 +34,7 @@ public class PlayerTargetingSystemY : IEcsRunSystem
     {
         foreach (var item in _ecsEntities)
         {
+            EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
             var provider = item.GetProvider<TagSelectorProvider>();
             var targetTo = _ecsEntitiesP.First().GetOrAdd<TargetTo>();
 

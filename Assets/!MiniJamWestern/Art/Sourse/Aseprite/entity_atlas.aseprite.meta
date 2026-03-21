@@ -158,9 +158,9 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 3
-      y: 40
-      width: 16
-      height: 22
+      y: 39
+      width: 18
+      height: 24
     spriteID: dac263c818f638e9195074ebacd5b880
     spriteBone: []
     spriteOutline: []
@@ -179,9 +179,9 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 29
-      y: 40
-      width: 16
-      height: 22
+      y: 39
+      width: 18
+      height: 24
     spriteID: 23b45e53865df90b7a126763eef41446
     spriteBone: []
     spriteOutline: []
