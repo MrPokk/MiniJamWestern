@@ -627,7 +627,6 @@ GameObject:
   - component: {fileID: 6022195578200359378}
   - component: {fileID: 912863783064651641}
   - component: {fileID: 4666372572243402185}
-  - component: {fileID: 399013292898589628}
   - component: {fileID: 8219956537100477628}
   - component: {fileID: -7509932521959305941}
   - component: {fileID: 9017329876921612687}
@@ -758,18 +757,6 @@ MonoBehaviour:
   _value:
     full: {fileID: -8973585378649061070, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
     empty: {fileID: -1549259546331813239, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
---- !u!114 &399013292898589628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8949300816209093632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f46b72222db1144388d7beeffd46bb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IsNotDraggingProvider
 --- !u!114 &8219956537100477628
 MonoBehaviour:
   m_ObjectHideFlags: 0

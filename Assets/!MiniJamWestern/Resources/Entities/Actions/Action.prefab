@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 896809214723962877}
   - component: {fileID: 70971005984427240}
   - component: {fileID: 2106185134255715517}
+  - component: {fileID: 1066741636676043921}
   m_Layer: 0
   m_Name: Action
   m_TagString: Untagged
@@ -364,3 +365,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableComponentProvider
   _gizmoColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &1066741636676043921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2594039447500818966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 031624128fb6d164ba0847720f59c235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetColorComponentProvider
+  _value:
+    color: {r: 0, g: 0.2251563, b: 1, a: 1}

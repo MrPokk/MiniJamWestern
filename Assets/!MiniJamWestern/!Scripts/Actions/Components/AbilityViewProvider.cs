@@ -12,7 +12,7 @@ public struct AbilityComponent
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class AbilityViewProvider : ProviderEcs<AbilityComponent>,
-    IPointerDownHandler, IPointerUpHandler
+    IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Color _gizmoColor = Color.green;
     private Camera _camera;
@@ -22,6 +22,16 @@ public class AbilityViewProvider : ProviderEcs<AbilityComponent>,
     {
         _camera = Camera.main;
         _collider = GetComponent<Collider2D>();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Entity.Add<IsHoverAbility>();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Entity.Remove<IsHoverAbility>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
