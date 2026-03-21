@@ -33,6 +33,7 @@ namespace BitterECS.Integration.Unity
 
         protected virtual void Awake()
         {
+            EcsComponentTypes.Warmup();
             EcsSystemStatic.Load();
             EcsSystemStatic.Run<IEcsPreInitSystem>(system => system.PreInit());
             Bootstrap();
