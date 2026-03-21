@@ -16,11 +16,13 @@ public class PlayerUsingAbilitySystem : IEcsInitSystem
 
         EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
 
-        ref var grid = ref player.Get<GridComponent>();
+        if (!player.TryGet<GridComponent>(out var gridComponent))
+            return;
+
         ref var target = ref player.GetOrAdd<TargetTo>();
 
-        AbilityLogicRouter.Execute(player, action.ability, ref grid, mainList, ref target);
-        ExecuteEffects(player, action.ability, ref grid, ref target);
+        AbilityLogicRouter.Execute(player, action.ability, ref gridComponent, mainList, ref target);
+        ExecuteEffects(player, action.ability, ref gridComponent, ref target);
 
         GFlow.MinusTransferProgress(1);
     }
