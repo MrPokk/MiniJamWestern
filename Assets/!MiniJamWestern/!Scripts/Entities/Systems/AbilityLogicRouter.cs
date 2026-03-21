@@ -9,6 +9,9 @@ public static class AbilityLogicRouter
         ListActionComponent list,
         ref TargetTo target)
     {
+
+        list ??= new();
+
         switch (ability)
         {
             case TagRotation:
