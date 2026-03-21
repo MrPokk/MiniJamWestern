@@ -69,8 +69,7 @@ public class AbilityEndDragSystem : IEcsAutoImplement
 
         if (hit != null && hit.TryGetComponent<AbilitySlotProvider>(out var slot))
         {
-            slot.AddItem(view);
-            placed = true;
+            placed = slot.AddItem(view);
         }
 
         if (!placed)
