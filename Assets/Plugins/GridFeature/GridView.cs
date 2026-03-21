@@ -15,10 +15,21 @@ public class GridView : MonoBehaviour
         transform.position = gridConfig.Position;
         transform.rotation = gridConfig.RotationQuaternion;
 
-        // Настраиваем материал
-        Material mat = new Material(Shader.Find("Custom/GridCell"));
+        // Загружаем шейдер из Resources/GridCell.shader
+        // Важно: расширение .shader не пишем!
+        Shader gridShader = Resources.Load<Shader>("GridCell");
 
-        // Передаем два разных цвета
+        if (gridShader == null)
+        {
+            Debug.LogError("Не удалось найти шейдер по пути Assets/Resources/GridCell.shader. " +
+                           "Проверьте правильность папки и имени файла.");
+            gridShader = Shader.Find("Custom/GridCell");
+            if (gridShader == null)
+                throw new("shader not found");
+        }
+
+        var mat = new Material(gridShader);
+
         mat.SetColor("_FillColor", gridConfig.FillColor);
         mat.SetColor("_BorderColor", gridConfig.BorderColor);
         mat.SetFloat("_Thickness", gridConfig.NodeLineWidth);
@@ -30,10 +41,10 @@ public class GridView : MonoBehaviour
 
     private void BuildMesh(GridConfig gridConfig)
     {
-        Mesh mesh = new Mesh { name = "GridMesh" };
-        List<Vector3> vertices = new List<Vector3>();
-        List<int> triangles = new List<int>();
-        List<Vector2> uvs = new List<Vector2>();
+        var mesh = new Mesh { name = "GridMesh" };
+        var vertices = new List<Vector3>();
+        var triangles = new List<int>();
+        var uvs = new List<Vector2>();
 
         float cellSize = gridConfig.CellSize;
         Vector2 total = new Vector2(cellSize, cellSize) + gridConfig.CellOffset;

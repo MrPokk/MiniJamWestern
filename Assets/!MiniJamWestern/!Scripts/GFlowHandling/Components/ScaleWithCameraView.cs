@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[ExecuteAlways] // Позволяет скрипту работать прямо в редакторе без запуска игры
 public class ScaleWithCameraView : MonoBehaviour
 {
     [SerializeField]
