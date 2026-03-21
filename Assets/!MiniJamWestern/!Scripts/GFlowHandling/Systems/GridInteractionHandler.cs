@@ -88,7 +88,10 @@ public static class GridInteractionHandler
         public void InstantiateObject(Vector2Int index, ProviderEcs prefab, out ProviderEcs instantiateObject)
         {
             var isSet = _playfield.InitializeGameObject(index, prefab, out instantiateObject, _playfieldGameObject.transform);
-            if (!isSet) return;
+            if (!isSet)
+            {
+                throw new Exception("Failed Instantiate Object ");
+            }
 
             instantiateObject.Entity.Add<GridComponent>(new(index, _playfield));
             instantiateObject.Entity.AddFrame<IsInstantiateEvent>();
