@@ -72,7 +72,9 @@ namespace BitterECS.Core
         internal ref EcsComponentMask GetEntityMask(int id) => ref _entityMasks[id];
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void SetMaskBit(int id, int componentId) => _entityMasks[id].Set(componentId); [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void SetMaskBit(int id, int componentId) => _entityMasks[id].Set(componentId);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void RemoveMaskBit(int id, int componentId) => _entityMasks[id].Remove(componentId);
 
         public EcsEntity CreateEntity()
