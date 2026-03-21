@@ -26,7 +26,10 @@ public class AbilityLongPressSystem : IEcsAutoImplement
 
             if (parentSlot.Value.itemEntity == abilityEntity)
             {
-                if (!parentSlot.TryRemoveItem()) return;
+                if (parentSlot.TryRemoveItem())
+                {
+                    abilityEntity.Add(new DraggingFromSlotComponent { slotProvider = parentSlot });
+                }
             }
         }
 

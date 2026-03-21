@@ -13,6 +13,11 @@ public struct PhysicsDragComponent
     public Vector3 currentVelocity;
 }
 
+public struct DraggingFromSlotComponent
+{
+    public AbilitySlotProvider slotProvider;
+}
+
 public struct BeginDragAbilityEvent { }
 public struct DragAbilityEvent { public Vector2 screenPosition; }
 public struct PointerDownAbilityEvent { public float pressTime; }
