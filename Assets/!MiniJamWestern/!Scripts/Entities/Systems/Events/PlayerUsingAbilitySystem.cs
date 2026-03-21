@@ -12,19 +12,17 @@ public class PlayerUsingAbilitySystem : IEcsInitSystem
 
     private void OnShortPress(EcsEntity abilityEntity)
     {
-
         if (!TryGetContext(abilityEntity, out var player, out var action, out var mainList)) return;
 
         EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
 
 
-        var playerFilter = _playerFilter.First();
-        Debug.Log($"{playerFilter.Id} {playerFilter.Has<TagPlayer>()} {playerFilter.Has<GridComponent>()} ");
-        ref var grid = ref playerFilter.GetOrAdd<GridComponent>();
-        ref var target = ref playerFilter.GetOrAdd<TargetTo>();
+        Debug.Log($"{player.Id} {player.Has<TagPlayer>()} {player.Has<GridComponent>()} ");
+        ref var grid = ref player.GetOrAdd<GridComponent>();
+        ref var target = ref player.GetOrAdd<TargetTo>();
 
-        AbilityLogicRouter.Execute(playerFilter, action.ability, ref grid, mainList, ref target);
-        ExecuteEffects(playerFilter, action.ability, ref grid, ref target);
+        AbilityLogicRouter.Execute(player, action.ability, ref grid, mainList, ref target);
+        ExecuteEffects(player, action.ability, ref grid, ref target);
 
         GFlow.MinusTransferProgress(1);
     }
