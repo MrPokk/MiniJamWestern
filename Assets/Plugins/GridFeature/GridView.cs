@@ -16,7 +16,7 @@ public class GridView : MonoBehaviour
         transform.rotation = gridConfig.RotationQuaternion;
 
         // Настраиваем материал
-        Material mat = new Material(Shader.Find("Custom/w"));
+        Material mat = new Material(Shader.Find("Custom/GridCell"));
 
         // Передаем два разных цвета
         mat.SetColor("_FillColor", gridConfig.FillColor);
