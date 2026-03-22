@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_PixelPerfect_SpriteOutline_URP
-  m_Shader: {fileID: 4800000, guid: c5f40491a95e2c7dfab9cde44e07ea75, type: 3}
+  m_Name: Entitiy_Watery_Balatro_Outline_URP
+  m_Shader: {fileID: 4800000, guid: 066e5d663a69d97a1b7fffb72583ee19, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -30,10 +30,18 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaThreshold: 0.1
+    - _CausticIntensity: 0.5
+    - _CausticScale: 3
     - _OutlinePixels: 1
-    - _Thickness: 16
+    - _Perspective: 0.03
+    - _WarpFreq: 1
+    - _WarpSpeed: 4
+    - _WarpStrength: 0.0015
+    - _WaveStretch: 0.05
     m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _CausticColor: {r: 0.16862746, g: 0.15294118, b: 0.18431373, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpriteSize: {r: 128, g: 256, b: 0, a: 0}
+    - _Tilt: {r: 0.29999998, g: 0.3, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

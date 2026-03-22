@@ -16,7 +16,7 @@ public class EnemySkirmisherBrainSystem : IUpdateTurn
         var playerPos = player.Get<GridComponent>().currentPosition;
 
         _enemies.For((
-            EcsEntity e,
+            EcsEntity entity,
             ref GridComponent grid,
             ref ListActionComponent list,
             ref EnemyStateComponent state,
@@ -24,16 +24,93 @@ public class EnemySkirmisherBrainSystem : IUpdateTurn
         {
             if (state.state != EnemyState.Thinking) return;
 
+            ref var sequence = ref entity.GetOrAdd<TagBehaviorSkirmisher>();
             var myPos = grid.currentPosition;
             var dist = EnemyBrainUtility.GetDistance(myPos, playerPos);
-            VectorUtility.TryGetStepDirection(myPos, playerPos, out var dir);
+            VectorUtility.TryGetStepDirection(myPos, playerPos, out var dirToPlayer);
 
-            if (EnemyBrainUtility.TryAction<TagAttackTwoSides>(e, list, playerPos, dist == 2, ref state)) return;
-            if (EnemyBrainUtility.TryAction<TagMoveForward>(e, list, myPos + dir, dist > 2, ref state)) return;
-
-            var diff = myPos - playerPos;
-            var runPos = myPos + new Vector2Int(Mathf.Clamp(diff.x, -1, 1), Mathf.Clamp(diff.y, -1, 1));
-            if (EnemyBrainUtility.TryAction<TagMoveForward>(e, list, runPos, dist < 2, ref state)) return;
+            ProcessBehaviorPhase(entity, list, ref state, ref sequence, myPos, playerPos, dirToPlayer, dist);
         });
+    }
+
+    private void ProcessBehaviorPhase(
+        EcsEntity entity,
+        ListActionComponent list,
+        ref EnemyStateComponent state,
+        ref TagBehaviorSkirmisher sequence,
+        Vector2Int myPos,
+        Vector2Int playerPos,
+        Vector2Int dirToPlayer,
+        int dist)
+    {
+        if (sequence.phase == SkirmisherPhase.Attack && dist > 1)
+        {
+            sequence.phase = SkirmisherPhase.Approach;
+        }
+
+        var actionTaken = false;
+        var safetyLimit = 0;
+
+
+        while (!actionTaken && safetyLimit < 4)
+        {
+            safetyLimit++;
+
+            switch (sequence.phase)
+            {
+                case SkirmisherPhase.Approach:
+                    actionTaken = TryApproach(entity, list, ref state, ref sequence, myPos, dirToPlayer, dist);
+                    break;
+
+                case SkirmisherPhase.Attack:
+                    actionTaken = TryAttack(entity, list, ref state, ref sequence, playerPos, dist);
+                    break;
+
+                case SkirmisherPhase.Retreat:
+                    actionTaken = TryRetreat(entity, list, ref state, ref sequence, myPos, dirToPlayer);
+                    break;
+
+                case SkirmisherPhase.FinalAttack:
+                    actionTaken = TryFinalAttack(entity, list, ref state, ref sequence, playerPos, dist);
+                    break;
+            }
+        }
+    }
+
+    private bool TryApproach(EcsEntity entity, ListActionComponent list, ref EnemyStateComponent state, ref TagBehaviorSkirmisher sequence, Vector2Int myPos, Vector2Int dirToPlayer, int dist)
+    {
+        if (dist > 1)
+        {
+            return EnemyBrainUtility.TryAction<TagMoveForward>(entity, list, myPos + dirToPlayer, true, ref state);
+        }
+
+        sequence.phase = SkirmisherPhase.Attack;
+        return false;
+    }
+
+    private bool TryAttack(EcsEntity entity, ListActionComponent list, ref EnemyStateComponent state, ref TagBehaviorSkirmisher sequence, Vector2Int playerPos, int dist)
+    {
+        var success = EnemyBrainUtility.TryAction<TagAttackForward>(entity, list, playerPos, dist <= 1, ref state);
+
+        sequence.phase = success ? SkirmisherPhase.Retreat : SkirmisherPhase.Approach;
+        return success;
+    }
+
+    private bool TryRetreat(EcsEntity entity, ListActionComponent list, ref EnemyStateComponent state, ref TagBehaviorSkirmisher sequence, Vector2Int myPos, Vector2Int dirToPlayer)
+    {
+        var retreatPos = myPos - dirToPlayer;
+        var success = EnemyBrainUtility.TryAction<TagMoveForward>(entity, list, retreatPos, true, ref state);
+
+        sequence.phase = SkirmisherPhase.FinalAttack;
+
+        return success;
+    }
+
+    private bool TryFinalAttack(EcsEntity entity, ListActionComponent list, ref EnemyStateComponent state, ref TagBehaviorSkirmisher sequence, Vector2Int playerPos, int dist)
+    {
+        var success = EnemyBrainUtility.TryAction<TagAttackForward>(entity, list, playerPos, dist <= 1, ref state);
+
+        sequence.phase = SkirmisherPhase.Approach;
+        return success;
     }
 }

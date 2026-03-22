@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ComplicationSettings
   m_EditorClassIdentifier: Assembly-CSharp::ComplicationSettings
   difficultyStart: 0
-  transferStart: 1
-  transferMax: 1
+  transferStart: 2
+  transferMax: 2
   enemyWaveConfig: {fileID: 11400000, guid: a93b586195a466cdb9bd80c1f431cc96, type: 2}

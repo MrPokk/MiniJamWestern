@@ -10,6 +10,8 @@ public class EnemyExecutionSystem : IUpdateTurn
     {
         _enemies.For((EcsEntity entity, ref GridComponent grid, ref ListActionComponent list, ref IsIntentComponent intent, ref EnemyStateComponent state) =>
         {
+            if (!entity.IsAlive) return;
+
             switch (state.state)
             {
                 case EnemyState.Preparing:

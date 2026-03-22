@@ -8,7 +8,8 @@ public enum DifficultyTier
     Tier1_Advanced = 1,
     Tier2_Base = 2,
     Tier2_Advanced = 3,
-    Tier3_Base = 4
+    Tier3_Base = 4,
+    Tier4_Advanced = 5
 }
 
 public class GState

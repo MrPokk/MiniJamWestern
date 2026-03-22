@@ -136,6 +136,11 @@ public class GridPresenter<T>
         return _grid.GridDictionary.ContainsKey(indexNode);
     }
 
+    public bool IsWithinGrid(Vector3 indexNode)
+    {
+        return _grid.GridDictionary.ContainsKey(ConvertingPosition(indexNode));
+    }
+
     public void AddGridCell(Vector2Int index, T value = default)
     {
         if (!_grid.GridDictionary.ContainsKey(index))

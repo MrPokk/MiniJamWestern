@@ -30,21 +30,21 @@ public static class GridInteractionHandler
 
     public class GridInteractionHandlerInstance
     {
-        public readonly MonoGridPresenter _playfield;
+        public readonly MonoGridPresenter Playfield;
         private readonly GameObject _playfieldGameObject;
 
         public GridInteractionHandlerInstance(MonoGridPresenter playfield, GameObject playfieldGameObject)
         {
-            _playfield = playfield;
+            Playfield = playfield;
             _playfieldGameObject = playfieldGameObject;
         }
 
         public ProviderEcs Extraction(Vector2Int index)
         {
-            var objectExtract = _playfield.GetGameObject(index);
+            var objectExtract = Playfield.GetGameObject(index);
             if (objectExtract == null) return null;
 
-            _playfield.ExtractGameObject(index);
+            Playfield.ExtractGameObject(index);
             objectExtract.Entity.AddFrame<IsExtractionEvent>();
 
             return objectExtract;
@@ -52,13 +52,13 @@ public static class GridInteractionHandler
 
         public bool TryGetRandomEmptyPoint(out Vector2Int position)
         {
-            position = _playfield.GetRandomPoint(obj => obj == null);
+            position = Playfield.GetRandomPoint(obj => obj == null);
             return position != new Vector2Int(-1, -1);
         }
 
         public bool TryGetRandomEmptyPointInArea(Vector2Int min, Vector2Int max, out Vector2Int position)
         {
-            var area = _playfield.GetRectangularArea(min, max, obj => obj == null);
+            var area = Playfield.GetRectangularArea(min, max, obj => obj == null);
             if (area.Count == 0)
             {
                 position = new Vector2Int(-1, -1);
@@ -70,32 +70,32 @@ public static class GridInteractionHandler
             return true;
         }
 
-        public ProviderEcs Extraction(Vector3 indexWorld) => Extraction(_playfield.ConvertingPosition(indexWorld));
+        public ProviderEcs Extraction(Vector3 indexWorld) => Extraction(Playfield.ConvertingPosition(indexWorld));
 
         public bool Placing(Vector2Int index, ProviderEcs entityObject)
         {
             if (entityObject == null) return false;
 
-            var isSet = _playfield.TrySetGameObject(index, entityObject);
+            var isSet = Playfield.TrySetGameObject(index, entityObject);
             if (!isSet) return false;
 
-            entityObject.Entity.Add<GridComponent>(new(index, _playfield));
+            entityObject.Entity.Add<GridComponent>(new(index, Playfield));
             entityObject.Entity.AddFrame<IsPlacingEvent>();
 
             return true;
         }
 
-        public bool Placing(Vector3 indexWorld, ProviderEcs entityObject) => Placing(_playfield.ConvertingPosition(indexWorld), entityObject);
+        public bool Placing(Vector3 indexWorld, ProviderEcs entityObject) => Placing(Playfield.ConvertingPosition(indexWorld), entityObject);
 
         public bool Moving(Vector2Int fromIndex, Vector2Int toIndex)
         {
-            var entityObject = _playfield.GetGameObject(fromIndex);
+            var entityObject = Playfield.GetGameObject(fromIndex);
             if (entityObject == null) return false;
 
-            var isMoved = _playfield.MoveGameObject(fromIndex, toIndex);
+            var isMoved = Playfield.MoveGameObject(fromIndex, toIndex);
             if (!isMoved) return false;
 
-            entityObject.Entity.Add<GridComponent>(new(toIndex, _playfield));
+            entityObject.Entity.Add<GridComponent>(new(toIndex, Playfield));
             entityObject.Entity.AddFrame<IsExtractionEvent>();
             entityObject.Entity.AddFrame<IsPlacingEvent>();
             entityObject.Entity.AddFrame<IsMovingEvent>();
@@ -103,30 +103,30 @@ public static class GridInteractionHandler
             return true;
         }
 
-        public bool Moving(Vector3 fromWorldPosition, Vector3 toWorldPosition) => Moving(_playfield.ConvertingPosition(fromWorldPosition), _playfield.ConvertingPosition(toWorldPosition));
+        public bool Moving(Vector3 fromWorldPosition, Vector3 toWorldPosition) => Moving(Playfield.ConvertingPosition(fromWorldPosition), Playfield.ConvertingPosition(toWorldPosition));
 
-        public bool IsPlacing(Vector2Int index) => _playfield.HasNotGameObject(index) && _playfield.IsWithinGrid(index);
+        public bool IsPlacing(Vector2Int index) => Playfield.HasNotGameObject(index) && Playfield.IsWithinGrid(index);
 
-        public bool IsPlacing(Vector3 indexWorld) => IsPlacing(_playfield.ConvertingPosition(indexWorld));
+        public bool IsPlacing(Vector3 indexWorld) => IsPlacing(Playfield.ConvertingPosition(indexWorld));
 
         public void InstantiateObject(Vector2Int index, ProviderEcs prefab, out ProviderEcs instantiateObject)
         {
-            var isSet = _playfield.InitializeGameObject(index, prefab, out instantiateObject, _playfieldGameObject.transform);
+            var isSet = Playfield.InitializeGameObject(index, prefab, out instantiateObject, _playfieldGameObject.transform);
             if (!isSet)
             {
                 throw new Exception("Failed Instantiate Object ");
             }
 
-            instantiateObject.Entity.Add<GridComponent>(new(index, _playfield));
+            instantiateObject.Entity.Add<GridComponent>(new(index, Playfield));
             instantiateObject.Entity.AddFrame<IsInstantiateEvent>();
             instantiateObject.Entity.AddFrame<IsActivatingEvent>();
         }
 
-        public void InstantiateObject(Vector3 indexWorld, ProviderEcs prefab, out ProviderEcs instantiateObject) => InstantiateObject(_playfield.ConvertingPosition(indexWorld), prefab, out instantiateObject);
+        public void InstantiateObject(Vector3 indexWorld, ProviderEcs prefab, out ProviderEcs instantiateObject) => InstantiateObject(Playfield.ConvertingPosition(indexWorld), prefab, out instantiateObject);
 
         public bool TryGetEntityAt(Vector2Int index, out EcsEntity entity)
         {
-            var provider = _playfield.GetGameObject(index);
+            var provider = Playfield.GetGameObject(index);
             if (provider != null)
             {
                 entity = provider.Entity;
@@ -136,7 +136,7 @@ public static class GridInteractionHandler
             return false;
         }
 
-        public bool TryGetEntityAt(Vector3 worldPosition, out EcsEntity entity) => TryGetEntityAt(_playfield.ConvertingPosition(worldPosition), out entity);
+        public bool TryGetEntityAt(Vector3 worldPosition, out EcsEntity entity) => TryGetEntityAt(Playfield.ConvertingPosition(worldPosition), out entity);
 
         public bool MoveEntity(EcsEntity entity, Vector2Int toIndex)
         {
@@ -150,6 +150,6 @@ public static class GridInteractionHandler
             return Moving(fromIndex, toIndex);
         }
 
-        public bool MoveEntity(EcsEntity entity, Vector3 toWorldPosition) => MoveEntity(entity, _playfield.ConvertingPosition(toWorldPosition));
+        public bool MoveEntity(EcsEntity entity, Vector3 toWorldPosition) => MoveEntity(entity, Playfield.ConvertingPosition(toWorldPosition));
     }
 }

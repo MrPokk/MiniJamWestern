@@ -39,7 +39,7 @@ public class DamagingSystem : IEcsAutoImplement
         health.SetHealth(deltaHealth);
         targetEntity.AddFrame<IsDamagedEvent>();
 
-        if (deltaHealth <= 0)
+        if (deltaHealth <= 0 && !targetEntity.Has<IsDeadEvent>())
         {
             targetEntity.AddFrame<IsDeadEvent>();
         }

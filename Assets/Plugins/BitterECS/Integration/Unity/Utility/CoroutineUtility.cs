@@ -89,8 +89,10 @@ namespace BitterECS.Integration.Unity
 
         public static bool IsCoroutineActive(CoroutineHandle handle)
         {
-            if (!handle.IsValid) return false;
-            return Instance._activeCoroutines.ContainsKey(handle.Id);
+            var id = handle.Id;
+            if (id == -1) return false;
+
+            return Instance._activeCoroutines.ContainsKey(id);
         }
 
         public static bool HasActiveCoroutines() => Instance._activeCoroutines.Count > 0;
@@ -135,14 +137,19 @@ namespace BitterECS.Integration.Unity
 
         private IEnumerator RunCoroutineWrapper(int id, IEnumerator coroutine)
         {
-            yield return coroutine;
-
-            if (_activeCoroutines.Remove(id, out var activeCoroutine))
+            try
             {
-                OnCoroutineStopped?.Invoke(id);
-                if (_activeCoroutines.Count == 0)
+                yield return coroutine;
+            }
+            finally
+            {
+                if (_activeCoroutines.Remove(id, out var activeCoroutine))
                 {
-                    OnAllCoroutinesStopped?.Invoke();
+                    OnCoroutineStopped?.Invoke(id);
+                    if (_activeCoroutines.Count == 0)
+                    {
+                        OnAllCoroutinesStopped?.Invoke();
+                    }
                 }
             }
         }
@@ -191,14 +198,16 @@ namespace BitterECS.Integration.Unity
 
     public readonly struct CoroutineHandle : IEquatable<CoroutineHandle>
     {
+        private readonly int _valuePlusOne;
+        public int Id => _valuePlusOne - 1;
+
         public static readonly CoroutineHandle Invalid = new(-1);
 
-        public readonly int Id;
-        public bool IsValid => Id != -1;
+        public bool IsValid => Id != -1 && CoroutineUtility.IsCoroutineActive(this);
 
         public CoroutineHandle(int id)
         {
-            Id = id;
+            _valuePlusOne = id + 1;
         }
 
         public bool Equals(CoroutineHandle other) => Id == other.Id;

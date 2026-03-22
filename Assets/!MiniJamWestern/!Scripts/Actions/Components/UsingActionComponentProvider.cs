@@ -8,6 +8,7 @@ public class UsingActionComponent
 {
     public List<UsingAbilityElement> abilities = new();
 }
+
 [Serializable]
 public class UsingAbilityElement
 {
@@ -18,6 +19,9 @@ public class UsingAbilityElement
 [RequireComponent(typeof(AbilityInventoryProvider))]
 public class UsingActionComponentProvider : ProviderEcs<UsingActionComponent>
 {
+
+    [SerializeField] private bool _hideSlots;
+
     private void Start() => FillAbilities();
 
     private void FillAbilities()
@@ -26,7 +30,15 @@ public class UsingActionComponentProvider : ProviderEcs<UsingActionComponent>
         if (!entity.TryGet<AbilityInventory>(out var inventory)) return;
 
         var slots = inventory.listSlot;
+        if (slots == null) return;
+
+        foreach (var slot in slots)
+        {
+            if (slot != null && _hideSlots) slot.gameObject.SetActive(false);
+        }
+
         var slotIndex = 0;
+        var listAction = entity.GetOrAdd<ListActionComponent>();
 
         foreach (var element in Value.abilities)
         {
@@ -35,14 +47,30 @@ public class UsingActionComponentProvider : ProviderEcs<UsingActionComponent>
 
             if (!element.isVisibleInScene)
             {
-                entity.GetOrAdd<ListActionComponent>().AddAbility(provider.Value, provider.Entity);
+                listAction.AddAbility(provider.Value, provider.Entity);
                 continue;
             }
 
-            if (slots != null && slotIndex < slots.Count)
+            if (slotIndex >= slots.Count)
             {
-                var view = Instantiate(provider.gameObject).GetComponent<AbilityViewProvider>();
-                if (view != null) slots[slotIndex++].AddItem(view);
+                continue;
+            }
+
+            if (!Instantiate(provider.gameObject).TryGetComponent<AbilityViewProvider>(out var view))
+            {
+                continue;
+            }
+
+            var targetSlot = slots[slotIndex];
+            if (targetSlot.AddItem(view))
+            {
+                targetSlot.gameObject.SetActive(true);
+
+                slotIndex++;
+            }
+            else
+            {
+                throw new("Unable to add ability to slot. Please check the");
             }
         }
     }

@@ -1,29 +1,51 @@
-﻿using BitterECS.Core;
+﻿using System.Collections;
+using BitterECS.Core;
+using BitterECS.Integration.Unity;
 using UnityEngine;
 
 public class EnemyWaveSystem : IEcsAutoImplement
 {
     public Priority Priority => Priority.High;
     private ComplicationSettings _settings;
+
     public void Setup(ComplicationSettings settings) => _settings = settings;
 
-    public void SpawnCurrentWave()
+    public void SpawnCurrentWave(DifficultyTier? overrideTier = null)
     {
-        var currentTier = GFlow.GState.CurrentDifficulty;
-        var waveData = _settings.enemyWaveConfig.waves.Find(w => w.difficultyTier == currentTier);
+        var targetTier = overrideTier ?? GFlow.GState.CurrentDifficulty;
 
-        if (waveData == null || waveData.enemyPrefabs.Count == 0) return;
-
-        foreach (var prefab in waveData.enemyPrefabs)
+        var waveData = _settings.enemyWaveConfig.waves.Find(w => w.difficultyTier == targetTier);
+        if (waveData == null || waveData.enemyGroups == null)
         {
+            Debug.LogWarning($"[EnemyWaveSystem] Wave data for {targetTier} not found!");
+            return;
+        }
+
+        Debug.Log($"Spawning wave for tier: {targetTier}");
+
+        foreach (var group in waveData.enemyGroups)
+        {
+            SpawnGroup(group);
+        }
+    }
+
+    private void SpawnGroup(EnemyWaveConfig.EnemySpawnGroup group)
+    {
+        if (group.enemyPrefabs == null) return;
+
+        foreach (var prefab in group.enemyPrefabs)
+        {
+            if (prefab == null) continue;
+
             Vector2Int spawnPos;
             bool found;
 
-            if (waveData.spawnArea.width > 0 && waveData.spawnArea.height > 0)
+            if (group.spawnArea.width > 0 && group.spawnArea.height > 0)
             {
-                var min = waveData.spawnArea.min;
-                var max = waveData.spawnArea.max;
-                found = GridInteractionHandler.TryGetRandomEmptyPointInArea(min, max, out spawnPos);
+                found = GridInteractionHandler.TryGetRandomEmptyPointInArea(
+                    group.spawnArea.min,
+                    group.spawnArea.max,
+                    out spawnPos);
             }
             else
             {
@@ -36,8 +58,33 @@ public class EnemyWaveSystem : IEcsAutoImplement
             }
             else
             {
-                Debug.LogWarning($"[EnemyWaveSystem] No empty space found for prefab {prefab.name}");
+                Debug.LogWarning($"[EnemyWaveSystem] No space for {prefab.name} in group {group.groupName}");
             }
         }
+    }
+}
+
+public class CheckEmptyWaveSystem : IEcsRunSystem
+{
+    public Priority Priority => Priority.High;
+
+    private EcsFilter<TagEnemy, GridComponent> _enemies;
+    private CoroutineHandle _isTransitioning;
+
+    public void Run()
+    {
+        if (_enemies.Count > 0) return;
+        if (_isTransitioning.IsValid) return;
+
+        _isTransitioning = CoroutineUtility.Run(WaveTransitionSequence());
+    }
+
+    private IEnumerator WaveTransitionSequence()
+    {
+        Debug.Log("Transition started...");
+
+        yield return new WaitForSeconds(2f);
+        GFlow.IncreaseToDifficulty();
+        EcsSystemStatic.GetSystem<EnemyWaveSystem>().SpawnCurrentWave();
     }
 }

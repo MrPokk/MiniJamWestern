@@ -10,6 +10,7 @@ public class EnemyDeadeningSystem : IEcsInitSystem
     private EcsEvent _ecsEvent;
 
     private EcsFilter<TagInventoryStorage> _ecsEntities;
+    private EcsFilter<TagEnemy> _ecsEntitiesEnemy;
 
     public void Init()
     {
@@ -18,21 +19,40 @@ public class EnemyDeadeningSystem : IEcsInitSystem
 
     private void OnDead(EcsEntity entity)
     {
+        if (entity.TryGet<GridComponent>(out var gridCom))
+        {
+            GridInteractionHandler.Extraction(gridCom.currentPosition);
+        }
+
         var inventory = entity.GetProvider<AbilityInventoryProvider>();
         if (inventory != null)
         {
             MoveAllToStorage(inventory);
         }
-        entity.AddFrame<IsPreDestroyDeadEvent>();
+
+        entity.Remove<IsIntentComponent>();
+
+        if (!entity.Has<IsPreDestroyDeadEvent>())
+        {
+            entity.AddFrame<IsPreDestroyDeadEvent>();
+        }
         entity.Destroy();
     }
 
     private void MoveAllToStorage(AbilityInventoryProvider enemyInventory)
     {
+        if (_ecsEntities.Count == 0)
+        {
+            Debug.LogWarning("[EnemyDeadeningSystem] Хранилище не найдено! Лут уничтожен вместе с врагом.");
+            return;
+        }
+
+        if (enemyInventory.Value.listSlot == null) return;
 
         var itemsToMove = enemyInventory.Value.listSlot
-            .Where(slot => slot.Value.itemEntity.IsAlive)
+            .Where(slot => slot != null && slot.Value.itemEntity.IsAlive)
             .Select(slot => slot.Value.itemEntity.GetProvider<AbilityViewProvider>())
+            .Where(provider => provider != null) // Защита от NullReference
             .ToList();
 
         enemyInventory.ExtractAll();

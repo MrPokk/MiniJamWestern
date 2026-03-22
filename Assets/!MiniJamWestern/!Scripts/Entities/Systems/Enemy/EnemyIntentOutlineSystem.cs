@@ -2,16 +2,18 @@
 using BitterECS.Core;
 using UnityEngine;
 
-public class EnemyIntentDisplaySystem : IEcsRunSystem, IEcsInitSystem
+public class EnemyIntentOutlineSystem : IEcsRunSystem, IEcsInitSystem
 {
     public Priority Priority => Priority.Medium;
 
     private EcsFilter<IsIntentComponent, EnemyStateComponent, TagEnemy> _filter;
     private EcsEvent _intentEvent;
+    private EcsEvent _isDeadReset;
 
     public void Init()
     {
         _intentEvent.Subscribe<IsIntentComponent>(removed: OnIntentRemoved);
+        _isDeadReset.Subscribe<IsPreDestroyDeadEvent>(added: OnIntentRemoved);
     }
 
     private void OnIntentRemoved(EcsEntity entity)
@@ -25,7 +27,7 @@ public class EnemyIntentDisplaySystem : IEcsRunSystem, IEcsInitSystem
         {
             if (state.state == EnemyState.Thinking) return;
 
-            var worldPos = GridInteractionHandler.Instance._playfield.ConvertingPosition(intent.targetPosition);
+            var targetPosition = intent.targetPosition;
             var color = Color.white;
 
             if (intent.abilityEntity.IsAlive && intent.abilityEntity.TryGet<SetColorComponent>(out var colorComp))
@@ -37,9 +39,6 @@ public class EnemyIntentDisplaySystem : IEcsRunSystem, IEcsInitSystem
             {
                 outlineComp.SetOutlineColor(color);
             }
-
-            DrawRectUtility.Instance?.DrawStaticRect(entity.GetHashCode(), worldPos, 32f, color);
         });
     }
-
 }

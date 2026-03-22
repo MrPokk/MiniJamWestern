@@ -14,10 +14,91 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyWaveConfig
   waves:
   - difficultyTier: 0
-    enemyPrefabs:
-    - {fileID: 6788570003604514119, guid: cb571ac73a5b533a3b2c98debd7b1f4c, type: 3}
-    spawnArea:
-      x: 0
-      y: 5
-      width: 1
-      height: 1
+    enemyGroups:
+    - groupName: tutorial
+      enemyPrefabs:
+      - {fileID: 6788570003604514119, guid: cb571ac73a5b533a3b2c98debd7b1f4c, type: 3}
+      spawnArea:
+        x: 0
+        y: 5
+        width: 1
+        height: 1
+  - difficultyTier: 1
+    enemyGroups:
+    - groupName: old_enemy
+      enemyPrefabs:
+      - {fileID: 6788570003604514119, guid: cb571ac73a5b533a3b2c98debd7b1f4c, type: 3}
+      spawnArea:
+        x: 0
+        y: 5
+        width: 0
+        height: 2
+    - groupName: new_enemy
+      enemyPrefabs:
+      - {fileID: 6788570003604514119, guid: 635be8366be2d74219804fac67328b04, type: 3}
+      spawnArea:
+        x: 0
+        y: 0
+        width: 0
+        height: -2
+  - difficultyTier: 2
+    enemyGroups:
+    - groupName: one_enemy
+      enemyPrefabs:
+      - {fileID: 6788570003604514119, guid: cb571ac73a5b533a3b2c98debd7b1f4c, type: 3}
+      spawnArea:
+        x: 0
+        y: 5
+        width: 1
+        height: 1
+    - groupName: two_enemy
+      enemyPrefabs:
+      - {fileID: 6788570003604514119, guid: 635be8366be2d74219804fac67328b04, type: 3}
+      - {fileID: 6788570003604514119, guid: 635be8366be2d74219804fac67328b04, type: 3}
+      spawnArea:
+        x: 0
+        y: 0
+        width: 0
+        height: -2
+  - difficultyTier: 3
+    enemyGroups:
+    - groupName: new_enemy
+      enemyPrefabs:
+      - {fileID: 6788570003604514119, guid: cac3605f5859f4cf7850d219a2b9df57, type: 3}
+      - {fileID: 6788570003604514119, guid: cac3605f5859f4cf7850d219a2b9df57, type: 3}
+      spawnArea:
+        x: 0
+        y: 5
+        width: 0
+        height: 2
+    - groupName: old_enemy
+      enemyPrefabs:
+      - {fileID: 6788570003604514119, guid: cb571ac73a5b533a3b2c98debd7b1f4c, type: 3}
+      spawnArea:
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+  - difficultyTier: 4
+    enemyGroups:
+    - groupName: all_enemy
+      enemyPrefabs:
+      - {fileID: 6788570003604514119, guid: cac3605f5859f4cf7850d219a2b9df57, type: 3}
+      - {fileID: 6788570003604514119, guid: 635be8366be2d74219804fac67328b04, type: 3}
+      - {fileID: 6788570003604514119, guid: cb571ac73a5b533a3b2c98debd7b1f4c, type: 3}
+      - {fileID: 6788570003604514119, guid: cb571ac73a5b533a3b2c98debd7b1f4c, type: 3}
+      spawnArea:
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+  - difficultyTier: 5
+    enemyGroups:
+    - groupName: final
+      enemyPrefabs:
+      - {fileID: 6788570003604514119, guid: baf1e91f3a2e24b72939fb0f0f8db596, type: 3}
+      spawnArea:
+        x: 0
+        y: 0
+        width: 0
+        height: 0

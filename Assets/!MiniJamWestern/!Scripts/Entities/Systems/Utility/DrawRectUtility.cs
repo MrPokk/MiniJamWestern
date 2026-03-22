@@ -7,33 +7,24 @@ public class DrawRectUtility : MonoBehaviour
 {
     public static DrawRectUtility Instance { get; private set; }
 
-    // Главный LineRenderer для отрисовки мышью и старых систем
     private LineRenderer _lineRend;
     private Vector2 _initialMousePosition;
     private bool _isDrawing;
 
     [Header("Resolution Settings")]
-    [Tooltip("Reference Screen Height (in pixels) for resolution calculations")]
     [SerializeField] private float _referenceScreenHeight = 1080f;
-    [SerializeField] private int _orderLayer = 0; [Header("Visual Settings")]
+    [SerializeField] private int _orderLayer = 0;
+
+    [Header("Visual Settings")]
     [SerializeField] private float _lineWidthPixels = 1.0f;
     [SerializeField] private Color _lineColor = Color.white;
+    [SerializeField] private Sprite _pixelSprite;
 
-    // ПУЛ ОБЪЕКТОВ ДЛЯ МНОЖЕСТВЕННЫХ РАМОК
     private Dictionary<int, LineRenderer> _activeRects = new Dictionary<int, LineRenderer>();
     private Queue<LineRenderer> _rectPool = new Queue<LineRenderer>();
 
-    public float LineWidth
-    {
-        get => _lineWidthPixels;
-        set => _lineWidthPixels = value;
-    }
-
-    public Color LineColor
-    {
-        get => _lineColor;
-        set => _lineColor = value;
-    }
+    private Dictionary<int, SpriteRenderer> _activeFills = new Dictionary<int, SpriteRenderer>();
+    private Queue<SpriteRenderer> _fillPool = new Queue<SpriteRenderer>();
 
     private void Awake()
     {
@@ -48,7 +39,15 @@ public class DrawRectUtility : MonoBehaviour
         _lineRend.positionCount = 0;
         _lineRend.loop = true;
         _lineRend.useWorldSpace = true;
-        _lineRend.sortingOrder = _orderLayer;
+        _lineRend.sortingOrder = _orderLayer + 1;
+
+        if (_pixelSprite == null)
+        {
+            Texture2D tex = new Texture2D(1, 1);
+            tex.SetPixel(0, 0, Color.white);
+            tex.Apply();
+            _pixelSprite = Sprite.Create(tex, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f));
+        }
     }
 
     private void OnEnable()
@@ -66,70 +65,6 @@ public class DrawRectUtility : MonoBehaviour
         }
     }
 
-    private float GetWorldHeightAtPosition(Vector3 worldPosition)
-    {
-        var cam = Camera.main;
-        if (cam == null) return 1f;
-
-        if (cam.orthographic)
-        {
-            return cam.orthographicSize * 2.0f;
-        }
-
-        var distance = Vector3.Distance(cam.transform.position, worldPosition);
-        return 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
-    }
-
-    // ==========================================
-    // СТАРЫЕ МЕТОДЫ (Используют базовый LineRenderer)
-    // ==========================================
-    public void DrawStaticRect(Vector3 center, float sizeInPixels, Color color)
-    {
-        DrawStaticRect(center, sizeInPixels);
-        _lineRend.startColor = color;
-        _lineRend.endColor = color;
-    }
-
-    public void DrawStaticRect(Vector3 center, float sizeInPixels)
-    {
-        SetLineRendererPoints(_lineRend, center, sizeInPixels, _lineColor);
-    }
-
-    public void HideRect()
-    {
-        if (_lineRend != null) _lineRend.positionCount = 0;
-    }
-
-    // ==========================================
-    // НОВЫЕ МЕТОДЫ ДЛЯ МНОЖЕСТВЕННЫХ РАМОК (Пул)
-    // ==========================================
-
-    // Получает свободный LineRenderer из пула или создает новый
-    private LineRenderer GetOrCreateLineRenderer(int id)
-    {
-        if (_activeRects.TryGetValue(id, out var lr)) return lr;
-
-        if (_rectPool.Count > 0)
-        {
-            lr = _rectPool.Dequeue();
-        }
-        else
-        {
-            var go = new GameObject($"DrawRect_{id}");
-            go.transform.SetParent(transform); // Делаем дочерним для порядка в иерархии
-            lr = go.AddComponent<LineRenderer>();
-            lr.loop = true;
-            lr.useWorldSpace = true;
-            lr.sortingOrder = _orderLayer;
-            // Копируем материал из главного LineRenderer
-            lr.material = _lineRend.sharedMaterial != null ? _lineRend.sharedMaterial : new Material(Shader.Find("Sprites/Default"));
-        }
-
-        lr.gameObject.SetActive(true);
-        _activeRects[id] = lr;
-        return lr;
-    }
-
     public void DrawStaticRect(int id, Vector3 center, float sizeInPixels, Color color)
     {
         var lr = GetOrCreateLineRenderer(id);
@@ -143,26 +78,99 @@ public class DrawRectUtility : MonoBehaviour
             lr.positionCount = 0;
             lr.gameObject.SetActive(false);
             _activeRects.Remove(id);
-            _rectPool.Enqueue(lr); // Возвращаем в пул
+            _rectPool.Enqueue(lr);
         }
     }
 
-    // Общая математика для установки точек
+    public void DrawStaticFullRect(int id, Vector3 center, float sizeInPixels, Color color)
+    {
+        var sr = GetOrCreateSpriteRenderer(id);
+
+        var worldHeight = GetWorldHeightAtPosition(center);
+        var logicalScale = worldHeight / _referenceScreenHeight;
+        var worldSize = sizeInPixels * logicalScale;
+
+        sr.transform.position = new Vector3(center.x, center.y, center.z + 0.01f);
+        sr.transform.localScale = new Vector3(worldSize, worldSize, 1f);
+        sr.color = color;
+    }
+
+    public void HideStaticFullRect(int id)
+    {
+        if (_activeFills.TryGetValue(id, out var sr))
+        {
+            sr.gameObject.SetActive(false);
+            _activeFills.Remove(id);
+            _fillPool.Enqueue(sr);
+        }
+    }
+
+    private LineRenderer GetOrCreateLineRenderer(int id)
+    {
+        if (_activeRects.TryGetValue(id, out var lr)) return lr;
+
+        if (_rectPool.Count > 0)
+        {
+            lr = _rectPool.Dequeue();
+        }
+        else
+        {
+            var go = new GameObject($"Outline_{id}");
+            go.transform.SetParent(transform);
+            lr = go.AddComponent<LineRenderer>();
+            lr.loop = true;
+            lr.useWorldSpace = true;
+            lr.sortingOrder = _orderLayer + 1;
+            lr.material = _lineRend.sharedMaterial;
+        }
+
+        lr.gameObject.SetActive(true);
+        _activeRects[id] = lr;
+        return lr;
+    }
+
+    private SpriteRenderer GetOrCreateSpriteRenderer(int id)
+    {
+        if (_activeFills.TryGetValue(id, out var sr)) return sr;
+
+        if (_fillPool.Count > 0)
+        {
+            sr = _fillPool.Dequeue();
+        }
+        else
+        {
+            var go = new GameObject($"Fill_{id}");
+            go.transform.SetParent(transform);
+            sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = _pixelSprite;
+            sr.sortingOrder = _orderLayer;
+        }
+
+        sr.gameObject.SetActive(true);
+        _activeFills[id] = sr;
+        return sr;
+    }
+
+    private float GetWorldHeightAtPosition(Vector3 worldPosition)
+    {
+        var cam = Camera.main;
+        if (cam == null) return 1f;
+        if (cam.orthographic) return cam.orthographicSize * 2.0f;
+        var distance = Vector3.Distance(cam.transform.position, worldPosition);
+        return 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+    }
+
     private void SetLineRendererPoints(LineRenderer lr, Vector3 center, float sizeInPixels, Color color)
     {
         var worldHeight = GetWorldHeightAtPosition(center);
         var logicalScale = worldHeight / _referenceScreenHeight;
         var minPhysicalScale = worldHeight / Screen.height;
         var worldLineWidth = Mathf.Max(_lineWidthPixels * logicalScale, minPhysicalScale);
-
         var worldSize = sizeInPixels * logicalScale;
         var half = worldSize * 0.5f;
 
-        lr.startWidth = worldLineWidth;
-        lr.endWidth = worldLineWidth;
-        lr.startColor = color;
-        lr.endColor = color;
-
+        lr.startWidth = lr.endWidth = worldLineWidth;
+        lr.startColor = lr.endColor = color;
         lr.positionCount = 4;
         lr.SetPosition(0, new Vector3(center.x - half, center.y + half, center.z));
         lr.SetPosition(1, new Vector3(center.x - half, center.y - half, center.z));
@@ -170,9 +178,6 @@ public class DrawRectUtility : MonoBehaviour
         lr.SetPosition(3, new Vector3(center.x + half, center.y + half, center.z));
     }
 
-    // ==========================================
-    // ЛОГИКА ОТРИСОВКИ МЫШЬЮ
-    // ==========================================
     private void OnDrawStarted(InputAction.CallbackContext context)
     {
         _isDrawing = true;
@@ -182,7 +187,7 @@ public class DrawRectUtility : MonoBehaviour
     private void OnDrawEnded(InputAction.CallbackContext context)
     {
         _isDrawing = false;
-        HideRect();
+        if (_lineRend != null) _lineRend.positionCount = 0;
     }
 
     private void Update()

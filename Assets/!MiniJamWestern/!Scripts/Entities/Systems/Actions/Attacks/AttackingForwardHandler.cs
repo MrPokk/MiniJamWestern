@@ -16,7 +16,7 @@ public class AttackingForwardHandler
         for (var i = 1; i <= attackAbility.distance; i++)
         {
             var attackPos = grid.currentPosition + (dir * i);
-            if (GridInteractionHandler.TryGetEntityAt(attackPos, out var entityTo))
+            GridInteractionHandler.TryGetEntityAt(attackPos, out var entityTo);
             {
                 entity.AddFrame<IsAttackerTo>(new(entityTo));
             }

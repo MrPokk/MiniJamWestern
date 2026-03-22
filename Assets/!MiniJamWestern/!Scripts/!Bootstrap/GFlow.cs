@@ -44,7 +44,7 @@ public class GFlow
     public static void MinusTransferProgress(int amount) =>
         SetTransferProgress(GState.TransferProgress - amount);
 
-    public static DifficultyTier IncreaseToLastDifficulty()
+    public static DifficultyTier IncreaseToDifficulty()
     {
         if (GState == null)
         {
@@ -55,7 +55,7 @@ public class GFlow
         var lastDifficulty = values[^1];
 
         var current = GState.CurrentDifficulty;
-        while (current < lastDifficulty)
+        if (current < lastDifficulty)
         {
             current++;
             GState = GState.WithDifficulty(current);

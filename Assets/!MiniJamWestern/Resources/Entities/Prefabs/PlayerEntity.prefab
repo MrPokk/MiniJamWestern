@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 195571559987928640}
   - component: {fileID: 7365184786023615348}
+  - component: {fileID: 3334068100383468631}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -58,7 +59,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e18b6f45c40882998a20a295fd731f97, type: 2}
+  - {fileID: 2100000, guid: 466edeb146670da3894a882d12903db0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,6 +92,21 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &3334068100383468631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507247111324707659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58e2e3d69b802190a0bc5666d9e9b13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WateryCardController
+  smoothSpeed: 10
+  tiltSensitivity: 1
+  maxTilt: 0.4
 --- !u!1 &8949300816209093632
 GameObject:
   m_ObjectHideFlags: 0

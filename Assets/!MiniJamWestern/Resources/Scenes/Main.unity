@@ -564,6 +564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UsingActionComponentProvider
   _value:
     abilities: []
+  _hideSlots: 0
 --- !u!1001 &529659689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -704,6 +705,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a01f04b61e75359b36c078d03528b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Startup
+  _useDebugWave: 1
+  _debugTier: 1
   _cameraObject: {fileID: 1697277111}
   _playfieldConfig: {fileID: 11400000, guid: d002ea22b9001b47387db3ca9d089b2d, type: 2}
   _complicationSettings: {fileID: 11400000, guid: 2e4980954013dff14940f8a7887a4227, type: 2}
@@ -1446,6 +1449,7 @@ MonoBehaviour:
       isVisibleInScene: 1
     - tagActionsProvider: {fileID: 5965930271600435582, guid: 791bfca319845fb8489ab6ef739ad591, type: 3}
       isVisibleInScene: 1
+  _hideSlots: 0
 --- !u!114 &1400553852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1581,6 +1585,7 @@ MonoBehaviour:
   _orderLayer: -5
   _lineWidthPixels: 1.24
   _lineColor: {r: 1, g: 1, b: 1, a: 1}
+  _pixelSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
 --- !u!120 &1900416842
 LineRenderer:
   serializedVersion: 3

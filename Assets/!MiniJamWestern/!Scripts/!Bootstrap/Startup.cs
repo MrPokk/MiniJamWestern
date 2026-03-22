@@ -6,6 +6,12 @@ using UnityEngine.EventSystems;
 
 public class Startup : EcsUnityRoot<Startup>
 {
+
+    [Header("Debug Settings")]
+    [SerializeField] private bool _useDebugWave;
+    [SerializeField] private DifficultyTier _debugTier;
+
+    [Header("Main Settings")]
     [SerializeField] private CameraObject _cameraObject;
     [SerializeField] private GridConfig _playfieldConfig;
     [SerializeField] private ComplicationSettings _complicationSettings;
@@ -38,8 +44,12 @@ public class Startup : EcsUnityRoot<Startup>
 
         var waveSystem = EcsSystemStatic.GetSystem<EnemyWaveSystem>();
         waveSystem.Setup(_complicationSettings);
-        waveSystem.SpawnCurrentWave();
+        if (_useDebugWave)
+            waveSystem.SpawnCurrentWave(_debugTier);
+        else
+            waveSystem.SpawnCurrentWave();
     }
+
     private void InitializeGrid()
     {
         _playfield = new MonoGridPresenter(_playfieldConfig);
