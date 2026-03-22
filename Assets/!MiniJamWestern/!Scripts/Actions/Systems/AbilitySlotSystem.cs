@@ -25,7 +25,7 @@ public class AbilitySlotSystem : IEcsAutoImplement
     private static void AddAbilityToOwner(EcsEntity ownerEntity, TagActions action)
     {
         var listComponent = ownerEntity.GetOrAdd<ListActionComponent>();
-        listComponent.AddAbility(action);
+        listComponent.AddAbility(action, ownerEntity);
     }
 
     public bool Extract(EcsEntity ownerEntity, EcsEntity slotEntity, EcsEntity removedItemEntity)

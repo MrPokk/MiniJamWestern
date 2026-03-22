@@ -11,15 +11,14 @@ public class EnemyAttackTargetingSystem : IUpdateTurn
     public void RefreshTurn()
     {
         var player = _playerFilter.First();
-        if (!player.IsAlive)
-        {
-            return;
-        }
+        if (!player.IsAlive) return;
 
         var playerPos = player.Get<GridComponent>().currentPosition;
 
         _enemyFilter.For((EcsEntity e, ref GridComponent gridCom, ref TagEnemy tagEnemy) =>
         {
+            if (e.TryGet<IsIntentComponent>(out _)) return;
+
             e.GetOrAdd<TargetTo>().position = playerPos;
         });
     }

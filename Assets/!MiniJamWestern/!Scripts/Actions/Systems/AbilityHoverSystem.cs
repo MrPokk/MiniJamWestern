@@ -1,5 +1,4 @@
-﻿using System;
-using BitterECS.Core;
+﻿using BitterECS.Core;
 using BitterECS.Integration.Unity;
 using UnityEngine;
 
@@ -9,7 +8,6 @@ public class AbilityHoverSystem : IEcsRunSystem
 
     private EcsEvent _ecsEvent = new EcsEvent().Subscribe<IsHoverAbility>(removed: OnResetColor);
 
-    private static EcsFilter<TagSelector, RenderSpriteComponent> _ecsEntitiesSelector;
     private EcsFilter<IsHoverAbility, SetColorComponent> _ecsEntities;
     private static EcsFilter<OutlineComponent, GridComponent, TagPlayer> _ecsEntitiesOutline;
 
@@ -17,31 +15,26 @@ public class AbilityHoverSystem : IEcsRunSystem
     {
         _ecsEntities.For((EcsEntity ecsEntity, ref IsHoverAbility hover, ref SetColorComponent colorComponent) =>
         {
-            var colorCom = colorComponent;
+            var targetColor = colorComponent.color;
 
             _ecsEntitiesOutline.For((EcsEntity entity, ref OutlineComponent outline, ref GridComponent grid, ref TagPlayer _) =>
             {
-                outline.SetOutlineColor(colorCom.color);
+                outline.SetOutlineColor(targetColor);
             });
 
-            _ecsEntitiesSelector.For((EcsEntity selectorEntity, ref TagSelector selector, ref RenderSpriteComponent spriteComponent) =>
+            EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
+
+            var playerEntity = _ecsEntitiesOutline.First();
+            if (playerEntity.Has<TargetTo>())
             {
-                if (spriteComponent.renderer != null)
+                var targetTo = playerEntity.Get<TargetTo>();
+                var worldPos = GridInteractionHandler.Instance._playfield.ConvertingPosition(targetTo.position);
+
+                if (DrawRectUtility.Instance != null)
                 {
-                    spriteComponent.renderer.color = colorCom.color;
+                    DrawRectUtility.Instance.DrawStaticRect(worldPos, 32f, targetColor);
                 }
-
-                var provider = selectorEntity.GetProvider<TagSelectorProvider>();
-                provider.gameObject.SetActive(true);
-
-                EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
-                var targetTo = _ecsEntitiesOutline.First().GetOrAdd<TargetTo>();
-
-                if (provider != null)
-                {
-                    provider.transform.position = GridInteractionHandler.Instance._playfield.ConvertingPosition(targetTo.position);
-                }
-            });
+            }
         });
     }
 
@@ -52,15 +45,9 @@ public class AbilityHoverSystem : IEcsRunSystem
             outline.SetOutlineColor(outline.defaultOutlineColor);
         });
 
-        _ecsEntitiesSelector.For((EcsEntity selectorEntity, ref TagSelector selector, ref RenderSpriteComponent spriteComponent) =>
+        if (DrawRectUtility.Instance != null)
         {
-            if (spriteComponent.renderer != null)
-            {
-                spriteComponent.renderer.color = Color.white;
-            }
-            var provider = selectorEntity.GetProvider<TagSelectorProvider>();
-            provider.gameObject.SetActive(false);
-
-        });
+            DrawRectUtility.Instance.HideRect();
+        }
     }
 }

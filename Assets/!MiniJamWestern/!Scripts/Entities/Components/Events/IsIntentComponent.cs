@@ -1,5 +1,9 @@
-﻿public struct IsIntentComponent
+﻿using BitterECS.Core;
+using UnityEngine;
+
+public struct IsIntentComponent
 {
     public IActionAbility chosenAbility;
-    public UnityEngine.Vector2Int targetPosition;
+    public Vector2Int targetPosition;
+    public EcsEntity abilityEntity;
 }

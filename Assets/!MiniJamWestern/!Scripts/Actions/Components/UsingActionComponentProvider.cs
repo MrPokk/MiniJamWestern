@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using BitterECS.Integration.Unity;
 using UnityEngine;
@@ -7,30 +6,44 @@ using UnityEngine;
 [Serializable]
 public class UsingActionComponent
 {
-    public List<TagActionsProvider> abilities = new();
+    public List<UsingAbilityElement> abilities = new();
+}
+[Serializable]
+public class UsingAbilityElement
+{
+    public TagActionsProvider tagActionsProvider;
+    public bool isVisibleInScene;
 }
 
 [RequireComponent(typeof(AbilityInventoryProvider))]
 public class UsingActionComponentProvider : ProviderEcs<UsingActionComponent>
 {
-    private void Start()
-    {
-        FillSlotsWithAbilities(GetComponent<AbilityInventoryProvider>());
-    }
+    private void Start() => FillAbilities();
 
-    private void FillSlotsWithAbilities(AbilityInventoryProvider containerProvider)
+    private void FillAbilities()
     {
-        ref var slots = ref containerProvider.Entity.Get<AbilityInventory>().listSlot;
-        ref var abilities = ref Value.abilities;
+        var entity = Entity;
+        if (!entity.TryGet<AbilityInventory>(out var inventory)) return;
 
-        for (var i = 0; i < abilities.Count && i < slots.Count; i++)
+        var slots = inventory.listSlot;
+        var slotIndex = 0;
+
+        foreach (var element in Value.abilities)
         {
-            var abilityPrefab = abilities[i].gameObject;
-            var instance = Instantiate(abilityPrefab);
+            var provider = element?.tagActionsProvider;
+            if (provider == null) continue;
 
-            var provider = instance.GetComponent<AbilityViewProvider>();
+            if (!element.isVisibleInScene)
+            {
+                entity.GetOrAdd<ListActionComponent>().AddAbility(provider.Value, provider.Entity);
+                continue;
+            }
 
-            slots[i].AddItem(provider);
+            if (slots != null && slotIndex < slots.Count)
+            {
+                var view = Instantiate(provider.gameObject).GetComponent<AbilityViewProvider>();
+                if (view != null) slots[slotIndex++].AddItem(view);
+            }
         }
     }
 }

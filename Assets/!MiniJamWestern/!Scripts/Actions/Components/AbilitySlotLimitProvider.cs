@@ -34,7 +34,7 @@ public struct AbilitySlotLimitComponent
 
         foreach (var action in listAction.abilities)
         {
-            if (IsAllowed(action.ability))
+            if (IsAllowed(action.data.ability))
             {
                 return true;
             }

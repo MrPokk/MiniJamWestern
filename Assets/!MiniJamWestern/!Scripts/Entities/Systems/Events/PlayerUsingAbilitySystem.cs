@@ -37,7 +37,8 @@ public class PlayerUsingAbilitySystem : IEcsInitSystem
                 if (slot.Entity.TryGet<AbilitySlotLimitComponent>(out var limit) && !limit.IsAllowed(primary)) continue;
                 if (!slot.Value.itemEntity.TryGet<TagActions>(out var action) || action.ability == null) continue;
 
-                var tempList = new ListActionComponent { abilities = new() { action } };
+                var tempList = new ListActionComponent();
+                tempList.AddAbility(action, slot.Value.itemEntity);
                 AbilityLogicRouter.Execute(player, action.ability, ref grid, tempList, ref target);
             }
         }

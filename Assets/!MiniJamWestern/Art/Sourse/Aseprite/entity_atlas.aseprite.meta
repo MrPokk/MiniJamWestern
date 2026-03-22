@@ -72,7 +72,7 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   previousAsepriteImporterSettings:
-    fileImportMode: 0
+    fileImportMode: 1
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
@@ -87,7 +87,7 @@ ScriptedImporter:
     generateIndividualEvents: 1
     generateSpriteAtlas: 1
   asepriteImporterSettings:
-    fileImportMode: 0
+    fileImportMode: 1
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
@@ -102,7 +102,7 @@ ScriptedImporter:
     generateIndividualEvents: 1
     generateSpriteAtlas: 1
   importFileNodeState: 1
-  platformSettingsDirtyTick: 639090299124152630
+  platformSettingsDirtyTick: 639098021654083270
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -157,74 +157,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 3
-      y: 39
-      width: 18
-      height: 24
+      x: 4
+      y: 9
+      width: 37
+      height: 25
     spriteID: dac263c818f638e9195074ebacd5b880
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: entity_atlas_1
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 29
-      y: 39
-      width: 18
-      height: 24
-    spriteID: 23b45e53865df90b7a126763eef41446
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: entity_atlas_2
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 20
-      y: 7
-      width: 28
-      height: 30
-    spriteID: f3f6c9dd3b6a9b64fbd5a5316fe67366
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: entity_atlas_3
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 69
-      y: 4
-      width: 40
-      height: 45
-    spriteID: de4c8a2e2d1182b959a26cc0a36522fa
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -251,10 +188,10 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 5
-        y: 176
-        width: 105
-        height: 57
+        x: 20
+        y: 210
+        width: 42
+        height: 28
       spriteId: a50b23d00101c78cfa87c8e06c832d87
     linkedCells: []
     tileCells: []
@@ -301,5 +238,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 384, y: 256}
-  previousTextureSize: {x: 128, y: 128}
+  canvasSize: {x: 256, y: 256}
+  previousTextureSize: {x: 64, y: 64}
