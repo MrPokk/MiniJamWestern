@@ -17,10 +17,6 @@ PrefabInstance:
       value: Assembly-CSharp TagAttackForward
       objectReference: {fileID: 0}
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
-      propertyPath: 'managedReferences[4048788208872849484]'
-      value: Assembly-CSharp TagPushForward
-      objectReference: {fileID: 0}
-    - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: 'managedReferences[4048788235717443667]'
       value: Assembly-CSharp TagAttackRegeneration
       objectReference: {fileID: 0}
