@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BitterECS.Core;
 using BitterECS.Integration.Unity;
 using UnityEngine;
@@ -16,6 +17,8 @@ public static class GridInteractionHandler
     public static bool Placing(Vector3 indexWorld, ProviderEcs entityObject) => Instance.Placing(indexWorld, entityObject);
     public static bool Moving(Vector2Int fromIndex, Vector2Int toIndex) => Instance.Moving(fromIndex, toIndex);
     public static bool Moving(Vector3 fromWorldPosition, Vector3 toWorldPosition) => Instance.Moving(fromWorldPosition, toWorldPosition);
+    public static bool TryGetRandomEmptyPoint(out Vector2Int position) => Instance.TryGetRandomEmptyPoint(out position);
+    public static bool TryGetRandomEmptyPointInArea(Vector2Int min, Vector2Int max, out Vector2Int position) => Instance.TryGetRandomEmptyPointInArea(min, max, out position);
     public static bool IsPlacing(Vector2Int index) => Instance.IsPlacing(index);
     public static bool IsPlacing(Vector3 indexWorld) => Instance.IsPlacing(indexWorld);
     public static void InstantiateObject(Vector2Int index, ProviderEcs prefab, out ProviderEcs instantiateObject) => Instance.InstantiateObject(index, prefab, out instantiateObject);
@@ -45,6 +48,26 @@ public static class GridInteractionHandler
             objectExtract.Entity.AddFrame<IsExtractionEvent>();
 
             return objectExtract;
+        }
+
+        public bool TryGetRandomEmptyPoint(out Vector2Int position)
+        {
+            position = _playfield.GetRandomPoint(obj => obj == null);
+            return position != new Vector2Int(-1, -1);
+        }
+
+        public bool TryGetRandomEmptyPointInArea(Vector2Int min, Vector2Int max, out Vector2Int position)
+        {
+            var area = _playfield.GetRectangularArea(min, max, obj => obj == null);
+            if (area.Count == 0)
+            {
+                position = new Vector2Int(-1, -1);
+                return false;
+            }
+
+            var keys = area.Keys.ToList();
+            position = keys[UnityEngine.Random.Range(0, keys.Count)];
+            return true;
         }
 
         public ProviderEcs Extraction(Vector3 indexWorld) => Extraction(_playfield.ConvertingPosition(indexWorld));

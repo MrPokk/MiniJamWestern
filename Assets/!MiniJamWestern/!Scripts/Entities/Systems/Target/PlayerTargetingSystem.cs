@@ -23,22 +23,3 @@ public class PlayerTargetingSystem : IUpdateTurn, IEcsInitSystem
         player.GetOrAdd<TargetTo>().position = gridCom.currentPosition + facingDir;
     }
 }
-
-public class PlayerTargetingSystemY : IEcsRunSystem
-{
-    public Priority Priority => Priority.High;
-    private EcsFilter<TagSelector> _ecsEntities;
-    private EcsFilter<TagPlayer, GridComponent> _ecsEntitiesP;
-
-    public void Run()
-    {
-        foreach (var item in _ecsEntities)
-        {
-            EcsSystemStatic.GetSystem<PlayerTargetingSystem>().Targeting();
-            var provider = item.GetProvider<TagSelectorProvider>();
-            var targetTo = _ecsEntitiesP.First().GetOrAdd<TargetTo>();
-
-            provider.transform.position = GridInteractionHandler.Instance._playfield.ConvertingPosition(targetTo.position);
-        }
-    }
-}

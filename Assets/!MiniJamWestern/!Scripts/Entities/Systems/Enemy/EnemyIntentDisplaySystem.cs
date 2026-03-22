@@ -1,12 +1,23 @@
-﻿using BitterECS.Core;
+﻿using System;
+using BitterECS.Core;
 using UnityEngine;
 
-public class EnemyIntentDisplaySystem : IEcsRunSystem
+public class EnemyIntentDisplaySystem : IEcsRunSystem, IEcsInitSystem
 {
     public Priority Priority => Priority.Medium;
 
     private EcsFilter<IsIntentComponent, EnemyStateComponent, TagEnemy> _filter;
-    private EcsEvent _intentEvent = new EcsEvent().Subscribe<IsIntentComponent>(removed: OnIntentRemoved);
+    private EcsEvent _intentEvent;
+
+    public void Init()
+    {
+        _intentEvent.Subscribe<IsIntentComponent>(removed: OnIntentRemoved);
+    }
+
+    private void OnIntentRemoved(EcsEntity entity)
+    {
+        ResetIntentDisplaySystem.OnReset(entity);
+    }
 
     public void Run()
     {
@@ -22,12 +33,13 @@ public class EnemyIntentDisplaySystem : IEcsRunSystem
                 color = colorComp.color;
             }
 
+            if (entity.TryGet<OutlineComponent>(out var outlineComp))
+            {
+                outlineComp.SetOutlineColor(color);
+            }
+
             DrawRectUtility.Instance?.DrawStaticRect(entity.GetHashCode(), worldPos, 32f, color);
         });
     }
 
-    private static void OnIntentRemoved(EcsEntity entity)
-    {
-        DrawRectUtility.Instance?.HideStaticRect(entity.GetHashCode());
-    }
 }

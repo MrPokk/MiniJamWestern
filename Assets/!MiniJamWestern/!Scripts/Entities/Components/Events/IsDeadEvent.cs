@@ -1,3 +1,5 @@
-public struct IsDeadEvent
+﻿public struct IsDeadEvent
 {
 }
+
+public struct IsPreDestroyDeadEvent { }

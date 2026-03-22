@@ -5,12 +5,12 @@
 
 public static class UiScreensPaths
 {
-    /// <summary> Component: UIStartScreen </summary>
-    public const string UISTART_SCREEN = "UI/!Screens/UIStartScreen";
+    /// <summary> Component: UIBackgroundScreen </summary>
+    public const string UIBACKGROUND_SCREEN = "UI/!Screens/UIBackgroundScreen";
 
     public static readonly string[] AllPaths = new string[]
     {
-        UISTART_SCREEN,
+        UIBACKGROUND_SCREEN,
     };
 
     public const int COUNT = 1;

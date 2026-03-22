@@ -1,4 +1,5 @@
-﻿using BitterECS.Integration.Unity;
+﻿using BitterECS.Core;
+using BitterECS.Integration.Unity;
 using UINotDependence.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +9,7 @@ public class Startup : EcsUnityRoot<Startup>
     [SerializeField] private CameraObject _cameraObject;
     [SerializeField] private GridConfig _playfieldConfig;
     [SerializeField] private ComplicationSettings _complicationSettings;
+
 
     [SerializeField] private MonoGridPresenter _playfield;
     [SerializeField] private GridParentObject _gridParent;
@@ -29,14 +31,15 @@ public class Startup : EcsUnityRoot<Startup>
 
     private void InitializePlaying()
     {
-        var goblinPref = new Loader<TagEnemyProvider>(PrefabObjectsPaths.GOBLIN_ENTITY).Prefab();
         var playerPref = new Loader<TagPlayerProvider>(PrefabObjectsPaths.PLAYER_ENTITY).Prefab();
-        GridInteractionHandler.InstantiateObject(new Vector2Int(0, 4), goblinPref, out _);
-        GridInteractionHandler.InstantiateObject(new Vector2Int(0, 2), playerPref, out _);
+        GridInteractionHandler.InstantiateObject(new Vector2Int(0, 1), playerPref, out _);
 
         new GFlow(new(_complicationSettings)).Play();
-    }
 
+        var waveSystem = EcsSystemStatic.GetSystem<EnemyWaveSystem>();
+        waveSystem.Setup(_complicationSettings);
+        waveSystem.SpawnCurrentWave();
+    }
     private void InitializeGrid()
     {
         _playfield = new MonoGridPresenter(_playfieldConfig);

@@ -23,7 +23,7 @@ public class EnemyDeadeningSystem : IEcsInitSystem
         {
             MoveAllToStorage(inventory);
         }
-
+        entity.AddFrame<IsPreDestroyDeadEvent>();
         entity.Destroy();
     }
 
