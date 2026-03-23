@@ -19,5 +19,7 @@ public static class RotationHandler
 
         facing.direction = newDir;
         target.position = grid.currentPosition + newDir;
+
+        entity.AddFrame<IsRotationEvent>();
     }
 }

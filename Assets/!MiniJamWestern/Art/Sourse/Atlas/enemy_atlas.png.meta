@@ -103,10 +103,10 @@ TextureImporter:
       name: enemy_atlas_0
       rect:
         serializedVersion: 2
-        x: 17
-        y: 209
-        width: 47
-        height: 30
+        x: 16
+        y: 208
+        width: 49
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,10 +125,10 @@ TextureImporter:
       name: enemy_atlas_1
       rect:
         serializedVersion: 2
-        x: 77
+        x: 76
         y: 208
-        width: 62
-        height: 31
+        width: 64
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -139,6 +139,50 @@ TextureImporter:
       bones: []
       spriteID: 5491d99979c7cad6b93f77bbf6c69d93
       internalID: -701546834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_atlas_2
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 208
+        width: 49
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acf7c23d973be5a929342b24860fd92e
+      internalID: -297776927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_atlas_3
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 145
+        width: 40
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9123c2f23950975289c0a94f73760daf
+      internalID: -62766535
       vertices: []
       indices: 
       edges: []
@@ -159,6 +203,8 @@ TextureImporter:
     nameFileIdTable:
       enemy_atlas_0: -2376406885039344204
       enemy_atlas_1: -701546834
+      enemy_atlas_2: -297776927
+      enemy_atlas_3: -62766535
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
