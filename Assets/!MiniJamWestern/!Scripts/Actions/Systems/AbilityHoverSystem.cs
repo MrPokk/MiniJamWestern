@@ -23,7 +23,13 @@ public class AbilityHoverSystem : IEcsRunSystem
 
                 if (!playerEntity.TryGet<TargetTo>(out var targetTo)) return;
 
-                IntentVisualUtility.DrawAbilityArea(playerEntity, abilityEntity, grid.currentPosition, targetTo.position, targetColor, "Hover".GetHashCode());
+                IntentVisualUtility.DrawAbilityArea(
+                    playerEntity,
+                    abilityEntity,
+                    grid.currentPosition,
+                    targetTo.position,
+                    targetColor,
+                    "Hover".GetHashCode());
             });
         });
     }

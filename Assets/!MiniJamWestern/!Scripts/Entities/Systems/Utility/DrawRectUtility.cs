@@ -39,7 +39,7 @@ public class DrawRectUtility : MonoBehaviour
         _lineRend.positionCount = 0;
         _lineRend.loop = true;
         _lineRend.useWorldSpace = true;
-        _lineRend.sortingOrder = _orderLayer + 1;
+        _lineRend.sortingOrder = _orderLayer;
 
         if (_pixelSprite == null)
         {

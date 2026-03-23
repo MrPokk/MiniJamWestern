@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BitterECS.Core;
+using BitterECS.Integration.Unity;
 using UnityEngine;
 
 public static class IntentVisualUtility
@@ -13,20 +14,21 @@ public static class IntentVisualUtility
         ref var tracker = ref owner.Get<IntentVisualTracker>();
         ClearVisuals(owner);
 
-        Vector2Int dir = GetAttackDirection(owner, origin, target);
-
-        if (ability.TryGet<TagAttackForward>(out var forward))
+        var dir = GetAttackDirection(owner, origin, target);
+        var abilityCurrent = ability.Get<TagActions>().ability;
+        if (abilityCurrent is TagAttackForward tagAttackForward)
         {
-            for (int i = 1; i <= forward.distance; i++)
-                DrawTile(owner, ref tracker, origin + (dir * i), color, salt);
-        }
-        else if (ability.TryGet<TagAttackTwoSides>(out var twoSides))
-        {
-            var diff = target - origin;
-            if (Mathf.Abs(diff.x) + Mathf.Abs(diff.y) <= twoSides.distance)
+            for (var i = 1; i <= tagAttackForward.distance; i++)
             {
-                DrawTile(owner, ref tracker, origin + dir, color, salt);
-                DrawTile(owner, ref tracker, origin - dir, color, salt);
+                DrawTile(owner, ref tracker, origin + (dir * i), color, salt);
+            }
+        }
+        else if (abilityCurrent is TagAttackTwoSides twoSides)
+        {
+            for (var i = 1; i <= twoSides.distance; i++)
+            {
+                DrawTile(owner, ref tracker, origin + (dir * i), color, salt);
+                DrawTile(owner, ref tracker, origin - (dir * i), color, salt);
             }
         }
         else
@@ -53,7 +55,7 @@ public static class IntentVisualUtility
         if (!GridInteractionHandler.Instance.Playfield.IsWithinGrid(gridPos)) return;
 
         var worldPos = GridInteractionHandler.Instance.Playfield.ConvertingPosition(gridPos);
-        int rectId = HashCode.Combine(owner.GetHashCode(), gridPos.GetHashCode(), salt);
+        var rectId = HashCode.Combine(owner.GetHashCode(), gridPos.GetHashCode(), salt);
 
         DrawRectUtility.Instance?.DrawStaticRect(rectId, worldPos, 32f, color);
 
@@ -66,10 +68,12 @@ public static class IntentVisualUtility
 
     public static Vector2Int GetAttackDirection(EcsEntity actor, Vector2Int actorPos, Vector2Int targetPos)
     {
-        if (actor.TryGet<FacingComponent>(out var facing))
+        if (actor.TryGet<FacingComponent>(out var facing) && facing.direction != Vector2Int.zero)
             return facing.direction;
 
         var diff = targetPos - actorPos;
-        return diff == Vector2Int.zero ? Vector2Int.up : new Vector2Int(Mathf.Clamp(diff.x, -1, 1), Mathf.Clamp(diff.y, -1, 1));
+        if (diff == Vector2Int.zero) return Vector2Int.up;
+
+        return new Vector2Int(Math.Sign(diff.x), Math.Sign(diff.y));
     }
 }

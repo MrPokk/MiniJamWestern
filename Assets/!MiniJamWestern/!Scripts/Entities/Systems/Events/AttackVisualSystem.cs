@@ -9,6 +9,7 @@ public class AttackVisualSystem : IEcsAutoImplement, IEcsInitSystem
     public Priority Priority => Priority.Low;
 
     private EcsEvent _genericEvent;
+    private EcsEvent _damageEvent;
 
     private CameraObjectComponent _cameraObject;
 
@@ -20,13 +21,17 @@ public class AttackVisualSystem : IEcsAutoImplement, IEcsInitSystem
     public void Init()
     {
         _genericEvent.Subscribe<IsAttackerTo>(added: OnEffect);
+        _damageEvent.Subscribe<IsDamagedEvent>(added: OnDamage);
+    }
+
+    private void OnDamage(EcsEntity entity)
+    {
+        ShakeCamera();
     }
 
     private void OnEffect(EcsEntity attacker)
     {
         ShakeEntity(attacker);
-        ShakeCamera();
-
     }
 
     private void ShakeCamera()
