@@ -2,14 +2,22 @@ Shader "Custom/ShimmeringPatternURP"
 {
     Properties
     {
-        [MainTexture] _MainTex ("Pattern Texture (Sprite)", 2D) = "white" {}
-        _Color1 ("Shimmer Color A", Color) = (1, 0.5, 0, 1)
-        _Color2 ("Shimmer Color B", Color) = (0, 0.5, 1, 1)
+        [MainTexture] _MainTex ("Pattern Texture (Grayscale)", 2D) = "white" {}
+        _Color1 ("Color for White Pixels", Color) = (1, 1, 1, 1)
+        _Color2 ("Color for Black Pixels", Color) = (0, 0, 0, 1)
         
         _NoiseScale ("Noise Scale", Float) = 4.0
         _DistortionStrength ("Distortion Strength", Range(0, 0.2)) = 0.05
         _Speed ("Speed", Float) = 1.0
         _PatternScroll ("Pattern Scroll Speed", Vector) = (0, 0, 0, 0)
+
+        [Header(Stencil)]
+        _Stencil ("Stencil ID", Float) = 0
+        _StencilComp ("Stencil Comparison", Float) = 8
+        _StencilOp ("Stencil Operation", Float) = 0
+        _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        _StencilReadMask ("Stencil Read Mask", Float) = 255
+        _ColorMask ("Color Mask", Float) = 15
     }
 
     SubShader
@@ -19,11 +27,22 @@ Shader "Custom/ShimmeringPatternURP"
             "RenderType"="Transparent" 
             "Queue"="Transparent" 
             "RenderPipeline" = "UniversalPipeline" 
+            "CanUseSpriteAtlas"="True"
+        }
+
+        Stencil
+        {
+            Ref [_Stencil]
+            Comp [_StencilComp]
+            Pass [_StencilOp]
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
         }
 
         Blend SrcAlpha OneMinusSrcAlpha
         Cull Off
         ZWrite Off
+        ColorMask [_ColorMask]
 
         Pass
         {
@@ -37,7 +56,7 @@ Shader "Custom/ShimmeringPatternURP"
             {
                 float4 positionOS   : POSITION;
                 float2 uv           : TEXCOORD0;
-                float4 color        : COLOR; // Цвет из SpriteRenderer
+                float4 color        : COLOR;
             };
 
             struct Varyings
@@ -59,7 +78,6 @@ Shader "Custom/ShimmeringPatternURP"
                 float2 _PatternScroll;
             CBUFFER_END
 
-            // Вспомогательные функции шума
             float hash(float2 p) {
                 return frac(sin(dot(p, float2(127.1, 311.7))) * 43758.5453123);
             }
@@ -75,7 +93,6 @@ Shader "Custom/ShimmeringPatternURP"
                 return lerp(lerp(a, b, f.x), lerp(c, d, f.x), f.y);
             }
 
-            // Fractal Brownian Motion (Слои шума)
             float fbm(float2 p) {
                 float v = 0.0;
                 float a = 0.5;
@@ -100,27 +117,34 @@ Shader "Custom/ShimmeringPatternURP"
             {
                 float time = _Time.y * _Speed;
                 
-                // 1. Генерируем два слоя шума для искажения UV
-                float noiseX = fbm(IN.uv * _NoiseScale + time);
-                float noiseY = fbm(IN.uv * _NoiseScale - time * 0.5);
-                float2 distortion = float2(noiseX, noiseY) * _DistortionStrength;
+                // 1. Искажение UV шумом
+                float nX = fbm(IN.uv * _NoiseScale + time);
+                float nY = fbm(IN.uv * _NoiseScale - time * 0.5);
+                float2 distortion = float2(nX, nY) * _DistortionStrength;
 
-                // 2. Рассчитываем финальные UV для паттерна
-                // Смещаем их по времени (скроллинг) + добавляем искажение (шум)
+                // 2. Скроллинг и выборка паттерна
                 float2 patternUV = IN.uv + distortion + (_PatternScroll * _Time.y);
-
-                // 3. Берем текстуру (паттерн)
                 half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_mainTex, patternUV);
 
-                // 4. Создаем переливающийся цвет на основе шума
-                float colorMask = fbm(IN.uv * (_NoiseScale * 0.5) + time * 0.3);
-                half4 shimmerColor = lerp(_Color1, _Color2, colorMask);
+                // 3. Получаем яркость паттерна (насколько пиксель "белый")
+                // Можно использовать r-канал, если текстура черно-белая
+                float patternValue = dot(texColor.rgb, float3(0.333, 0.333, 0.333));
 
-                // 5. Комбинируем всё
-                // Умножаем текстуру на переливающийся цвет и на цвет из SpriteRenderer
-                half4 finalColor = texColor * shimmerColor * IN.color;
+                // 4. Генерируем маску мерцания (shimmer)
+                float shimmer = fbm(IN.uv * (_NoiseScale * 0.5) + time * 0.3);
+                
+                // 5. Логика смешивания:
+                // Мы берем яркость паттерна и модулируем её шумом.
+                // Это заставляет "белые" части текстуры переливаться.
+                float finalMask = saturate(patternValue * (0.4 + shimmer * 0.6));
 
-                // Если в текстуре есть альфа-канал, используем его
+                // 6. Заменяем цвета: 0 (черный) -> _Color2, 1 (белый) -> _Color1
+                half4 finalColor = lerp(_Color2, _Color1, finalMask);
+
+                // Умножаем на прозрачность текстуры и цвет из Image/SpriteRenderer
+                finalColor.a *= texColor.a * IN.color.a;
+                finalColor.rgb *= IN.color.rgb;
+
                 return finalColor;
             }
             ENDHLSL

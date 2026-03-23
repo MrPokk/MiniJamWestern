@@ -22,7 +22,7 @@ public class UIShopPopup : UIPopup
 
     public void AddCard(ShopCard card)
     {
-        card.transform.SetParent(cardContainer, false);
+        card.transform.SetParent(cardContainer);
         _cards.Add(card.GetComponent<RectTransform>());
         UpdateLayout();
     }
@@ -39,7 +39,7 @@ public class UIShopPopup : UIPopup
 
         for (var i = 0; i < count; i++)
         {
-            RectTransform rect = _cards[i];
+            var rect = _cards[i];
             if (rect == null) continue;
 
             var linear = (i - centerOffset) * _space;

@@ -16,7 +16,7 @@ Shader "Custom/PixelPerfect_WavingCircle_Elka_URP"
         _WaveSpeed ("Wave Speed", Float) = 2.0
         _RotationSpeed ("Rotation Speed", Float) = 1.0
         _ElkaSharpness ("Elka Sharpness", Range(1, 10)) = 3.0
-        _MaxAngle ("Max Angle", Range(0.1, 10)) = 6.28 
+        _MaxAngle ("Max Angle", Range(0.1, 32)) = 6.28 
         
         [Header(Pixelation)]
         _PixelSize ("Pixel Density", Range(1, 200)) = 50

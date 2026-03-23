@@ -50,19 +50,19 @@ Material:
     - _ElkaSharpness: 1
     - _EnableExternalAlpha: 0
     - _ManualAspect: 1
-    - _MaxAngle: 0.1
+    - _MaxAngle: 32
     - _NoiseScale: 7.46
-    - _OutlinePixels: 0
+    - _OutlinePixels: 1
     - _OutlineWidth: 0.1
-    - _PixelSize: 16
+    - _PixelSize: 12
     - _Radius: 0.8
     - _Randomness: 0
     - _RotationSpeed: 1
     - _Smoothness: 0.001
     - _UseManualAspect: 1
-    - _WaveAmplitude: 0.1
-    - _WaveFrequency: 3
-    - _WaveSpeed: 0.03
+    - _WaveAmplitude: 0.139
+    - _WaveFrequency: 4.3
+    - _WaveSpeed: 0.3
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 0.8980392, g: 0.5921569, b: 0.5411765, a: 1}

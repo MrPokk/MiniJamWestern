@@ -1,194 +1,160 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 [DisallowMultipleComponent]
 public class TextOutline : MonoBehaviour
 {
-    [SerializeField] private List<TMP_Text> _textOutlines = new();
-    private Dictionary<TMP_Text, (Vector3 positionOffset, Vector3 scaleFactor)> _outlineTransforms = new();
-
-    [Header("Text Settings")]
     [SerializeField] private TMP_Text _mainText;
-    [SerializeField] private string _text;
+    [SerializeField] private List<TMP_Text> _textOutlines = new();
 
-    [Header("Colors")]
-    [SerializeField] private Color _textColor = Color.white;
+    [Header("Settings")]
     [SerializeField] private Color _outlineColor = Color.black;
 
-    private void Start()
+    private readonly Dictionary<TMP_Text, Vector3> _initialOffsets = new();
+    private string _lastText;
+    private Color _lastMainColor;
+    private float _lastFontSize;
+    private bool _isSyncing;
+
+    [Header("Editor")]
+    [SerializeField] private bool _isEdit;
+
+    private void OnEnable()
     {
-        if (_mainText == null)
-            throw new Exception("MainText is null");
+        TMPro_EventManager.TEXT_CHANGED_EVENT.Add(OnTextChanged);
+        RefreshOutlineTransforms();
+        SyncTextAndStyle();
+    }
 
-        _textOutlines.RemoveAll(x => x == null);
-
-        StoreOutlineTransforms();
+    private void OnDisable()
+    {
+        TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(OnTextChanged);
     }
 
     private void OnValidate()
     {
-        if (!_mainText)
-            return;
+        if (_isEdit) return;
+        RefreshOutlineTransforms();
+        SyncTextAndStyle();
+    }
 
-        _mainText.color = _textColor;
+    private void LateUpdate()
+    {
+        if (_isEdit || _mainText == null) return;
 
-        SetText(_text);
-        UpdateOutlineColor();
+        if (_mainText.text != _lastText ||
+            !Mathf.Approximately(_mainText.fontSize, _lastFontSize) ||
+            _mainText.color != _lastMainColor)
+        {
+            SyncTextAndStyle();
+        }
+
         UpdateOutlineTransforms();
     }
 
-    private void Update()
+    private void OnTextChanged(Object obj)
     {
-        UpdateOutlineTransforms();
+        if (_isSyncing) return;
+        if (_mainText != null && obj == (Object)_mainText)
+        {
+            SyncTextAndStyle();
+        }
+    }
+
+    public void SyncTextAndStyle()
+    {
+        if (_mainText == null || _isSyncing) return;
+
+        _isSyncing = true;
+
+        try
+        {
+            _mainText.ForceMeshUpdate();
+
+            _lastText = _mainText.text;
+            _lastMainColor = _mainText.color;
+            _lastFontSize = _mainText.fontSize;
+
+            var font = _mainText.font;
+            var align = _mainText.alignment;
+            var style = _mainText.fontStyle;
+            var overflow = _mainText.overflowMode;
+            var margin = _mainText.margin;
+            float alpha = _mainText.alpha;
+
+            var mainRT = _mainText.rectTransform;
+
+            foreach (var outline in _textOutlines)
+            {
+                if (outline == null || outline == _mainText) continue;
+
+                outline.enableAutoSizing = false;
+                outline.fontSize = _lastFontSize;
+
+                if (outline.text != _lastText) outline.text = _lastText;
+
+                Color targetColor = _outlineColor;
+                targetColor.a *= alpha;
+                if (outline.color != targetColor) outline.color = targetColor;
+
+                if (outline.font != font) outline.font = font;
+                if (outline.alignment != align) outline.alignment = align;
+                if (outline.fontStyle != style) outline.fontStyle = style;
+                if (outline.overflowMode != overflow) outline.overflowMode = overflow;
+                if (outline.margin != margin) outline.margin = margin;
+
+                var outlineRT = outline.rectTransform;
+                outlineRT.anchorMin = mainRT.anchorMin;
+                outlineRT.anchorMax = mainRT.anchorMax;
+                outlineRT.pivot = mainRT.pivot;
+                outlineRT.sizeDelta = mainRT.sizeDelta;
+
+                outline.ForceMeshUpdate();
+            }
+        }
+        finally
+        {
+            _isSyncing = false;
+        }
     }
 
     private void UpdateOutlineTransforms()
     {
-        if (_mainText == null)
-            return;
+        if (_mainText == null) return;
 
-        if (_textOutlines == null)
-            return;
+        Vector3 mainPos = _mainText.transform.localPosition;
+        Vector3 mainScale = _mainText.transform.localScale;
 
         foreach (var outline in _textOutlines)
         {
-            if (_outlineTransforms.TryGetValue(outline, out var transformData))
-            {
-                outline.transform.localPosition = _mainText.transform.localPosition + transformData.positionOffset;
+            if (outline == null || !_initialOffsets.TryGetValue(outline, out var offset)) continue;
 
-                Vector3 newScale = new Vector3(
-                    _mainText.transform.localScale.x * transformData.scaleFactor.x,
-                    _mainText.transform.localScale.y * transformData.scaleFactor.y,
-                    _mainText.transform.localScale.z * transformData.scaleFactor.z);
-
-                if (float.IsFinite(newScale.x) && float.IsFinite(newScale.y) && float.IsFinite(newScale.z))
-                {
-                    outline.transform.localScale = newScale;
-                }
-            }
-        }
-    }
-
-    private void StoreOutlineTransforms()
-    {
-        _outlineTransforms.Clear();
-        foreach (var outline in _textOutlines)
-        {
-            if (outline != null && _mainText != null)
-            {
-                Vector3 positionOffset = outline.transform.localPosition - _mainText.transform.localPosition;
-
-                Vector3 mainScale = _mainText.transform.localScale;
-                Vector3 outlineScale = outline.transform.localScale;
-
-                Vector3 scaleFactor = new Vector3(
-                    mainScale.x == 0 ? 1 : outlineScale.x / mainScale.x,
-                    mainScale.y == 0 ? 1 : outlineScale.y / mainScale.y,
-                    mainScale.z == 0 ? 1 : outlineScale.z / mainScale.z);
-
-                _outlineTransforms[outline] = (positionOffset, scaleFactor);
-            }
-        }
-    }
-
-    public float GetAlpha() => _mainText != null ? _mainText.alpha : throw new Exception("MainText is null");
-    public string GetText() => _mainText != null ? _mainText.text : throw new Exception("MainText is null");
-    public Transform GetTransform() => _mainText != null ? _mainText.transform : throw new Exception("MainText is null");
-    public Vector3 GetPosition() => _mainText != null ? _mainText.transform.localPosition : throw new Exception("MainText is null");
-    public Vector3 GetScale() => _mainText != null ? _mainText.transform.localScale : throw new Exception("MainText is null");
-
-    public TextOutline SetText(string text)
-    {
-        if (_mainText == null)
-            throw new Exception("MainText is null");
-
-        _mainText.text = text;
-        foreach (var outline in _textOutlines)
-        {
-            if (outline != null) outline.text = text;
-        }
-
-        return this;
-    }
-
-    public TextOutline SetAlpha(float targetAlpha)
-    {
-        if (_mainText == null)
-            throw new Exception("MainText is null");
-
-        _mainText.alpha = targetAlpha;
-        foreach (var outline in _textOutlines)
-        {
-            outline.alpha = targetAlpha;
-        }
-
-        return this;
-    }
-
-    public TextOutline SetColor(Color color)
-    {
-        _textColor = color;
-        if (_mainText != null) _mainText.color = color;
-        return this;
-    }
-
-    public TextOutline SetOutlineColor(Color color)
-    {
-        _outlineColor = color;
-        UpdateOutlineColor();
-        return this;
-    }
-
-    public TextOutline SetLocalPosition(Vector3 position)
-    {
-        if (_mainText == null)
-            throw new Exception("MainText is null");
-
-        _mainText.transform.localPosition = position;
-        UpdateOutlineTransforms();
-        return this;
-    }
-
-    public TextOutline SetLocalScale(Vector3 scale)
-    {
-        if (_mainText == null)
-            throw new Exception("MainText is null");
-
-        _mainText.transform.localScale = scale;
-        UpdateOutlineTransforms();
-        return this;
-    }
-
-    public TextOutline SetAll(
-        string text,
-        Vector3 position,
-        Vector3 scale,
-        Color textColor,
-        Color outlineColor,
-        float alpha = 1f)
-    {
-        return SetColor(textColor)
-            .SetOutlineColor(outlineColor)
-            .SetAlpha(alpha)
-            .SetText(text)
-            .SetLocalPosition(position)
-            .SetLocalScale(scale);
-    }
-
-    private void UpdateOutlineColor()
-    {
-        foreach (var outline in _textOutlines)
-        {
-            if (outline != null) outline.color = _outlineColor;
+            outline.transform.localPosition = mainPos + offset;
+            outline.transform.localScale = mainScale;
         }
     }
 
     public void RefreshOutlineTransforms()
     {
-        StoreOutlineTransforms();
-        UpdateOutlineTransforms();
+        _textOutlines.RemoveAll(x => x == null);
+        _initialOffsets.Clear();
+
+        if (_mainText == null) return;
+
+        Vector3 mainPos = _mainText.transform.localPosition;
+
+        foreach (var outline in _textOutlines)
+        {
+            if (outline == null || outline == _mainText) continue;
+            _initialOffsets[outline] = outline.transform.localPosition - mainPos;
+        }
+    }
+
+    public void SetText(string text)
+    {
+        if (_mainText) _mainText.text = text;
+        SyncTextAndStyle();
     }
 }

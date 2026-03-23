@@ -3,14 +3,14 @@
 // [AUTO-GENERATED] by BitterECS AutoPathConstantsGenerator
 // Defines paths for Prefabs (Providers/MonoBehaviours) and ScriptableObjects
 
-public static class EnvironmentPaths
+public static class CardsPaths
 {
-    /// <summary> Component: CinemachineImpulseSource </summary>
-    public const string CAMERA_OBJECT = "Environment/[CameraObject]";
+    /// <summary> Component: ShopCard </summary>
+    public const string UICARD_ELEMENT = "Entities/Cards/UICardElement";
 
     public static readonly string[] AllPaths = new string[]
     {
-        CAMERA_OBJECT,
+        UICARD_ELEMENT,
     };
 
     public const int COUNT = 1;

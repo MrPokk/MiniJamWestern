@@ -4,6 +4,7 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 using System;
+using BitterECS.Integration.Unity;
 
 public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -11,67 +12,72 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 
     [Header("UI References")]
     public RectTransform visual;
-    public Image topIcon;
-    public Image bottomIcon;
-    public TextMeshProUGUI titleLabel;
-    public TextMeshProUGUI descriptionLabel;
+    [SerializeField] private Image _icon;
+    [SerializeField] private TMP_Text _titleLabel;
+    [SerializeField] private TMP_Text _descriptionLabel;
+    [SerializeField] private TMP_Text _amountLabel;
+
 
     [Header("Settings")]
-    public float hoverOffset = 20f;
-    public float animDuration = 0.2f;
+    [SerializeField] private float _hoverOffset = 40f;
+    [SerializeField] private float _hoverScale = 1.1f;
+    [SerializeField] private float _animDuration = 0.2f;
 
-    public CardType type;
-    public object data; // Сюда кладем Perk, Action или количество хила
-    public Action<ShopCard> OnSelected;
+    private CardType _type;
+    public CardType Type => _type;
+    public Action<ShopCard> onSelected;
 
-    private Vector2 _basePos;
+    private Tween _moveTween;
+    private Tween _scaleTween;
 
-    void Start() => _basePos = visual.anchoredPosition;
-
-    // Инициализация для Способностей (Actions)
-    public void AssignActions(TagActions top, TagActions bottom)
+    public void AssignAction(TagActionsProvider provider)
     {
-        type = CardType.ACTION;
-        data = new[] { top, bottom };
-        titleLabel.text = "Ability Bundle";
-        descriptionLabel.text = $"Top: {top.ability.GetType().Name}\nBottom: {bottom.ability.GetType().Name}";
-        // topIcon.sprite = ... (если есть иконки)
+        if (provider == null) return;
+
+        //type = CardType.ACTION;
+        //data = provider;
+        //titleLabel.text = provider.name;
+        //// Настройку иконок и описания можно добавить сюда
+        //bottomIcon.gameObject.SetActive(true);
     }
 
-    // Инициализация для Перков
-    public void AssignPerk(object perkData, string name, string desc)
-    {
-        type = CardType.PERK;
-        data = perkData;
-        titleLabel.text = name;
-        descriptionLabel.text = desc;
-        bottomIcon.gameObject.SetActive(false);
-    }
+    //// Инициализация для Перков
+    //public void AssignPerk(object perkData, string name, string desc)
+    //{
+    //    type = CardType.PERK;
+    //    data = perkData;
+    //    titleLabel.text = name;
+    //    descriptionLabel.text = desc;
+    //    bottomIcon.gameObject.SetActive(false);
+    //}
 
-    // Инициализация для Хила
     public void AssignHeal(int amount)
     {
-        type = CardType.HEAL;
-        data = amount;
-        titleLabel.text = "Heal";
-        descriptionLabel.text = $"Restore {amount} HP";
-        bottomIcon.gameObject.SetActive(false);
+        _type = CardType.HEAL;
+        _titleLabel.text = "Heal";
+        _descriptionLabel.text = $"Restore {amount} HP";
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        OnSelected?.Invoke(this);
+        onSelected?.Invoke(this);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        visual.DOAnchorPosY(_basePos.y + hoverOffset, animDuration);
-        visual.DOScale(1.05f, animDuration);
+        _moveTween?.Kill();
+        _scaleTween?.Kill();
+
+        _moveTween = visual.DOAnchorPosY(_hoverOffset, _animDuration);
+        _scaleTween = visual.DOScale(_hoverScale, _animDuration);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        visual.DOAnchorPosY(_basePos.y, animDuration);
-        visual.DOScale(1f, animDuration);
+        _moveTween?.Kill();
+        _scaleTween?.Kill();
+
+        _moveTween = visual.DOAnchorPosY(0, _animDuration);
+        _scaleTween = visual.DOScale(1f, _animDuration);
     }
 }

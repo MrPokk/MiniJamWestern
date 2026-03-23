@@ -26,6 +26,7 @@ public class Startup : EcsUnityRoot<Startup>
         InitializeGrid();
         InitializeEventSystem();
         InitializePlaying();
+        DebugShope();
     }
 
     private void InitializeUI()
@@ -35,6 +36,11 @@ public class Startup : EcsUnityRoot<Startup>
         attackVisualSystem.Setup(_cameraObject);
 
         UIInit.Initialize("UI", _cameraObject.CameraTarget);
+    }
+
+    private void DebugShope()
+    {
+        EcsSystemStatic.GetSystem<ShopSystem>().OpenShop();
     }
 
     private void InitializePlaying()

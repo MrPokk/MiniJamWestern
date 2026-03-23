@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_ShimmeringPatternURP
-  m_Shader: {fileID: 4800000, guid: 34af5df4c60782ae3b1666b052e31e49, type: 3}
+  m_Name: Custom_WhiteMaskShader
+  m_Shader: {fileID: 4800000, guid: 9f6bbb526f54e7e3e92b0e2070f37139, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -30,17 +30,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _ColorMask: 15
-    - _DistortionStrength: 0.2
-    - _NoiseScale: 1
-    - _Speed: 1
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
+    - _Threshold: 0.9
     m_Colors:
-    - _Color1: {r: 0.2627451, g: 0.65882355, b: 0.75686276, a: 1}
-    - _Color2: {r: 0.20465466, g: 0.58549416, b: 0.6886792, a: 1}
-    - _PatternScroll: {r: 0.3, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
