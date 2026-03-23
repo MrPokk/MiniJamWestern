@@ -575,7 +575,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2522545445977969614, guid: a7ec4d0fe28ebea57af49609884afbe3, type: 3}
       propertyPath: m_Name
-      value: CameraObject
+      value: '[CameraObject]'
       objectReference: {fileID: 0}
     - target: {fileID: 7749073041484894994, guid: a7ec4d0fe28ebea57af49609884afbe3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -620,22 +620,6 @@ PrefabInstance:
     - target: {fileID: 8438162135960486746, guid: a7ec4d0fe28ebea57af49609884afbe3, type: 3}
       propertyPath: orthographic size
       value: 5.625
-      objectReference: {fileID: 0}
-    - target: {fileID: 8438162135960486746, guid: a7ec4d0fe28ebea57af49609884afbe3, type: 3}
-      propertyPath: m_NormalizedViewPortRect.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8438162135960486746, guid: a7ec4d0fe28ebea57af49609884afbe3, type: 3}
-      propertyPath: m_NormalizedViewPortRect.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8438162135960486746, guid: a7ec4d0fe28ebea57af49609884afbe3, type: 3}
-      propertyPath: m_NormalizedViewPortRect.width
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8438162135960486746, guid: a7ec4d0fe28ebea57af49609884afbe3, type: 3}
-      propertyPath: m_NormalizedViewPortRect.height
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -707,7 +691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Startup
   _useDebugWave: 1
   _debugTier: 1
-  _cameraObject: {fileID: 1697277111}
+  _cameraObject: {fileID: 1697277113}
   _playfieldConfig: {fileID: 11400000, guid: d002ea22b9001b47387db3ca9d089b2d, type: 2}
   _complicationSettings: {fileID: 11400000, guid: 2e4980954013dff14940f8a7887a4227, type: 2}
   _gridParent: {fileID: 1604807520}
@@ -1506,17 +1490,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a936c524d06bfb755ad5c5cf20952a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridParentObject
---- !u!114 &1697277111 stripped
+--- !u!114 &1697277113 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6116761258415711493, guid: a7ec4d0fe28ebea57af49609884afbe3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7292917672766486182, guid: a7ec4d0fe28ebea57af49609884afbe3, type: 3}
   m_PrefabInstance: {fileID: 529659689}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a5ba8fa026b5ef2b8e6490b869016e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 3563b461184569235a6006c2f4163fa0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraObject
+  m_EditorClassIdentifier: Assembly-CSharp::CameraObjectComponent
 --- !u!1 &1868914406
 GameObject:
   m_ObjectHideFlags: 0

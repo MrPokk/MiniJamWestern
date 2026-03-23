@@ -10,12 +10,31 @@ public class AttackVisualSystem : IEcsAutoImplement, IEcsInitSystem
 
     private EcsEvent _genericEvent;
 
+    private CameraObjectComponent _cameraObject;
+
+    public void Setup(CameraObjectComponent cameraObject)
+    {
+        _cameraObject = cameraObject;
+    }
+
     public void Init()
     {
         _genericEvent.Subscribe<IsAttackerTo>(added: OnEffect);
     }
 
     private void OnEffect(EcsEntity attacker)
+    {
+        ShakeEntity(attacker);
+        ShakeCamera();
+
+    }
+
+    private void ShakeCamera()
+    {
+        _cameraObject.ShakeCamera();
+    }
+
+    private static void ShakeEntity(EcsEntity attacker)
     {
         if (!attacker.TryGet<IsAttackerTo>(out var info)) return;
         if (!attacker.TryGet<UnityComponent<Transform>>(out var view)) return;

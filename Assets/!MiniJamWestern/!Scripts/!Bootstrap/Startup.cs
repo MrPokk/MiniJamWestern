@@ -12,7 +12,7 @@ public class Startup : EcsUnityRoot<Startup>
     [SerializeField] private DifficultyTier _debugTier;
 
     [Header("Main Settings")]
-    [SerializeField] private CameraObject _cameraObject;
+    [SerializeField] private CameraObjectComponent _cameraObject;
     [SerializeField] private GridConfig _playfieldConfig;
     [SerializeField] private ComplicationSettings _complicationSettings;
 
@@ -31,6 +31,8 @@ public class Startup : EcsUnityRoot<Startup>
     private void InitializeUI()
     {
         DontDestroyOnLoad(_cameraObject);
+        var attackVisualSystem = EcsSystemStatic.GetSystem<AttackVisualSystem>();
+        attackVisualSystem.Setup(_cameraObject);
 
         UIInit.Initialize("UI", _cameraObject.CameraTarget);
     }
