@@ -78,7 +78,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 4
+    mosaicPadding: 6
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -93,7 +93,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 4
+    mosaicPadding: 6
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -102,7 +102,7 @@ ScriptedImporter:
     generateIndividualEvents: 1
     generateSpriteAtlas: 1
   importFileNodeState: 1
-  platformSettingsDirtyTick: 639098021251120120
+  platformSettingsDirtyTick: 639099190507736750
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -157,9 +157,9 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 3
-      y: 97
-      width: 25
+      x: 4
+      y: 99
+      width: 27
       height: 28
     spriteID: f4d3aa34fca7f82ebb6e1cf4dc4b4527
     spriteBone: []
@@ -178,10 +178,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 34
-      y: 93
-      width: 24
-      height: 28
+      x: 36
+      y: 98
+      width: 23
+      height: 24
     spriteID: d8fb6006048e6c9fdb93679b240035e6
     spriteBone: []
     spriteOutline: []
@@ -199,10 +199,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 3
-      y: 68
-      width: 25
-      height: 28
+      x: 4
+      y: 70
+      width: 27
+      height: 29
     spriteID: 31b5fa17c7d79e32f8c42accb028e771
     spriteBone: []
     spriteOutline: []
@@ -220,10 +220,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 3
-      y: 125
-      width: 25
-      height: 28
+      x: 4
+      y: 127
+      width: 27
+      height: 30
     spriteID: 61e628a2a3a14b63b84dc71b5db31284
     spriteBone: []
     spriteOutline: []
@@ -241,10 +241,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 34
-      y: 125
-      width: 25
-      height: 28
+      x: 35
+      y: 126
+      width: 27
+      height: 31
     spriteID: 91e1ae174dfb917e0b3f290b4e98c21f
     spriteBone: []
     spriteOutline: []
@@ -262,8 +262,8 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 68
-      y: 141
+      x: 70
+      y: 143
       width: 9
       height: 8
     spriteID: e0b5710d7c9badaff9ad2fddcab04084
@@ -283,10 +283,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 68
-      y: 131
+      x: 70
+      y: 132
       width: 9
-      height: 8
+      height: 9
     spriteID: 986e1a22b977a9d059471f64c4e40ce2
     spriteBone: []
     spriteOutline: []
@@ -304,10 +304,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 3
-      y: 3
-      width: 109
-      height: 29
+      x: 6
+      y: 5
+      width: 108
+      height: 30
     spriteID: 3b0787308e9f08dd19d6e1010b3f08c3
     spriteBone: []
     spriteOutline: []
@@ -325,10 +325,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 60
-      y: 97
+      x: 62
+      y: 100
       width: 19
-      height: 22
+      height: 20
     spriteID: b83bb0da2f1cdb3b9be65bb5a08e2799
     spriteBone: []
     spriteOutline: []
@@ -346,9 +346,9 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 80
-      y: 101
-      width: 13
+      x: 83
+      y: 103
+      width: 12
       height: 14
     spriteID: 30cb7072364ed02789e9ffd0c15f1448
     spriteBone: []
@@ -367,8 +367,8 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 94
-      y: 104
+      x: 96
+      y: 106
       width: 3
       height: 7
     spriteID: bc0080abf7e91ca218899177873ec142
@@ -388,10 +388,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 58
-      y: 34
-      width: 54
-      height: 48
+      x: 61
+      y: 37
+      width: 52
+      height: 46
     spriteID: 8f64ea285fdd19a7b8d240bedfc52524
     spriteBone: []
     spriteOutline: []
@@ -409,10 +409,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 3
-      y: 33
-      width: 51
-      height: 33
+      x: 8
+      y: 36
+      width: 44
+      height: 31
     spriteID: c2b06d2b933dd43ee9ee87975a3fd1ea
     spriteBone: []
     spriteOutline: []
@@ -430,10 +430,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 97
-      y: 94
+      x: 99
+      y: 97
       width: 27
-      height: 27
+      height: 25
     spriteID: cc1d414ec8b04fa6282b7efe67dda661
     spriteBone: []
     spriteOutline: []
@@ -451,10 +451,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 122
-      y: 7
-      width: 54
-      height: 70
+      x: 126
+      y: 11
+      width: 51
+      height: 67
     spriteID: 6140e42844655891f8edf5f65af58bfa
     spriteBone: []
     spriteOutline: []
@@ -472,10 +472,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 92
-      y: 125
-      width: 23
-      height: 21
+      x: 94
+      y: 126
+      width: 24
+      height: 22
     spriteID: 0f99dcea2078f2d01917d4fbc0d7b4a4
     spriteBone: []
     spriteOutline: []
@@ -550,7 +550,7 @@ ScriptedImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
-  generatePhysicsShape: 1
+  generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 384, y: 256}

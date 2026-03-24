@@ -18,14 +18,14 @@ public static class IntentVisualUtility
         var abilityCurrent = ability.Get<TagActions>().ability;
         if (abilityCurrent is TagAttackForward tagAttackForward)
         {
-            for (var i = 1; i <= tagAttackForward.distance; i++)
+            for (var i = 1; i <= tagAttackForward.value; i++)
             {
                 DrawTile(owner, ref tracker, origin + (dir * i), color, salt);
             }
         }
         else if (abilityCurrent is TagAttackTwoSides twoSides)
         {
-            for (var i = 1; i <= twoSides.distance; i++)
+            for (var i = 1; i <= twoSides.value; i++)
             {
                 DrawTile(owner, ref tracker, origin + (dir * i), color, salt);
                 DrawTile(owner, ref tracker, origin - (dir * i), color, salt);

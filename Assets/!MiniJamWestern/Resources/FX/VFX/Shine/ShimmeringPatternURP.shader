@@ -66,8 +66,9 @@ Shader "Custom/ShimmeringPatternURP"
                 float4 color        : COLOR;
             };
 
+            // Имена текстур и сэмплеров должны быть согласованы
             TEXTURE2D(_MainTex);
-            SAMPLER(sampler_mainTex);
+            SAMPLER(sampler_MainTex); 
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _Color1;
@@ -76,6 +77,7 @@ Shader "Custom/ShimmeringPatternURP"
                 float _DistortionStrength;
                 float _Speed;
                 float2 _PatternScroll;
+                float4 _MainTex_ST;
             CBUFFER_END
 
             float hash(float2 p) {
@@ -117,31 +119,20 @@ Shader "Custom/ShimmeringPatternURP"
             {
                 float time = _Time.y * _Speed;
                 
-                // 1. Искажение UV шумом
                 float nX = fbm(IN.uv * _NoiseScale + time);
                 float nY = fbm(IN.uv * _NoiseScale - time * 0.5);
                 float2 distortion = float2(nX, nY) * _DistortionStrength;
 
-                // 2. Скроллинг и выборка паттерна
                 float2 patternUV = IN.uv + distortion + (_PatternScroll * _Time.y);
-                half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_mainTex, patternUV);
+                // Используем исправленный сэмплер
+                half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, patternUV);
 
-                // 3. Получаем яркость паттерна (насколько пиксель "белый")
-                // Можно использовать r-канал, если текстура черно-белая
                 float patternValue = dot(texColor.rgb, float3(0.333, 0.333, 0.333));
-
-                // 4. Генерируем маску мерцания (shimmer)
                 float shimmer = fbm(IN.uv * (_NoiseScale * 0.5) + time * 0.3);
                 
-                // 5. Логика смешивания:
-                // Мы берем яркость паттерна и модулируем её шумом.
-                // Это заставляет "белые" части текстуры переливаться.
                 float finalMask = saturate(patternValue * (0.4 + shimmer * 0.6));
-
-                // 6. Заменяем цвета: 0 (черный) -> _Color2, 1 (белый) -> _Color1
                 half4 finalColor = lerp(_Color2, _Color1, finalMask);
 
-                // Умножаем на прозрачность текстуры и цвет из Image/SpriteRenderer
                 finalColor.a *= texColor.a * IN.color.a;
                 finalColor.rgb *= IN.color.rgb;
 

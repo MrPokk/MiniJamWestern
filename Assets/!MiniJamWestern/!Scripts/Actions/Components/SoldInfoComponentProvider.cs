@@ -11,9 +11,12 @@ public class SoldInfoComponentProvider : ProviderEcs<SoldInfoComponent>
 public struct SoldInfoComponent
 {
     public Sprite icon;
-    [TextArea(1, 3)]
+    [TextArea(3, 10)]
     public string title;
-    [TextArea(1, 5)]
+    [TextArea(5, 10)]
     public string description;
     public int amount;
+
+    public Color valuable;
+    public Color other;
 }

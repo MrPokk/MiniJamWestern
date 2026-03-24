@@ -13,7 +13,7 @@ public class AttackingForwardHandler
         else
             VectorUtility.TryGetStepDirection(grid.currentPosition, target.position, out dir);
 
-        for (var i = 1; i <= attackAbility.distance; i++)
+        for (var i = 1; i <= attackAbility.value; i++)
         {
             var attackPos = grid.currentPosition + (dir * i);
             GridInteractionHandler.TryGetEntityAt(attackPos, out var entityTo);

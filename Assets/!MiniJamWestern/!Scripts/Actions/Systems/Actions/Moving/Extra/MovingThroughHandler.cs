@@ -12,7 +12,7 @@ public class MovingThroughHandler
         var currentPos = gridCom.currentPosition;
 
         var nextPos = currentPos + direction;
-        var landingPos = currentPos + (direction * ability.distance);
+        var landingPos = currentPos + (direction * ability.value);
 
         if (GridInteractionHandler.TryGetEntityAt(nextPos, out var entityOnWay))
         {

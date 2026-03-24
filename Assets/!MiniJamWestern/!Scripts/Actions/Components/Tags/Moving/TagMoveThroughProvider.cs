@@ -4,11 +4,11 @@ using BitterECS.Integration.Unity;
 using UnityEngine;
 
 [Serializable]
-public struct TagMoveThrough : IActionAbility, IMoveAbility
+public struct TagMoveThrough : IActionAbility, IMoveAbility, IComponentValue
 {
     [SerializeField] private int _passDistance;
 
-    public int distance
+    public int value
     {
         get => _passDistance;
         set => _passDistance = value;

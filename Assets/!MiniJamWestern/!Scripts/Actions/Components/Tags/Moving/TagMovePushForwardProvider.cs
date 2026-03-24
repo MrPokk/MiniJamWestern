@@ -4,14 +4,14 @@ using BitterECS.Integration.Unity;
 using UnityEngine;
 
 [Serializable]
-public struct TagMovePushForward : IActionAbility, IMoveAbility, IComponentPush
+public struct TagMovePushForward : IActionAbility, IMoveAbility, IComponentValue
 {
-    [SerializeField] private int _distance;
+    [SerializeField] private int _value;
 
-    public int distance
+    public int value
     {
-        get => _distance;
-        set => _distance = value;
+        get => _value;
+        set => _value = value;
     }
 
     public void Execute(EcsEntity actor, ref GridComponent grid, ListActionComponent list, ref TargetTo target)

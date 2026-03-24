@@ -10,7 +10,7 @@ public class AttackingTwoSidesHandler
         var diff = target.position - grid.currentPosition;
         var distance = Mathf.Abs(diff.x) + Mathf.Abs(diff.y);
 
-        if (distance > ability.distance) return;
+        if (distance > ability.value) return;
 
         var dir = new Vector2Int(Mathf.Clamp(diff.x, -1, 1), Mathf.Clamp(diff.y, -1, 1));
         if (dir == Vector2Int.zero) return;

@@ -8,6 +8,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5695121260021062679, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _value.title
+      value: FORWARD STRIKE
+      objectReference: {fileID: 0}
+    - target: {fileID: -5695121260021062679, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _value.description
+      value: <color=other>Attack</color> <color=valuable>{distance}</color> tiles
+        ahead.
+      objectReference: {fileID: 0}
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: _value.ability
       value: 4048788162374008910
@@ -15,6 +24,10 @@ PrefabInstance:
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: 'managedReferences[4048788162374008910]'
       value: Assembly-CSharp TagAttackForward
+      objectReference: {fileID: 0}
+    - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: managedReferences[4048788162374008910]._value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: managedReferences[4048788162374008910].distance

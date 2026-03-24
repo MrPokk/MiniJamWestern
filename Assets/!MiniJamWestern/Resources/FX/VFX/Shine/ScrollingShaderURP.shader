@@ -3,7 +3,7 @@ Shader "Custom/ScrollingShaderURP_WithColor"
     Properties
     {
         [MainTexture] _MainTex ("Texture", 2D) = "white" {}
-        [MainColor] _BaseColor ("Color", Color) = (1, 1, 1, 1) // Цвет материала
+        [MainColor] _BaseColor ("Color", Color) = (1, 1, 1, 1)
         _MoveSpeed ("Move Speed", Vector) = (0.1, 0.1, 0, 0)
         _TextureScale ("Texture Scale", Float) = 1.0
     }
@@ -15,7 +15,7 @@ Shader "Custom/ScrollingShaderURP_WithColor"
             "RenderType"="Transparent" 
             "Queue"="Transparent" 
             "RenderPipeline" = "UniversalPipeline" 
-            "PreviewType"="Plane" // Удобно для спрайтов
+            "PreviewType"="Plane"
         }
 
         Blend SrcAlpha OneMinusSrcAlpha
@@ -34,7 +34,7 @@ Shader "Custom/ScrollingShaderURP_WithColor"
             {
                 float4 positionOS   : POSITION;
                 float2 uv           : TEXCOORD0;
-                float4 color        : COLOR; // Цвет из SpriteRenderer / Vertex Color
+                float4 color        : COLOR;
             };
 
             struct Varyings
@@ -45,10 +45,11 @@ Shader "Custom/ScrollingShaderURP_WithColor"
             };
 
             TEXTURE2D(_MainTex);
-            SAMPLER(sampler_mainTex);
+            SAMPLER(sampler_MainTex);
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _BaseColor;
+                float4 _MainTex_ST;
                 float2 _MoveSpeed;
                 float _TextureScale;
             CBUFFER_END
@@ -56,24 +57,15 @@ Shader "Custom/ScrollingShaderURP_WithColor"
             Varyings vert(Attributes IN)
             {
                 Varyings OUT;
-                
                 OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
-
-                // Расчет UV с учетом масштаба и времени
                 OUT.uv = IN.uv * _TextureScale + (_MoveSpeed * 0.1 * _Time.y);
-                
-                // Прокидываем цвет вершин (SpriteRenderer использует его)
                 OUT.color = IN.color * _BaseColor;
-                
                 return OUT;
             }
 
             half4 frag(Varyings IN) : SV_Target
             {
-                // Выборка текстуры
-                half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_mainTex, IN.uv);
-                
-                // Умножаем текстуру на итоговый цвет (Material Color * Sprite Color)
+                half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv);
                 return texColor * IN.color;
             }
             ENDHLSL

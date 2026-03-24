@@ -124,7 +124,7 @@ public class EnemySkirmisherBrainSystem : IUpdateTurn
 
         if (list.Is<TagAttackForward>(out var forward))
         {
-            return forward.distance;
+            return forward.value;
         }
 
         throw new System.Exception("Ability is null");

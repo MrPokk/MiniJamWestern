@@ -29,7 +29,7 @@ public class EnemyMeleeBrainSystem : IUpdateTurn
             VectorUtility.TryGetStepDirection(myPos, playerPos, out var dir);
 
             list.Is<TagAttackForward>(out var attackForward);
-            var distTarget = attackForward.distance;
+            var distTarget = attackForward.value;
 
             if (EnemyBrainUtility.TryAction<TagAttackForward>(e, list, playerPos, dist <= distTarget, ref state)) return;
             if (EnemyBrainUtility.TryAction<TagMoveForward>(e, list, myPos + dir, true, ref state)) return;

@@ -34,22 +34,29 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         if (provider == null) return;
 
-        //type = CardType.ACTION;
-        //data = provider;
-        //titleLabel.text = provider.name;
-        //// Настройку иконок и описания можно добавить сюда
-        //bottomIcon.gameObject.SetActive(true);
-    }
+        if (!provider.Entity.TryGet<SoldInfoComponent>(out var soldInfo))
+        {
+            throw new("Component SoldInfoComponent not found on entity");
+        }
 
-    //// Инициализация для Перков
-    //public void AssignPerk(object perkData, string name, string desc)
-    //{
-    //    type = CardType.PERK;
-    //    data = perkData;
-    //    titleLabel.text = name;
-    //    descriptionLabel.text = desc;
-    //    bottomIcon.gameObject.SetActive(false);
-    //}
+        _type = CardType.ACTION;
+
+        if (soldInfo.icon != null)
+            _icon.sprite = soldInfo.icon;
+
+        _titleLabel.text = soldInfo.title;
+        _amountLabel.text = soldInfo.amount.ToString();
+
+        var dynamicValue = 0;
+        var ability = provider.Entity.Get<TagActions>().ability;
+
+        if (ability is IComponentValue valueComp)
+        {
+            dynamicValue = valueComp.value;
+        }
+
+        _descriptionLabel.text = AbilityUIConverter.GetFinalText(soldInfo, dynamicValue);
+    }
 
     public void AssignHeal(int amount)
     {

@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SetColorComponentProvider
   _value:
-    color: {r: 0, g: 0.2251563, b: 1, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &-5695121260021062679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,3 +399,5 @@ MonoBehaviour:
     title: 
     description: 
     amount: 0
+    valuable: {r: 1, g: 1, b: 1, a: 1}
+    other: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
