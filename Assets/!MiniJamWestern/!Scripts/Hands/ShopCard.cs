@@ -9,19 +9,25 @@ using BitterECS.Integration.Unity;
 public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public enum CardType { ACTION, PERK, HEAL }
-    [Header("UI References")][SerializeField] private Image _icon;
-    [SerializeField] private TMP_Text _titleLabel; [SerializeField] private TMP_Text _descriptionLabel;
+
+    [Header("UI References")]
+    [SerializeField] private Image _icon;
+    [SerializeField] private TMP_Text _titleLabel;
+    [SerializeField] private TMP_Text _descriptionLabel;
     [SerializeField] private TMP_Text _amountLabel;
 
     [Header("Settings")]
-    [SerializeField] private float _hoverOffset = 50f; [SerializeField] private float _hoverScale = 1.05f;
-    [SerializeField] private float _animDuration = 0.25f;
-    [SerializeField] private Ease _easeType = Ease.OutCubic;
+    [SerializeField] private float _hoverOffset = 50f;
+    [SerializeField] private float _hoverScale = 1.05f;
+    [SerializeField] private float _animDuration = 0.25f; [SerializeField] private Ease _easeType = Ease.OutCubic;
 
     private CardType _type;
     public CardType Type => _type;
     public Action<ShopCard> onSelected;
     public int Price { get; private set; }
+
+    public AbilityViewProvider AbilityView { get; private set; }
+    public int HealthAmount { get; private set; }
 
     private Vector2 _basePosition;
     private Quaternion _baseRotation = Quaternion.identity;
@@ -34,6 +40,8 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         if (!provider.Entity.TryGet<SoldInfoComponent>(out var soldInfo)) return;
 
         _type = CardType.ACTION;
+        AbilityView = provider.Entity.GetProvider<AbilityViewProvider>();
+
         if (soldInfo.icon != null) _icon.sprite = soldInfo.icon;
 
         _titleLabel.text = soldInfo.title;
@@ -53,6 +61,7 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         _type = CardType.HEAL;
         _titleLabel.text = "Heal";
         _descriptionLabel.text = $"Restore {amount} HP";
+        HealthAmount = amount;
         SetPrice(defaultPrice);
     }
 

@@ -36,7 +36,6 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
 
         GFlow.IncreaseToDifficulty();
         EcsSystemStatic.GetSystem<EnemyWaveSystem>().SpawnCurrentWave();
-
         UIController.ClosePopup<UIEffectTransitionPopup>();
 
         EcsSystemStatic.GetSystem<ShopSystem>().OpenShop();

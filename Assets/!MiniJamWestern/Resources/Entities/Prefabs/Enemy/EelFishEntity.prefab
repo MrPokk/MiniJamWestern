@@ -257,6 +257,7 @@ MonoBehaviour:
   _value:
     full: {fileID: -8973585378649061070, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
     empty: {fileID: -1549259546331813239, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
+    slots: []
 --- !u!114 &-7509932521959305941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,11 +321,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1077023981095955262, guid: 4762a400529b0287d811bddaf6f4cca4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.2125
+      value: -0.8625001
       objectReference: {fileID: 0}
     - target: {fileID: 1077023981095955262, guid: 4762a400529b0287d811bddaf6f4cca4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.8000001
       objectReference: {fileID: 0}
     - target: {fileID: 1077023981095955262, guid: 4762a400529b0287d811bddaf6f4cca4, type: 3}
       propertyPath: m_LocalPosition.z

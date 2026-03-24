@@ -20,6 +20,12 @@ public class EnemyWaveSystem : IEcsAutoImplement
         }
 
         Debug.Log($"Spawning wave for tier: {targetTier}");
+        if (targetTier == DifficultyTier.Tier1_Base)
+        {
+            Debug.Log("Add Transfer to");
+            GFlow.AddTransferProgressMax(1);
+            GFlow.AddTransferProgress(1);
+        }
 
         foreach (var group in waveData.enemyGroups)
         {

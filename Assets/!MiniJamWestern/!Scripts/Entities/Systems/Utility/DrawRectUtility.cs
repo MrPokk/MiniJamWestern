@@ -8,7 +8,8 @@ public class DrawRectUtility : MonoBehaviour
     public static DrawRectUtility Instance { get; private set; }
 
     private LineRenderer _lineRend;
-    private Vector2 _initialMousePosition;
+    // ИСПРАВЛЕНИЕ: Используем Vector3, чтобы не терять глубину (Z) при клике в 3D пространстве
+    private Vector3 _initialMousePosition;
     private bool _isDrawing;
 
     [Header("Resolution Settings")]
@@ -39,7 +40,9 @@ public class DrawRectUtility : MonoBehaviour
         _lineRend.positionCount = 0;
         _lineRend.loop = true;
         _lineRend.useWorldSpace = true;
-        _lineRend.sortingOrder = _orderLayer;
+
+        // ИСПРАВЛЕНИЕ: Интерактивная рамка всегда рисуется поверх всего (большой offset)
+        _lineRend.sortingOrder = _orderLayer + 2000;
 
         if (_pixelSprite == null)
         {
@@ -68,7 +71,7 @@ public class DrawRectUtility : MonoBehaviour
     public void DrawStaticRect(int id, Vector3 center, float sizeInPixels, Color color)
     {
         var lr = GetOrCreateLineRenderer(id);
-        SetLineRendererPoints(lr, center, sizeInPixels, color);
+        SetLineRendererPoints(lr, id, center, sizeInPixels, color); // Передали ID
     }
 
     public void HideStaticRect(int id)
@@ -90,7 +93,11 @@ public class DrawRectUtility : MonoBehaviour
         var logicalScale = worldHeight / _referenceScreenHeight;
         var worldSize = sizeInPixels * logicalScale;
 
-        sr.transform.position = new Vector3(center.x, center.y, center.z + 0.01f);
+        // ИСПРАВЛЕНИЕ Z-FIGHTING: 
+        // Создаем уникальное микро-смещение по Z на основе ID, чтобы они физически не сливались.
+        float uniqueZOffset = 0.01f - ((Mathf.Abs(id) % 1000) * 0.0001f);
+
+        sr.transform.position = new Vector3(center.x, center.y, center.z + uniqueZOffset);
         sr.transform.localScale = new Vector3(worldSize, worldSize, 1f);
         sr.color = color;
     }
@@ -120,9 +127,12 @@ public class DrawRectUtility : MonoBehaviour
             lr = go.AddComponent<LineRenderer>();
             lr.loop = true;
             lr.useWorldSpace = true;
-            lr.sortingOrder = _orderLayer + 1;
             lr.material = _lineRend.sharedMaterial;
         }
+
+        // ИСПРАВЛЕНИЕ Z-FIGHTING: Разные ID получают разный sortingOrder. 
+        // +1000 гарантирует, что контуры всегда поверх заливки (Fill).
+        lr.sortingOrder = _orderLayer + 1000 + (Mathf.Abs(id) % 1000);
 
         lr.gameObject.SetActive(true);
         _activeRects[id] = lr;
@@ -143,8 +153,10 @@ public class DrawRectUtility : MonoBehaviour
             go.transform.SetParent(transform);
             sr = go.AddComponent<SpriteRenderer>();
             sr.sprite = _pixelSprite;
-            sr.sortingOrder = _orderLayer;
         }
+
+        // ИСПРАВЛЕНИЕ Z-FIGHTING: Каждый уникальный прямоугольник имеет свой приоритет отрисовки
+        sr.sortingOrder = _orderLayer + (Mathf.Abs(id) % 1000);
 
         sr.gameObject.SetActive(true);
         _activeFills[id] = sr;
@@ -160,7 +172,8 @@ public class DrawRectUtility : MonoBehaviour
         return 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
     }
 
-    private void SetLineRendererPoints(LineRenderer lr, Vector3 center, float sizeInPixels, Color color)
+    // ИСПРАВЛЕНИЕ: Добавлен параметр id
+    private void SetLineRendererPoints(LineRenderer lr, int id, Vector3 center, float sizeInPixels, Color color)
     {
         var worldHeight = GetWorldHeightAtPosition(center);
         var logicalScale = worldHeight / _referenceScreenHeight;
@@ -169,13 +182,18 @@ public class DrawRectUtility : MonoBehaviour
         var worldSize = sizeInPixels * logicalScale;
         var half = worldSize * 0.5f;
 
+        // Микро-смещение по Z для обводок, чтобы они не конфликтовали друг с другом
+        float uniqueZOffset = -((Mathf.Abs(id) % 1000) * 0.0001f);
+        float zPos = center.z + uniqueZOffset;
+
         lr.startWidth = lr.endWidth = worldLineWidth;
         lr.startColor = lr.endColor = color;
         lr.positionCount = 4;
-        lr.SetPosition(0, new Vector3(center.x - half, center.y + half, center.z));
-        lr.SetPosition(1, new Vector3(center.x - half, center.y - half, center.z));
-        lr.SetPosition(2, new Vector3(center.x + half, center.y - half, center.z));
-        lr.SetPosition(3, new Vector3(center.x + half, center.y + half, center.z));
+
+        lr.SetPosition(0, new Vector3(center.x - half, center.y + half, zPos));
+        lr.SetPosition(1, new Vector3(center.x - half, center.y - half, zPos));
+        lr.SetPosition(2, new Vector3(center.x + half, center.y - half, zPos));
+        lr.SetPosition(3, new Vector3(center.x + half, center.y + half, zPos));
     }
 
     private void OnDrawStarted(InputAction.CallbackContext context)
@@ -195,7 +213,7 @@ public class DrawRectUtility : MonoBehaviour
         if (_isDrawing)
         {
             Vector3 currentPos = ControllableSystem.GetPointerPositionWorld();
-            Vector3 center = ((Vector3)_initialMousePosition + currentPos) * 0.5f;
+            Vector3 center = (_initialMousePosition + currentPos) * 0.5f;
 
             var worldHeight = GetWorldHeightAtPosition(center);
             var logicalScale = worldHeight / _referenceScreenHeight;
@@ -208,10 +226,12 @@ public class DrawRectUtility : MonoBehaviour
             _lineRend.endColor = _lineColor;
 
             _lineRend.positionCount = 4;
-            _lineRend.SetPosition(0, new Vector2(_initialMousePosition.x, _initialMousePosition.y));
-            _lineRend.SetPosition(1, new Vector2(_initialMousePosition.x, currentPos.y));
-            _lineRend.SetPosition(2, new Vector2(currentPos.x, currentPos.y));
-            _lineRend.SetPosition(3, new Vector2(currentPos.x, _initialMousePosition.y));
+
+            // ИСПРАВЛЕНИЕ: Используем Vector3, чтобы сохранять Z позицию мыши
+            _lineRend.SetPosition(0, new Vector3(_initialMousePosition.x, _initialMousePosition.y, _initialMousePosition.z));
+            _lineRend.SetPosition(1, new Vector3(_initialMousePosition.x, currentPos.y, _initialMousePosition.z));
+            _lineRend.SetPosition(2, new Vector3(currentPos.x, currentPos.y, currentPos.z));
+            _lineRend.SetPosition(3, new Vector3(currentPos.x, _initialMousePosition.y, currentPos.z));
         }
     }
 }

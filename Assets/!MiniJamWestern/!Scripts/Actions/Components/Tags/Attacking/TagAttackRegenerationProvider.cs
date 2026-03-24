@@ -1,6 +1,7 @@
 ﻿using System;
 using BitterECS.Core;
 using BitterECS.Integration.Unity;
+using UnityEngine;
 
 public class TagAttackRegenerationProvider : ProviderEcs<TagAttackRegeneration>
 {
@@ -8,9 +9,15 @@ public class TagAttackRegenerationProvider : ProviderEcs<TagAttackRegeneration>
 }
 
 [Serializable]
-public struct TagAttackRegeneration : IActionAbility, IAttackAbility
+public struct TagAttackRegeneration : IActionAbility, IAttackAbility, IComponentValue
 {
-    public int value;
+    [SerializeField] private int _value;
+
+    public int value
+    {
+        get => _value;
+        set => _value = value;
+    }
 
     public void Execute(EcsEntity actor, ref GridComponent grid, ListActionComponent list, ref TargetTo target)
     {

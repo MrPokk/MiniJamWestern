@@ -92,11 +92,16 @@ public class ShopSystem : IEcsAutoImplement
     {
         var playerMoney = GetPlayerMoney();
 
-        if (playerMoney >= card.Price)
+        if (playerMoney < card.Price)
         {
-            SpendMoney(card.Price);
-            CloseShop();
+            return;
         }
+
+        EcsSystemStatic.GetSystem<ShopAbilityPurchaseSystem>().ProcessPurchase(card);
+        EcsSystemStatic.GetSystem<ShopHealthPurchaseSystem>().ProcessPurchase(card);
+
+        SpendMoney(card.Price);
+        CloseShop();
     }
 
     private int GetPlayerMoney()

@@ -34,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: managedReferences[4048788235717443667].value
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: managedReferences[4048788162374008910].distance
