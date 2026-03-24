@@ -485,6 +485,27 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_16
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 182
+      y: 10
+      width: 36
+      height: 72
+    spriteID: 8feeb8217c2fb5cad8e6e262aa56b917
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
   tileSetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -505,7 +526,7 @@ ScriptedImporter:
       cellRect:
         x: 21
         y: 88
-        width: 171
+        width: 205
         height: 148
       spriteId: 2bb75264f8809f086bf45dc6fa673836
     linkedCells: []

@@ -19,11 +19,11 @@ public class MoneyVisualSystem : IEcsAutoImplement, IEcsInitSystem
         if (entity.TryGet<MoneyComponent>(out var money) &&
             entity.TryGet<MoneyDisplayComponent>(out var display))
         {
-            Set(display, money.GetCurrentMoney(), money.GetMaxMoney());
+            Set(display, money.GetCurrentMoney());
         }
     }
 
-    private static void Set(MoneyDisplayComponent display, int current, int max)
+    private static void Set(MoneyDisplayComponent display, int current)
     {
         if (display.slots == null) return;
 
@@ -32,11 +32,13 @@ public class MoneyVisualSystem : IEcsAutoImplement, IEcsInitSystem
             var slot = display.slots[i];
             if (slot == null) continue;
 
-            if (i < max)
+            // Если индекс слота меньше текущих денег — показываем его
+            if (i < current)
             {
                 slot.SetActive(true);
-                slot.SetSprite(i < current ? display.full : display.empty);
+                slot.SetSprite(display.full);
             }
+            // Все остальные слоты скрываем
             else
             {
                 slot.SetActive(false);
