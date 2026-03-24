@@ -11,14 +11,14 @@ public struct HealthDisplayComponent
 {
     public Sprite full;
     public Sprite empty;
-    public List<IDisplay> slots;
+    public List<HealthElementProvider> slots;
 }
 
 public class HealthDisplayProvider : ProviderEcs<HealthDisplayComponent>
 {
     protected override void PostRegistration()
     {
-        Value.slots = GetComponentsInChildren<IDisplay>(true).ToList();
+        Value.slots = GetComponentsInChildren<HealthElementProvider>(true).ToList();
     }
 
     private void Start()

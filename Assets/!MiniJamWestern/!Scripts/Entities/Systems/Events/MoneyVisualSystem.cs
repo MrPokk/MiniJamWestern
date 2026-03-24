@@ -1,7 +1,7 @@
 ﻿using System;
 using BitterECS.Core;
 
-public struct UpdateUIEvent { }
+public struct UpdateUIMoneyEvent { }
 
 public class MoneyVisualSystem : IEcsAutoImplement, IEcsInitSystem
 {
@@ -11,7 +11,7 @@ public class MoneyVisualSystem : IEcsAutoImplement, IEcsInitSystem
 
     public void Init()
     {
-        _genericEvent.Subscribe<UpdateUIEvent>(added: OnUpdateUI);
+        _genericEvent.Subscribe<UpdateUIMoneyEvent>(added: OnUpdateUI);
     }
 
     private void OnUpdateUI(EcsEntity entity)

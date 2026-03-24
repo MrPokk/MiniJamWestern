@@ -11,17 +11,17 @@ public struct MoneyDisplayComponent
 {
     public Sprite full;
     public Sprite empty;
-    public List<IDisplay> slots;
+    public List<MoneyElementProvider> slots;
 }
 
 public class MoneyDisplayProvider : ProviderEcs<MoneyDisplayComponent>
 {
     protected override void PostRegistration()
     {
-        Value.slots = GetComponentsInChildren<IDisplay>(true).ToList();
+        Value.slots = GetComponentsInChildren<MoneyElementProvider>(true).ToList();
     }
     private void Start()
     {
-        Entity.AddFrame<UpdateUIEvent>();
+        Entity.AddFrame<UpdateUIMoneyEvent>();
     }
 }
