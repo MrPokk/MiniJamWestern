@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BitterECS.Core;
 using BitterECS.Integration.Unity;
 
@@ -14,13 +15,14 @@ public class AbilityInventoryProvider : ProviderEcs<AbilityInventory>
     protected override void Registration()
     {
         FindAllSlot();
+        UpdateVisibility();
     }
 
     public void AddFirstEmpty(AbilityViewProvider item)
     {
         foreach (var slot in Value.listSlot)
         {
-            if (slot.AddItem(item))
+            if (slot.gameObject.activeSelf && slot.AddItem(item))
             {
                 return;
             }
@@ -29,7 +31,7 @@ public class AbilityInventoryProvider : ProviderEcs<AbilityInventory>
 
     private void FindAllSlot()
     {
-        Value.listSlot = new List<AbilitySlotProvider>(GetComponentsInChildren<AbilitySlotProvider>());
+        Value.listSlot = new List<AbilitySlotProvider>(GetComponentsInChildren<AbilitySlotProvider>(true));
         foreach (var slot in Value.listSlot)
         {
             slot.Entity.Get<AbilitySlotComponent>().abilityInventory = this;
@@ -41,6 +43,20 @@ public class AbilityInventoryProvider : ProviderEcs<AbilityInventory>
         foreach (var slot in Value.listSlot)
         {
             slot.TryRemoveItem();
+        }
+    }
+
+    public void UpdateVisibility()
+    {
+        var groupedSlots = Value.listSlot.GroupBy(s => s.transform.GetSiblingIndex());
+        foreach (var group in groupedSlots)
+        {
+            bool showNext = true;
+            foreach (var slot in group)
+            {
+                slot.gameObject.SetActive(showNext);
+                showNext = slot.Entity.Get<AbilitySlotComponent>().itemEntity.IsAlive;
+            }
         }
     }
 }

@@ -10,7 +10,6 @@ public struct AbilitySlotComponent
     public EcsEntity itemEntity;
     public AbilityInventoryProvider abilityInventory;
 }
-
 [RequireComponent(typeof(BoxCollider2D))]
 public class AbilitySlotProvider : ProviderEcs<AbilitySlotComponent>, IDropHandler
 {
@@ -32,7 +31,9 @@ public class AbilitySlotProvider : ProviderEcs<AbilitySlotComponent>, IDropHandl
 
         if (system.Placing(ownerInventory, Entity, item.Entity))
         {
-            return systemView.Placing(item, this);
+            var result = systemView.Placing(item, this);
+            Value.abilityInventory.UpdateVisibility();
+            return result;
         }
 
         return false;
@@ -49,7 +50,9 @@ public class AbilitySlotProvider : ProviderEcs<AbilitySlotComponent>, IDropHandl
 
         if (system.Extract(ownerInventory, Entity, removedItem))
         {
-            return systemView.Extract(this);
+            var result = systemView.Extract(this);
+            Value.abilityInventory.UpdateVisibility();
+            return result;
         }
 
         return false;

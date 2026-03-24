@@ -51,7 +51,7 @@ public class ShopSystem : IEcsAutoImplement
 
         foreach (var card in cards)
         {
-            if (card.Price <= playerMoney)
+            if (card.Price <= playerMoney && card.Type != ShopCard.CardType.HEAL)
             {
                 hasAffordable = true;
                 break;
