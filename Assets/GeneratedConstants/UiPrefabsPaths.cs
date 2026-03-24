@@ -11,13 +11,16 @@ public static class UiPrefabsPaths
     public const string ACTION_SLOT_MEDIUM = "UI/Prefabs/ActionSlotMedium";
     /// <summary> Provider: AbilitySlotProvider </summary>
     public const string ACTION_SLOT_SMALL = "UI/Prefabs/ActionSlotSmall";
+    /// <summary> Component: ShopCard </summary>
+    public const string UICARD_ELEMENT = "UI/Prefabs/UICardElement";
 
     public static readonly string[] AllPaths = new string[]
     {
         ACTION_SLOT_LARGE,
         ACTION_SLOT_MEDIUM,
         ACTION_SLOT_SMALL,
+        UICARD_ELEMENT,
     };
 
-    public const int COUNT = 3;
+    public const int COUNT = 4;
 }

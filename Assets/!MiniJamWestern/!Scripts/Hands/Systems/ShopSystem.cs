@@ -16,8 +16,7 @@ public class ShopSystem : IEcsAutoImplement
     private ShopCard _cardPrefab;
     public void OpenShop()
     {
-
-        _cardPrefab = new Loader<ShopCard>(CardsPaths.UICARD_ELEMENT).Prefab();
+        _cardPrefab = new Loader<ShopCard>(UiPrefabsPaths.UICARD_ELEMENT).Prefab();
 
         _shopPopup = UIController.OpenPopup<UIShopPopup>();
         _shopPopup.Clear();
@@ -29,7 +28,7 @@ public class ShopSystem : IEcsAutoImplement
         var listCard = new List<ShopCard>();
         for (var i = 0; i < 3; i++)
         {
-            listCard.Add(CreateCard(i));
+            listCard.Add(CreateCard());
         }
 
         var availablePaths = new List<string>(ActionsExtraPaths.AllPaths);
@@ -53,17 +52,12 @@ public class ShopSystem : IEcsAutoImplement
         card.AssignAction(provider);
     }
 
-    private ShopCard CreateCard(int index)
+    private ShopCard CreateCard()
     {
         var card = Object.Instantiate(_cardPrefab);
         card.onSelected = OnCardSelected;
 
         _shopPopup.AddCard(card);
-
-        card.visual.localScale = Vector3.zero;
-        card.visual.DOScale(Vector3.one, 0.5f)
-            .SetDelay(index * 0.2f)
-            .SetEase(Ease.OutBack);
 
         return card;
     }

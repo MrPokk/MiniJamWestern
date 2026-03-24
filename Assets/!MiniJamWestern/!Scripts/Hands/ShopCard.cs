@@ -9,48 +9,41 @@ using BitterECS.Integration.Unity;
 public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public enum CardType { ACTION, PERK, HEAL }
-
     [Header("UI References")]
-    public RectTransform visual;
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _titleLabel;
     [SerializeField] private TMP_Text _descriptionLabel;
     [SerializeField] private TMP_Text _amountLabel;
 
-
     [Header("Settings")]
-    [SerializeField] private float _hoverOffset = 40f;
-    [SerializeField] private float _hoverScale = 1.1f;
-    [SerializeField] private float _animDuration = 0.2f;
+    [SerializeField] private float _hoverOffset = 50f;
+    [SerializeField] private float _hoverScale = 1.05f;
+    [SerializeField] private float _animDuration = 0.25f;
+    [SerializeField] private Ease _easeType = Ease.OutCubic;
 
     private CardType _type;
     public CardType Type => _type;
     public Action<ShopCard> onSelected;
 
-    private Tween _moveTween;
-    private Tween _scaleTween;
+    // Переменные для хранения базового состояния (волна) и текущего смещения (наведение)
+    private Vector2 _basePosition;
+    private Quaternion _baseRotation = Quaternion.identity;
+    private float _currentHoverY = 0f;
+    private float _currentScale = 1f;
 
     public void AssignAction(TagActionsProvider provider)
     {
         if (provider == null) return;
-
-        if (!provider.Entity.TryGet<SoldInfoComponent>(out var soldInfo))
-        {
-            throw new("Component SoldInfoComponent not found on entity");
-        }
+        if (!provider.Entity.TryGet<SoldInfoComponent>(out var soldInfo)) return;
 
         _type = CardType.ACTION;
-
-        if (soldInfo.icon != null)
-            _icon.sprite = soldInfo.icon;
+        if (soldInfo.icon != null) _icon.sprite = soldInfo.icon;
 
         _titleLabel.text = soldInfo.title;
         _amountLabel.text = soldInfo.amount.ToString();
 
         var dynamicValue = 0;
-        var ability = provider.Entity.Get<TagActions>().ability;
-
-        if (ability is IComponentValue valueComp)
+        if (provider.Entity.TryGet<TagActions>(out var tagActions) && tagActions.ability is IComponentValue valueComp)
         {
             dynamicValue = valueComp.value;
         }
@@ -65,6 +58,19 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         _descriptionLabel.text = $"Restore {amount} HP";
     }
 
+    public void SetArcTransform(Vector2 basePosition, Quaternion baseRotation)
+    {
+        _basePosition = basePosition;
+        _baseRotation = baseRotation;
+        ApplyTransform();
+    }
+
+    private void ApplyTransform()
+    {
+        transform.SetLocalPositionAndRotation(_basePosition + new Vector2(0, _currentHoverY), _baseRotation);
+        transform.localScale = new Vector3(_currentScale, _currentScale, 1f);
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         onSelected?.Invoke(this);
@@ -72,19 +78,40 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _moveTween?.Kill();
-        _scaleTween?.Kill();
+        DOTween.Kill(this);
 
-        _moveTween = visual.DOAnchorPosY(_hoverOffset, _animDuration);
-        _scaleTween = visual.DOScale(_hoverScale, _animDuration);
+        DOTween.To(() => _currentHoverY, x => _currentHoverY = x, _hoverOffset, _animDuration)
+            .SetEase(_easeType)
+            .SetTarget(this)
+            .OnUpdate(ApplyTransform)
+            .Play();
+
+        DOTween.To(() => _currentScale, x => _currentScale = x, _hoverScale, _animDuration)
+            .SetEase(_easeType)
+            .SetTarget(this)
+            .OnUpdate(ApplyTransform)
+            .Play();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _moveTween?.Kill();
-        _scaleTween?.Kill();
+        DOTween.Kill(this);
 
-        _moveTween = visual.DOAnchorPosY(0, _animDuration);
-        _scaleTween = visual.DOScale(1f, _animDuration);
+        DOTween.To(() => _currentHoverY, x => _currentHoverY = x, 0f, _animDuration)
+            .SetEase(_easeType)
+            .SetTarget(this)
+            .OnUpdate(ApplyTransform)
+            .Play();
+
+        DOTween.To(() => _currentScale, x => _currentScale = x, 1f, _animDuration)
+            .SetEase(_easeType)
+            .SetTarget(this)
+            .OnUpdate(ApplyTransform)
+            .Play();
+    }
+
+    private void OnDisable()
+    {
+        DOTween.Kill(this);
     }
 }

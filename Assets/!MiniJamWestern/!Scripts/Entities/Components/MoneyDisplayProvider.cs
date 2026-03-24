@@ -7,22 +7,21 @@ using UnityEngine;
 
 
 [Serializable]
-public struct HealthDisplayComponent
+public struct MoneyDisplayComponent
 {
     public Sprite full;
     public Sprite empty;
     public List<IDisplay> slots;
 }
 
-public class HealthDisplayProvider : ProviderEcs<HealthDisplayComponent>
+public class MoneyDisplayProvider : ProviderEcs<MoneyDisplayComponent>
 {
     protected override void PostRegistration()
     {
         Value.slots = GetComponentsInChildren<IDisplay>(true).ToList();
     }
-
     private void Start()
     {
-        Entity.AddFrame<UpdateHealthUIEvent>();
+        Entity.AddFrame<UpdateUIEvent>();
     }
 }

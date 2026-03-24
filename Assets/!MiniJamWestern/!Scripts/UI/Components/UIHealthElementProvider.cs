@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class UIHealthElementProvider : ProviderEcs<UIHealthElementComponent>, IHealthSlot
+public class UIHealthElementProvider : ProviderEcs<UIHealthElementComponent>, IDisplay
 {
     private Image _image;
     protected override void Registration() => _image = GetComponent<Image>();

@@ -8,7 +8,7 @@ public class Startup : EcsUnityRoot<Startup>
 {
 
     [Header("Debug Settings")]
-    [SerializeField] private bool _useDebugWave;
+    [SerializeField] private bool _useDebug;
     [SerializeField] private DifficultyTier _debugTier;
 
     [Header("Main Settings")]
@@ -40,7 +40,10 @@ public class Startup : EcsUnityRoot<Startup>
 
     private void DebugShope()
     {
-        EcsSystemStatic.GetSystem<ShopSystem>().OpenShop();
+        if (_useDebug)
+        {
+            EcsSystemStatic.GetSystem<ShopSystem>().OpenShop();
+        }
     }
 
     private void InitializePlaying()
@@ -52,7 +55,7 @@ public class Startup : EcsUnityRoot<Startup>
 
         var waveSystem = EcsSystemStatic.GetSystem<EnemyWaveSystem>();
         waveSystem.Setup(_complicationSettings);
-        if (_useDebugWave)
+        if (_useDebug)
             waveSystem.SpawnCurrentWave(_debugTier);
         else
             waveSystem.SpawnCurrentWave();

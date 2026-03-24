@@ -107,6 +107,8 @@ MonoBehaviour:
   smoothSpeed: 10
   tiltSensitivity: 1
   maxTilt: 0.4
+  noiseSpeed: 0.3
+  noiseStrength: 0.1
 --- !u!1 &8949300816209093632
 GameObject:
   m_ObjectHideFlags: 0

@@ -54,7 +54,7 @@ Material:
     - _NoiseScale: 7.46
     - _OutlinePixels: 1
     - _OutlineWidth: 0.1
-    - _PixelSize: 12
+    - _PixelSize: 8
     - _Radius: 0.8
     - _Randomness: 0
     - _RotationSpeed: 1
