@@ -9,23 +9,20 @@ using BitterECS.Integration.Unity;
 public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public enum CardType { ACTION, PERK, HEAL }
-    [Header("UI References")]
-    [SerializeField] private Image _icon;
-    [SerializeField] private TMP_Text _titleLabel;
-    [SerializeField] private TMP_Text _descriptionLabel;
+    [Header("UI References")][SerializeField] private Image _icon;
+    [SerializeField] private TMP_Text _titleLabel; [SerializeField] private TMP_Text _descriptionLabel;
     [SerializeField] private TMP_Text _amountLabel;
 
     [Header("Settings")]
-    [SerializeField] private float _hoverOffset = 50f;
-    [SerializeField] private float _hoverScale = 1.05f;
+    [SerializeField] private float _hoverOffset = 50f; [SerializeField] private float _hoverScale = 1.05f;
     [SerializeField] private float _animDuration = 0.25f;
     [SerializeField] private Ease _easeType = Ease.OutCubic;
 
     private CardType _type;
     public CardType Type => _type;
     public Action<ShopCard> onSelected;
+    public int Price { get; private set; }
 
-    // Переменные для хранения базового состояния (волна) и текущего смещения (наведение)
     private Vector2 _basePosition;
     private Quaternion _baseRotation = Quaternion.identity;
     private float _currentHoverY = 0f;
@@ -40,7 +37,7 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         if (soldInfo.icon != null) _icon.sprite = soldInfo.icon;
 
         _titleLabel.text = soldInfo.title;
-        _amountLabel.text = soldInfo.amount.ToString();
+        SetPrice(soldInfo.amount);
 
         var dynamicValue = 0;
         if (provider.Entity.TryGet<TagActions>(out var tagActions) && tagActions.ability is IComponentValue valueComp)
@@ -51,11 +48,18 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         _descriptionLabel.text = AbilityUIConverter.GetFinalText(soldInfo, dynamicValue);
     }
 
-    public void AssignHeal(int amount)
+    public void AssignHeal(int amount, int defaultPrice = 50)
     {
         _type = CardType.HEAL;
         _titleLabel.text = "Heal";
         _descriptionLabel.text = $"Restore {amount} HP";
+        SetPrice(defaultPrice);
+    }
+
+    public void SetPrice(int price)
+    {
+        Price = price;
+        _amountLabel.text = Price.ToString();
     }
 
     public void SetArcTransform(Vector2 basePosition, Quaternion baseRotation)

@@ -29,14 +29,14 @@ public class ObjectAnimator : MonoBehaviour
     private void UpdateRotation()
     {
         if (!rotationEnabled) return;
-        float t = Mathf.Sin(Time.time * rotationSpeed);
+        var t = Mathf.Sin(Time.time * rotationSpeed);
         transform.localEulerAngles = initialRotation + (rotationRange * t);
     }
 
     private void UpdateScale()
     {
         if (!scaleEnabled) return;
-        float t = (Mathf.Sin(Time.time * scaleSpeed) + 1f) / 2f;
+        var t = (Mathf.Sin(Time.time * scaleSpeed) + 1f) / 2f;
         transform.localScale = Vector3.Lerp(minScale, maxScale, t);
     }
 }

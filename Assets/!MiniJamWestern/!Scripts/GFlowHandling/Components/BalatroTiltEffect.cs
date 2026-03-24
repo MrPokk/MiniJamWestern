@@ -31,18 +31,18 @@ public class BalatroTiltEffect : MonoBehaviour
         Vector3 screenPos = _mainCamera.WorldToScreenPoint(transform.position);
 
         // Вычисляем относительное смещение (-1 до 1)
-        float distX = (pointerPos.x - screenPos.x) / Screen.width;
-        float distY = (pointerPos.y - screenPos.y) / Screen.height;
+        var distX = (pointerPos.x - screenPos.x) / Screen.width;
+        var distY = (pointerPos.y - screenPos.y) / Screen.height;
 
         // Определяем направление наклона (инверсия)
         // Если _tiltTowardsPointer = true, то инвертируем базовую логику
-        float directionMultiplier = _tiltTowardsPointer ? -1f : 1f;
+        var directionMultiplier = _tiltTowardsPointer ? -1f : 1f;
 
         // Базовая математика:
         // Поворот вокруг Y зависит от смещения по X
         // Поворот вокруг X зависит от смещения по Y
-        float tiltY = distX * _maxTiltAngle * _tiltSensitivity * directionMultiplier;
-        float tiltX = -distY * _maxTiltAngle * _tiltSensitivity * directionMultiplier;
+        var tiltY = distX * _maxTiltAngle * _tiltSensitivity * directionMultiplier;
+        var tiltX = -distY * _maxTiltAngle * _tiltSensitivity * directionMultiplier;
 
         // Ограничиваем углы
         tiltX = Mathf.Clamp(tiltX, -_maxTiltAngle, _maxTiltAngle);

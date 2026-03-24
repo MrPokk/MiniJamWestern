@@ -12,8 +12,11 @@ public class ShopSystem : IEcsAutoImplement
 {
     public Priority Priority => Priority.High;
 
+    private EcsFilter<TagPlayerMoney, MoneyComponent> _ecsEntities;
+
     private UIShopPopup _shopPopup;
     private ShopCard _cardPrefab;
+
     public void OpenShop()
     {
         _cardPrefab = new Loader<ShopCard>(UiPrefabsPaths.UICARD_ELEMENT).Prefab();
@@ -36,7 +39,30 @@ public class ShopSystem : IEcsAutoImplement
         AssignUniqueAction(listCard[0], availablePaths);
         AssignUniqueAction(listCard[1], availablePaths);
 
-        listCard[2].AssignHeal(25);
+        listCard[2].AssignHeal(3, 1);
+
+        EnsureAffordableCard(listCard);
+    }
+
+    private void EnsureAffordableCard(List<ShopCard> cards)
+    {
+        var playerMoney = GetPlayerMoney();
+        var hasAffordable = false;
+
+        foreach (var card in cards)
+        {
+            if (card.Price <= playerMoney)
+            {
+                hasAffordable = true;
+                break;
+            }
+        }
+
+        if (!hasAffordable && cards.Count > 0)
+        {
+            var randomCard = cards[Random.Range(0, cards.Count)];
+            randomCard.SetPrice(playerMoney);
+        }
     }
 
     private void AssignUniqueAction(ShopCard card, List<string> paths)
@@ -64,7 +90,28 @@ public class ShopSystem : IEcsAutoImplement
 
     private void OnCardSelected(ShopCard card)
     {
-        CloseShop();
+        var playerMoney = GetPlayerMoney();
+
+        if (playerMoney >= card.Price)
+        {
+            SpendMoney(card.Price);
+            CloseShop();
+        }
+    }
+
+    private int GetPlayerMoney()
+    {
+        var money = _ecsEntities.First().Get<MoneyComponent>().GetCurrentMoney();
+        return money;
+    }
+
+    private void SpendMoney(int amount)
+    {
+        var ecsEntity = _ecsEntities.First();
+        ref var moneyComponent = ref ecsEntity.Get<MoneyComponent>();
+        var deltaMoney = moneyComponent.GetCurrentMoney() - amount;
+        moneyComponent.SetMoney(deltaMoney);
+        ecsEntity.AddFrame<PlayerUpdateMoneyUIEvent>();
     }
 
     public void CloseShop()

@@ -43,7 +43,7 @@ public class EnemySkirmisherBrainSystem : IUpdateTurn
         Vector2Int dirToPlayer,
         int dist)
     {
-        int attackDist = GetAttackDistance(list);
+        var attackDist = GetAttackDistance(list);
 
         if (sequence.phase == SkirmisherPhase.Attack && dist > attackDist)
         {

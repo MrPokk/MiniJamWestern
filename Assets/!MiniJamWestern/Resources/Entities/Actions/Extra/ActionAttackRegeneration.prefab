@@ -13,6 +13,10 @@ PrefabInstance:
       value: VAMPIRIC STRIKE
       objectReference: {fileID: 0}
     - target: {fileID: -5695121260021062679, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _value.amount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -5695121260021062679, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: _value.description
       value: <color=other>Heal</color> <color=valuable>{value}</color> on hit.
       objectReference: {fileID: 0}

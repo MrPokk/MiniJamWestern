@@ -39,7 +39,7 @@ public class FollowMouseX : MonoBehaviour
 
         if (invertDirection)
         {
-            float currentWorldX = transform.position.x;
+            var currentWorldX = transform.position.x;
             targetX = 2f * currentWorldX - targetX;
         }
 

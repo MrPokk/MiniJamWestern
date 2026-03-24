@@ -57,12 +57,12 @@ public class TransitionManager : MonoBehaviour
         _transitionMaterial.SetFloat(_seedID, Random.value);
 
         // --- Фаза 1: Закрытие экрана (от 0 до 0.5) ---
-        float time = 0f;
+        var time = 0f;
         while (time < transitionDuration)
         {
             time += Time.deltaTime;
-            float t = Mathf.Clamp01(time / transitionDuration);
-            float progress = Mathf.Lerp(0f, 0.5f, t);
+            var t = Mathf.Clamp01(time / transitionDuration);
+            var progress = Mathf.Lerp(0f, 0.5f, t);
 
             UpdateShaderParameters(progress);
             yield return null;
@@ -80,8 +80,8 @@ public class TransitionManager : MonoBehaviour
         while (time < transitionDuration)
         {
             time += Time.deltaTime;
-            float t = Mathf.Clamp01(time / transitionDuration);
-            float progress = Mathf.Lerp(0.5f, 1.0f, t);
+            var t = Mathf.Clamp01(time / transitionDuration);
+            var progress = Mathf.Lerp(0.5f, 1.0f, t);
 
             UpdateShaderParameters(progress);
             yield return null;

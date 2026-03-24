@@ -11,7 +11,7 @@ public class LookAtPointerSimple : MonoBehaviour
         Vector3 mousePos = ControllableSystem.GetPointerPositionWorld();
 
         Vector2 direction = (Vector2)mousePos - (Vector2)transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         Quaternion targetRot = Quaternion.Euler(0, 0, angle + angleOffset);
 

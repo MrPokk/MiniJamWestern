@@ -55,8 +55,8 @@ public class ScaleWithCameraView : MonoBehaviour
         _lastAspect = _cachedCamera.aspect;
         _lastScaleFactor = _scaleFactor;
 
-        float cameraHeight = 2f * _cachedCamera.orthographicSize;
-        float cameraWidth = cameraHeight * _cachedCamera.aspect;
+        var cameraHeight = 2f * _cachedCamera.orthographicSize;
+        var cameraWidth = cameraHeight * _cachedCamera.aspect;
 
         transform.localScale = new Vector3(cameraWidth * _scaleFactor, cameraHeight * _scaleFactor, 1f);
     }

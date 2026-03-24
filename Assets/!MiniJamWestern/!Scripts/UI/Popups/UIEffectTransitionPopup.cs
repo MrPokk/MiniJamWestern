@@ -54,13 +54,13 @@ public class UIEffectTransitionPopup : UIPopup
 
     private IEnumerator TransitionRoutine(float start, float end, System.Action onComplete = null)
     {
-        float time = 0f;
+        var time = 0f;
         UpdateShaderParameters(start);
 
         while (time < transitionDuration)
         {
             time += Time.deltaTime;
-            float progress = Mathf.Lerp(start, end, Mathf.Clamp01(time / transitionDuration));
+            var progress = Mathf.Lerp(start, end, Mathf.Clamp01(time / transitionDuration));
             UpdateShaderParameters(progress);
             yield return null;
         }
