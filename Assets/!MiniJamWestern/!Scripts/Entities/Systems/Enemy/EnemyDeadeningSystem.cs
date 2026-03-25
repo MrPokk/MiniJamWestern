@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using DG.Tweening;
 using BitterECS.Core;
 using BitterECS.Integration.Unity;
 using UnityEngine;
@@ -18,11 +19,6 @@ public class EnemyDeadeningSystem : IEcsInitSystem
 
     private void OnDead(EcsEntity entity)
     {
-        //if (entity.TryGet<GridComponent>(out var gridCom))
-        //{
-        //    GridInteractionHandler.Extraction(gridCom.currentPosition);
-        //}
-
         var inventory = entity.GetProvider<AbilityInventoryProvider>();
         if (inventory != null)
         {
@@ -30,9 +26,20 @@ public class EnemyDeadeningSystem : IEcsInitSystem
         }
 
         entity.Remove<IsIntentComponent>();
-
         entity.AddFrame<IsPreDestroyDeadEvent>();
-        entity.Destroy();
+
+        if (entity.TryGet<UnityComponent<Transform>>(out var transformComp) && transformComp.value != null)
+        {
+            var transform = transformComp.value;
+            transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
+            {
+                entity.Destroy();
+            }).Play();
+        }
+        else
+        {
+            entity.Destroy();
+        }
     }
 
     private void MoveAllToStorage(AbilityInventoryProvider enemyInventory)
@@ -48,7 +55,7 @@ public class EnemyDeadeningSystem : IEcsInitSystem
         var itemsToMove = enemyInventory.Value.listSlot
             .Where(slot => slot != null && slot.Value.itemEntity.IsAlive)
             .Select(slot => slot.Value.itemEntity.GetProvider<AbilityViewProvider>())
-            .Where(provider => provider != null) // Защита от NullReference
+            .Where(provider => provider != null)
             .ToList();
 
         enemyInventory.ExtractAll();
@@ -61,5 +68,4 @@ public class EnemyDeadeningSystem : IEcsInitSystem
             storageProvider.AddFirstEmpty(item);
         }
     }
-
 }

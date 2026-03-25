@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 
 public class WateryCardController : MonoBehaviour
 {
@@ -55,5 +56,23 @@ public class WateryCardController : MonoBehaviour
 
             _mat.SetVector("_Tilt", finalTilt);
         }
+    }
+
+    public void Flash(Color color, float duration, float maxIntensity = 1f)
+    {
+        if (_mat == null) return;
+
+        DOTween.Kill(_mat);
+
+        _mat.SetColor("_FlashColor", color);
+
+        Sequence sequence = DOTween.Sequence();
+        sequence.SetId(_mat);
+
+        sequence.Append(DOTween.To(() => _mat.GetFloat("_FlashIntensity"), x => _mat.SetFloat("_FlashIntensity", x), maxIntensity, duration * 0.5f));
+        sequence.Append(DOTween.To(() => _mat.GetFloat("_FlashIntensity"), x => _mat.SetFloat("_FlashIntensity", x), 0f, duration * 0.5f));
+        sequence.OnComplete(() => _mat.SetColor("_FlashColor", Color.white));
+
+        sequence.Play();
     }
 }

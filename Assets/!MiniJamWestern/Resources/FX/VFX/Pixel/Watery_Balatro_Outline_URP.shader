@@ -24,6 +24,10 @@ Shader "Custom/Watery_Balatro_Outline_URP"
         _CausticColor ("Caustic Color", Color) = (1, 1, 1, 1)
         _CausticIntensity ("Caustic Intensity", Range(0, 2)) = 1.0
         _CausticScale ("Caustic Scale", Range(1, 20)) = 5.0
+
+        [Header(Flash Effect)]
+        _FlashColor ("Flash Color", Color) = (1, 1, 1, 1)
+        _FlashIntensity ("Flash Intensity", Range(0, 1)) = 0
     }
 
     SubShader
@@ -72,6 +76,8 @@ Shader "Custom/Watery_Balatro_Outline_URP"
                 half4 _CausticColor;
                 float _CausticIntensity;
                 float _CausticScale;
+                half4 _FlashColor;
+                float _FlashIntensity;
             CBUFFER_END
 
             float3 mod289(float3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -109,7 +115,6 @@ Shader "Custom/Watery_Balatro_Outline_URP"
             {
                 float time = _Time.y * _WarpSpeed;
 
-                // 1. Искажение координат (Warp)
                 float2 warp = float2(
                     sin(input.uv.y * _WarpFreq + time),
                     cos(input.uv.x * _WarpFreq + time)
@@ -118,11 +123,9 @@ Shader "Custom/Watery_Balatro_Outline_URP"
                 
                 float2 warpedUV = input.uv + warp;
 
-                // 2. Основной цвет спрайта
                 half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, warpedUV);
                 half4 mainColor = texColor * _BaseColor * input.color;
 
-                // 3. Логика Pixel Perfect Outline (на искаженных координатах)
                 float2 offset = _MainTex_TexelSize.xy * _OutlinePixels;
                 
                 half aUp    = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, warpedUV + float2(0, offset.y)).a;
@@ -133,17 +136,17 @@ Shader "Custom/Watery_Balatro_Outline_URP"
                 half maxAlpha = max(max(aUp, aDown), max(aLeft, aRight));
                 half outlineMask = step(_AlphaThreshold, maxAlpha) * step(mainColor.a, _AlphaThreshold);
 
-                // Применяем обводку
                 mainColor.rgb = lerp(mainColor.rgb, _OutlineColor.rgb, outlineMask);
                 mainColor.a = max(mainColor.a, outlineMask * _OutlineColor.a * input.color.a);
 
-                // 4. Каустика (Блики воды)
                 float2 causticUV = input.uv + _Tilt.xy * 0.15;
                 float c1 = GetCaustics(causticUV + warp, time);
                 float c2 = GetCaustics(causticUV * 1.2 - warp, time * 0.8);
                 
                 half3 finalCaustic = (c1 + c2) * _CausticColor.rgb * _CausticIntensity;
                 mainColor.rgb += finalCaustic * mainColor.a;
+
+                mainColor.rgb = lerp(mainColor.rgb, _FlashColor.rgb, _FlashIntensity);
 
                 return mainColor;
             }

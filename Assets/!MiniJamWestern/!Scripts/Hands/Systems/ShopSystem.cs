@@ -12,6 +12,8 @@ public class ShopSystem : IEcsAutoImplement
 {
     public Priority Priority => Priority.High;
 
+    private const int AmountRegeneration = 3;
+    private const int AmountAddMaxCount = 1;
     private EcsFilter<TagPlayerMoney, MoneyComponent> _ecsEntities;
     private EcsFilter<TagPlayer, HealthComponent> _playerFilter;
 
@@ -43,13 +45,16 @@ public class ShopSystem : IEcsAutoImplement
         var player = _playerFilter.First();
         var healthComp = player.Get<HealthComponent>();
 
-        if (healthComp.GetCurrentHealth() >= healthComp.GetMaxHealth())
+        var currentHealth = healthComp.GetCurrentHealth();
+        var currentHealthMax = healthComp.GetMaxHealth();
+        if (currentHealth >= currentHealthMax
+            && currentHealth >= AmountRegeneration)
         {
-            listCard[2].AssignMaxHealth(1, 3);
+            listCard[2].AssignMaxHealth(AmountAddMaxCount, 3);
         }
         else
         {
-            listCard[2].AssignHeal(3, 3);
+            listCard[2].AssignHeal(AmountRegeneration, 3);
         }
 
         EnsureAffordableCard(listCard);

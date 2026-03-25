@@ -1,4 +1,5 @@
-﻿using System;
+﻿// AttackVisualSystem.cs
+using System;
 using BitterECS.Core;
 using BitterECS.Integration.Unity;
 using DG.Tweening;
@@ -27,11 +28,13 @@ public class AttackVisualSystem : IEcsAutoImplement, IEcsInitSystem
     private void OnDamage(EcsEntity entity)
     {
         ShakeCamera();
+        FlashEntity(entity, Color.white);
     }
 
     private void OnEffect(EcsEntity attacker)
     {
         ShakeEntity(attacker);
+        //  FlashEntity(attacker, Color.white);
     }
 
     private void ShakeCamera()
@@ -51,5 +54,17 @@ public class AttackVisualSystem : IEcsAutoImplement, IEcsInitSystem
         var direction = new Vector3(Mathf.Clamp(diff.x, -1, 1), Mathf.Clamp(diff.y, -1, 1), 0).normalized;
 
         transform.DOPunchPosition(direction * 0.7f, 0.25f, 1, 0.1f).Play();
+    }
+
+    private void FlashEntity(EcsEntity entity, Color color)
+    {
+        if (!entity.TryGet<UnityComponent<Transform>>(out var view)) return;
+        var transform = view.value.transform;
+        var wateryCard = transform.GetComponentInChildren<WateryCardController>();
+        if (wateryCard != null)
+        {
+            wateryCard.Flash(color, 0.4f, 1f);
+            return;
+        }
     }
 }
