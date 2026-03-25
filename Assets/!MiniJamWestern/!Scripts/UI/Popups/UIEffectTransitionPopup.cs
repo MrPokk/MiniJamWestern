@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UINotDependence.Core;
+using BitterECS.Integration.Unity;
 
 public class UIEffectTransitionPopup : UIPopup
 {
@@ -9,7 +10,7 @@ public class UIEffectTransitionPopup : UIPopup
     [SerializeField] private float transitionDuration = 0.5f;
 
     private Material _transitionMaterial;
-    private Coroutine _transitionCoroutine;
+    private CoroutineHandle _transitionHandle;
 
     private readonly int _progressID = Shader.PropertyToID("_Progress");
     private readonly int _bgThresholdID = Shader.PropertyToID("_BackgroundThreshold");
@@ -29,22 +30,22 @@ public class UIEffectTransitionPopup : UIPopup
     {
         base.Open();
 
-        if (_transitionCoroutine != null) StopCoroutine(_transitionCoroutine);
+        if (_transitionHandle.IsValid) CoroutineUtility.Stop(_transitionHandle);
 
         if (_transitionMaterial != null)
         {
             _transitionMaterial.SetFloat(_seedID, Random.value);
-            _transitionCoroutine = StartCoroutine(TransitionRoutine(0f, 0.5f));
+            _transitionHandle = CoroutineUtility.Run(TransitionRoutine(0f, 0.5f));
         }
     }
 
     public override void Close()
     {
-        if (_transitionCoroutine != null) StopCoroutine(_transitionCoroutine);
+        if (_transitionHandle.IsValid) CoroutineUtility.Stop(_transitionHandle);
 
         if (_transitionMaterial != null)
         {
-            _transitionCoroutine = StartCoroutine(TransitionRoutine(0.5f, 1.0f, () => base.Close()));
+            _transitionHandle = CoroutineUtility.Run(TransitionRoutine(0.5f, 1.0f, () => base.Close()));
         }
         else
         {
@@ -66,7 +67,7 @@ public class UIEffectTransitionPopup : UIPopup
         }
 
         UpdateShaderParameters(end);
-        _transitionCoroutine = null;
+        _transitionHandle = CoroutineHandle.Invalid;
         onComplete?.Invoke();
     }
 

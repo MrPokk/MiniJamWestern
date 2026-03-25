@@ -13,12 +13,16 @@ public class AttackingForwardHandler
         else
             VectorUtility.TryGetStepDirection(grid.currentPosition, target.position, out dir);
 
-        for (var i = 1; i <= attackAbility.value; i++)
+        var distance = Mathf.Abs(target.position.x - grid.currentPosition.x) + Mathf.Abs(target.position.y - grid.currentPosition.y);
+        var maxSteps = Mathf.Min(attackAbility.value, distance);
+
+        for (var i = 1; i <= maxSteps; i++)
         {
             var attackPos = grid.currentPosition + (dir * i);
-            GridInteractionHandler.TryGetEntityAt(attackPos, out var entityTo);
+            if (GridInteractionHandler.TryGetEntityAt(attackPos, out var entityTo))
             {
                 entity.AddFrame<IsAttackerTo>(new(entityTo));
+                break;
             }
         }
     }

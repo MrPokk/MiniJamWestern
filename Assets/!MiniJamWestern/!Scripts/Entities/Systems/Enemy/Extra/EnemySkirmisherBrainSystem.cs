@@ -29,7 +29,7 @@ public class EnemySkirmisherBrainSystem : IUpdateTurn
             var dist = EnemyBrainUtility.GetDistance(myPos, playerPos);
             VectorUtility.TryGetStepDirection(myPos, playerPos, out var dirToPlayer);
 
-            ProcessBehaviorPhase(entity, list, ref state, ref sequence, myPos, playerPos, dirToPlayer, dist);
+            ProcessBehaviorPhase(entity, list, ref state, ref sequence, ref grid, myPos, playerPos, dirToPlayer, dist);
         });
     }
 
@@ -38,6 +38,7 @@ public class EnemySkirmisherBrainSystem : IUpdateTurn
         ListActionComponent list,
         ref EnemyStateComponent state,
         ref TagBehaviorSkirmisher sequence,
+        ref GridComponent grid,
         Vector2Int myPos,
         Vector2Int playerPos,
         Vector2Int dirToPlayer,
@@ -60,7 +61,7 @@ public class EnemySkirmisherBrainSystem : IUpdateTurn
             switch (sequence.phase)
             {
                 case SkirmisherPhase.Approach:
-                    actionTaken = TryApproach(entity, list, ref state, ref sequence, myPos, dirToPlayer, dist, attackDist);
+                    actionTaken = TryApproach(entity, list, ref state, ref sequence, ref grid, myPos, dirToPlayer, dist, attackDist);
                     break;
 
                 case SkirmisherPhase.Attack:
@@ -68,7 +69,7 @@ public class EnemySkirmisherBrainSystem : IUpdateTurn
                     break;
 
                 case SkirmisherPhase.Retreat:
-                    actionTaken = TryRetreat(entity, list, ref state, ref sequence, myPos, dirToPlayer);
+                    actionTaken = TryRetreat(entity, list, ref state, ref sequence, ref grid, myPos, dirToPlayer);
                     break;
 
                 case SkirmisherPhase.FinalAttack:
@@ -78,18 +79,44 @@ public class EnemySkirmisherBrainSystem : IUpdateTurn
         }
     }
 
-    private bool TryApproach(EcsEntity entity, ListActionComponent list, ref EnemyStateComponent state, ref TagBehaviorSkirmisher sequence, Vector2Int myPos, Vector2Int dirToPlayer, int dist, int attackDist)
+    private bool TryApproach(
+        EcsEntity entity,
+        ListActionComponent list,
+        ref EnemyStateComponent state,
+        ref TagBehaviorSkirmisher sequence,
+        ref GridComponent grid,
+        Vector2Int myPos,
+        Vector2Int dirToPlayer,
+        int dist,
+        int attackDist)
     {
         if (dist > attackDist)
         {
-            return EnemyBrainUtility.TryAction<TagMoveForward>(entity, list, myPos + dirToPlayer, true, ref state);
+            var targetPos = myPos + dirToPlayer;
+            if (grid.gridPresenter.IsWithinGrid(targetPos))
+            {
+                return EnemyBrainUtility.TryAction<TagMoveForward>(entity, list, targetPos, true, ref state);
+            }
+            else
+            {
+                // Движение невозможно из-за границ поля – переходим в Retreat, чтобы попробовать отступить
+                sequence.phase = SkirmisherPhase.Retreat;
+                return false;
+            }
         }
 
         sequence.phase = SkirmisherPhase.Attack;
         return false;
     }
 
-    private bool TryAttack(EcsEntity entity, ListActionComponent list, ref EnemyStateComponent state, ref TagBehaviorSkirmisher sequence, Vector2Int playerPos, int dist, int attackDist)
+    private bool TryAttack(
+        EcsEntity entity,
+        ListActionComponent list,
+        ref EnemyStateComponent state,
+        ref TagBehaviorSkirmisher sequence,
+        Vector2Int playerPos,
+        int dist,
+        int attackDist)
     {
         var success = EnemyBrainUtility.TryAction<TagAttackForward>(entity, list, playerPos, dist <= attackDist, ref state);
 
@@ -97,17 +124,38 @@ public class EnemySkirmisherBrainSystem : IUpdateTurn
         return success;
     }
 
-    private bool TryRetreat(EcsEntity entity, ListActionComponent list, ref EnemyStateComponent state, ref TagBehaviorSkirmisher sequence, Vector2Int myPos, Vector2Int dirToPlayer)
+    private bool TryRetreat(
+        EcsEntity entity,
+        ListActionComponent list,
+        ref EnemyStateComponent state,
+        ref TagBehaviorSkirmisher sequence,
+        ref GridComponent grid,
+        Vector2Int myPos,
+        Vector2Int dirToPlayer)
     {
         var retreatPos = myPos - dirToPlayer;
-        var success = EnemyBrainUtility.TryAction<TagMoveForward>(entity, list, retreatPos, true, ref state);
-
-        sequence.phase = SkirmisherPhase.FinalAttack;
-
-        return success;
+        if (grid.gridPresenter.IsWithinGrid(retreatPos))
+        {
+            var success = EnemyBrainUtility.TryAction<TagMoveForward>(entity, list, retreatPos, true, ref state);
+            sequence.phase = SkirmisherPhase.FinalAttack;
+            return success;
+        }
+        else
+        {
+            // Отступление невозможно из-за границ – переходим сразу в FinalAttack
+            sequence.phase = SkirmisherPhase.FinalAttack;
+            return false;
+        }
     }
 
-    private bool TryFinalAttack(EcsEntity entity, ListActionComponent list, ref EnemyStateComponent state, ref TagBehaviorSkirmisher sequence, Vector2Int playerPos, int dist, int attackDist)
+    private bool TryFinalAttack(
+        EcsEntity entity,
+        ListActionComponent list,
+        ref EnemyStateComponent state,
+        ref TagBehaviorSkirmisher sequence,
+        Vector2Int playerPos,
+        int dist,
+        int attackDist)
     {
         var success = EnemyBrainUtility.TryAction<TagAttackForward>(entity, list, playerPos, dist <= attackDist, ref state);
 

@@ -1,5 +1,6 @@
 ﻿using BitterECS.Core;
 using UnityEngine;
+
 public class AbilityLongPressSystem : IEcsAutoImplement
 {
     public Priority Priority => Priority.High;
@@ -9,6 +10,8 @@ public class AbilityLongPressSystem : IEcsAutoImplement
 
     private static void OnLongPress(EcsEntity abilityEntity)
     {
+        Debug.Log($"[AbilityLongPressSystem] Long press detected on ability entity: {abilityEntity}");
+
         if (abilityEntity.Has<IsDraggingAbility>()) return;
 
         var view = abilityEntity.GetProvider<AbilityViewProvider>();
@@ -57,14 +60,17 @@ public class AbilityPressSystem : IEcsAutoImplement, IEcsRunSystem
 
     private static void OnPointerDown(EcsEntity entity)
     {
+        Debug.Log($"[AbilityPressSystem] Pointer down on entity: {entity} at {Time.time}");
         var ev = entity.Get<PointerDownAbilityEvent>();
         entity.Add(new PointerDownAbility { pressTime = ev.pressTime });
     }
 
     private static void OnPointerUp(EcsEntity entity)
     {
+        Debug.Log($"[AbilityPressSystem] Pointer up on entity: {entity} at {Time.time}");
         if (entity.Has<PointerDownAbility>())
         {
+            Debug.Log($"[AbilityPressSystem] Short press detected on entity: {entity}");
             entity.AddFrame<ShortPressAbilityEvent>();
             entity.Remove<PointerDownAbility>();
         }
@@ -77,6 +83,7 @@ public class AbilityPressSystem : IEcsAutoImplement, IEcsRunSystem
         {
             if (now - down.pressTime >= HOLD_DURATION)
             {
+                Debug.Log($"[AbilityPressSystem] Long press detected on entity: {entity}");
                 entity.AddFrame<LongPressAbilityEvent>();
                 entity.Remove<PointerDownAbility>();
             }

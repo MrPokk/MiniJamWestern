@@ -5,7 +5,7 @@ public class ShopHealthPurchaseSystem : IEcsAutoImplement
 {
     public Priority Priority => Priority.Medium;
 
-    private EcsFilter<TagPlayer, HealthComponent> _playerFilter;
+    private EcsFilter<TagPlayer, HealthComponent, GridComponent> _playerFilter;
 
     public void ProcessPurchase(ShopCard card)
     {

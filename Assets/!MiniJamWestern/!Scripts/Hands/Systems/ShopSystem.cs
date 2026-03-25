@@ -45,7 +45,7 @@ public class ShopSystem : IEcsAutoImplement
 
         if (healthComp.GetCurrentHealth() >= healthComp.GetMaxHealth())
         {
-            listCard[2].AssignMaxHealth(1, 3);
+            listCard[2].AssignMaxHealth(1, 0);
         }
         else
         {

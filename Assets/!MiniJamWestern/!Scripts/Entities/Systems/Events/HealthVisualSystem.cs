@@ -1,5 +1,6 @@
 ﻿using System;
 using BitterECS.Core;
+using UnityEngine;
 
 public struct UpdateHealthUIEvent { }
 public struct PlayerUpdateHealthUIEvent { }
@@ -10,7 +11,7 @@ public class HealthVisualSystem : IEcsAutoImplement, IEcsInitSystem
 
     private EcsEvent _genericEvent;
     private EcsEvent _playerUIFilterEvent;
-    private EcsFilter<TagPlayer> _playerFilter;
+    private EcsFilter<TagPlayer, GridComponent> _playerFilter;
 
     public void Init()
     {
@@ -25,7 +26,7 @@ public class HealthVisualSystem : IEcsAutoImplement, IEcsInitSystem
 
     private void OnUpdateUI(EcsEntity entity)
     {
-        if (entity.Has<TagPlayer>())
+        if (EcsConditions.Has<TagPlayer, GridComponent>(entity))
         {
             NotifyPlayerUI();
             return;
@@ -43,11 +44,16 @@ public class HealthVisualSystem : IEcsAutoImplement, IEcsInitSystem
         var player = _playerFilter.First();
         if (player.IsAlive)
         {
-            if (player.TryGet<HealthComponent>(out var health))
+            if (!player.TryGet<HealthComponent>(out var health))
             {
-                UIChamberPopup.OnPlayerHealthChanged?.Invoke(health.GetCurrentHealth(), health.GetMaxHealth());
+                return;
             }
+
+            Debug.Log($"Player add heath {health.GetMaxHealth()}   {health.GetCurrentHealth()}");
+            UIChamberPopup.OnPlayerHealthChanged?.Invoke(health.GetCurrentHealth(), health.GetMaxHealth());
         }
+        else
+            Debug.Log("Player add heath");
     }
 
     private static void SetHealth(HealthDisplayComponent display, int current, int max)
