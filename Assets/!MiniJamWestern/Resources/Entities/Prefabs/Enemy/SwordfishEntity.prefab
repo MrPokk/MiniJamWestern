@@ -244,6 +244,8 @@ MonoBehaviour:
       isVisibleInScene: 0
     - tagActionsProvider: {fileID: 5965930271600435582, guid: 791bfca319845fb8489ab6ef739ad591, type: 3}
       isVisibleInScene: 0
+    - tagActionsProvider: {fileID: 5965930271600435582, guid: 58706355cdfb379b3b7226e3b8f62712, type: 3}
+      isVisibleInScene: 0
   _hideSlots: 1
 --- !u!114 &4666372572243402185
 MonoBehaviour:
@@ -329,8 +331,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyComponentProvider
   _value:
-    _maxMoney: 3
-    _currentMoney: 3
+    _maxMoney: 2
+    _currentMoney: 2
 --- !u!114 &6262359659586428034
 MonoBehaviour:
   m_ObjectHideFlags: 0

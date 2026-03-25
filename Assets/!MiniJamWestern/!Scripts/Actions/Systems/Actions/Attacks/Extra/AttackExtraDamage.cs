@@ -21,7 +21,7 @@ public class AttackExtraDamage
         health.SetHealth(newHealth);
         target.AddFrame<IsDamagedEvent>();
 
-        if (newHealth <= 0 && !target.Has<IsDeadEvent>())
+        if (health.GetCurrentHealth() <= 0)
         {
             target.AddFrame<IsDeadEvent>();
         }

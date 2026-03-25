@@ -12,6 +12,8 @@ public static class ActionsPaths
     /// <summary> Provider: TagActionsProvider </summary>
     public const string ACTION_ATTACK_TWO_DISTANSE = "Entities/Actions/ActionAttackTwoDistanse";
     /// <summary> Provider: TagActionsProvider </summary>
+    public const string ACTION_ATTACK_TWO_SIDES = "Entities/Actions/ActionAttackTwoSides";
+    /// <summary> Provider: TagActionsProvider </summary>
     public const string ACTION_MOVE = "Entities/Actions/ActionMove";
     /// <summary> Provider: TagActionsProvider </summary>
     public const string ACTION_ROTATION = "Entities/Actions/ActionRotation";
@@ -21,9 +23,10 @@ public static class ActionsPaths
         ACTION,
         ACTION_ATTACK_ONE_DISTANSE,
         ACTION_ATTACK_TWO_DISTANSE,
+        ACTION_ATTACK_TWO_SIDES,
         ACTION_MOVE,
         ACTION_ROTATION,
     };
 
-    public const int COUNT = 5;
+    public const int COUNT = 6;
 }

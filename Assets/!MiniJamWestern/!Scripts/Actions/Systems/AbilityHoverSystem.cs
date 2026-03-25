@@ -8,6 +8,8 @@ public class AbilityHoverSystem : IEcsRunSystem
     private EcsEvent _ecsEvent = new EcsEvent().Subscribe<IsHoverAbility>(removed: OnResetColor);
     private EcsFilter<IsHoverAbility, SetColorComponent> _ecsEntities;
     private static EcsFilter<OutlineComponent, GridComponent, TagPlayer> _ecsEntitiesOutline;
+    private EcsFilter<TagInventoryEffects> _storageFilter;
+
 
     public void Run()
     {

@@ -10,6 +10,8 @@ public class AbilityLongPressSystem : IEcsAutoImplement
 
     private static void OnLongPress(EcsEntity abilityEntity)
     {
+        if (abilityEntity.Has<IsNotClick>()) return;
+
         Debug.Log($"[AbilityLongPressSystem] Long press detected on ability entity: {abilityEntity}");
 
         if (abilityEntity.Has<IsDraggingAbility>()) return;
@@ -60,14 +62,18 @@ public class AbilityPressSystem : IEcsAutoImplement, IEcsRunSystem
 
     private static void OnPointerDown(EcsEntity entity)
     {
-        Debug.Log($"[AbilityPressSystem] Pointer down on entity: {entity} at {Time.time}");
+        if (entity.Has<IsNotClick>()) return;
+
+        Debug.Log($"[AbilityPressSystem] Pointer down on entity: {entity}");
         var ev = entity.Get<PointerDownAbilityEvent>();
         entity.Add(new PointerDownAbility { pressTime = ev.pressTime });
     }
 
     private static void OnPointerUp(EcsEntity entity)
     {
-        Debug.Log($"[AbilityPressSystem] Pointer up on entity: {entity} at {Time.time}");
+        if (entity.Has<IsNotClick>()) return;
+
+        Debug.Log($"[AbilityPressSystem] Pointer up on entity: {entity}");
         if (entity.Has<PointerDownAbility>())
         {
             Debug.Log($"[AbilityPressSystem] Short press detected on entity: {entity}");

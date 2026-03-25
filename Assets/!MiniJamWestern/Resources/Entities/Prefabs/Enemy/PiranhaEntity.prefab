@@ -151,10 +151,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 321630713065669545}
   - {fileID: 195571559987928640}
   - {fileID: 914038423066369438}
   - {fileID: 824956439267584461}
+  - {fileID: 321630713065669545}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4884942284734336874
@@ -238,11 +238,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UsingActionComponentProvider
   _value:
     abilities:
-    - tagActionsProvider: {fileID: 5965930271600435582, guid: 05c5bd74a398ea748b09be8d610f5c23, type: 3}
+    - tagActionsProvider: {fileID: 5965930271600435582, guid: 5157f3f9eb4eb297091f893c9d2b55b7, type: 3}
       isVisibleInScene: 0
     - tagActionsProvider: {fileID: 5965930271600435582, guid: 6365a8ded0e59f7df838a5a8b5f4b5d5, type: 3}
       isVisibleInScene: 0
     - tagActionsProvider: {fileID: 5965930271600435582, guid: 791bfca319845fb8489ab6ef739ad591, type: 3}
+      isVisibleInScene: 0
+    - tagActionsProvider: {fileID: 5965930271600435582, guid: d4ad46410ace6e61eab95ff67ba25cfe, type: 3}
       isVisibleInScene: 0
   _hideSlots: 1
 --- !u!114 &4666372572243402185
@@ -343,8 +345,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyComponentProvider
   _value:
-    _maxMoney: 3
-    _currentMoney: 3
+    _maxMoney: 2
+    _currentMoney: 2
 --- !u!1001 &396473000980513523
 PrefabInstance:
   m_ObjectHideFlags: 0

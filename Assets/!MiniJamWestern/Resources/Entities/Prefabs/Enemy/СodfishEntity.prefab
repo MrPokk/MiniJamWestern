@@ -343,8 +343,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyComponentProvider
   _value:
-    _maxMoney: 2
-    _currentMoney: 2
+    _maxMoney: 1
+    _currentMoney: 1
 --- !u!1001 &6512396434883731564
 PrefabInstance:
   m_ObjectHideFlags: 0

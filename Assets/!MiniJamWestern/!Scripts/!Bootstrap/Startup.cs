@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 public class Startup : EcsUnityRoot<Startup>
 {
-
     [Header("Debug Settings")]
     [SerializeField] private bool _useDebug;
     [SerializeField] private DifficultyTier _debugTier;
@@ -16,9 +15,13 @@ public class Startup : EcsUnityRoot<Startup>
     [SerializeField] private GridConfig _playfieldConfig;
     [SerializeField] private ComplicationSettings _complicationSettings;
 
-
     [SerializeField] private MonoGridPresenter _playfield;
     [SerializeField] private GridParentObject _gridParent;
+
+    private static EventSystem s_eventSystem;
+    private static CameraObjectComponent s_mainCamera;
+
+    public static CameraObjectComponent MainCamera => s_mainCamera;
 
     protected override void Bootstrap()
     {
@@ -31,11 +34,38 @@ public class Startup : EcsUnityRoot<Startup>
 
     private void InitializeUI()
     {
-        DontDestroyOnLoad(_cameraObject);
-        var attackVisualSystem = EcsSystemStatic.GetSystem<AttackVisualSystem>();
-        attackVisualSystem.Setup(_cameraObject);
+        // Ensure camera singleton
+        if (s_mainCamera == null)
+        {
+            s_mainCamera = _cameraObject;
+            DontDestroyOnLoad(s_mainCamera);
+        }
+        else
+        {
+            // If another camera is assigned, destroy the new one
+            if (_cameraObject != s_mainCamera)
+            {
+                Destroy(_cameraObject.gameObject);
+            }
+        }
 
-        UIInit.Initialize("UI", _cameraObject.CameraTarget);
+        var attackVisualSystem = EcsSystemStatic.GetSystem<AttackVisualSystem>();
+        attackVisualSystem.Setup(s_mainCamera);
+
+        UIInit.Initialize("UI", s_mainCamera.CameraTarget);
+    }
+
+    private void InitializeEventSystem()
+    {
+        if (s_eventSystem == null)
+        {
+            s_eventSystem = FindFirstObjectByType<EventSystem>();
+            if (s_eventSystem == null)
+            {
+                s_eventSystem = new Loader<EventSystem>(SettingsPaths.EVENT_SYSTEM).New();
+            }
+            DontDestroyOnLoad(s_eventSystem);
+        }
     }
 
     private void DebugShope()
@@ -65,10 +95,5 @@ public class Startup : EcsUnityRoot<Startup>
     {
         _playfield = new MonoGridPresenter(_playfieldConfig);
         GridInteractionHandler.Initialize(_playfield, _gridParent.gameObject);
-    }
-
-    private void InitializeEventSystem()
-    {
-        new Loader<EventSystem>(SettingsPaths.EVENT_SYSTEM).New();
     }
 }

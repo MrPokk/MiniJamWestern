@@ -31,6 +31,10 @@ public static class IntentVisualUtility
                 DrawTile(owner, ref tracker, origin - (dir * i), color, salt);
             }
         }
+        else if (abilityCurrent is TagRotation)
+        {
+            return;
+        }
         else
         {
             DrawTile(owner, ref tracker, target, color, salt);

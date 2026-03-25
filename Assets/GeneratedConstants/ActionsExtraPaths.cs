@@ -12,8 +12,6 @@ public static class ActionsExtraPaths
     /// <summary> Provider: TagActionsProvider </summary>
     public const string ACTION_ATTACK_REGENERATION = "Entities/Actions/Extra/ActionAttackRegeneration";
     /// <summary> Provider: TagActionsProvider </summary>
-    public const string ACTION_ATTACK_TWO_SIDES = "Entities/Actions/Extra/ActionAttackTwoSides";
-    /// <summary> Provider: TagActionsProvider </summary>
     public const string ACTION_MOVING_PUSH = "Entities/Actions/Extra/ActionMovingPush";
     /// <summary> Provider: TagActionsProvider </summary>
     public const string ACTION_MOVING_SWAP = "Entities/Actions/Extra/ActionMovingSwap";
@@ -25,11 +23,10 @@ public static class ActionsExtraPaths
         ACTION_ATTACK_EXTRA_DAMAGE,
         ACTION_ATTACK_PUSH,
         ACTION_ATTACK_REGENERATION,
-        ACTION_ATTACK_TWO_SIDES,
         ACTION_MOVING_PUSH,
         ACTION_MOVING_SWAP,
         ACTION_MOVING_THROUGH,
     };
 
-    public const int COUNT = 7;
+    public const int COUNT = 6;
 }

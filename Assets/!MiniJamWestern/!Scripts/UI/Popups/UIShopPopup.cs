@@ -1,10 +1,15 @@
 ﻿using System.Collections.Generic;
+using BitterECS.Core;
+using TMPro;
 using UINotDependence.Core;
 using UnityEngine;
 
 public class UIShopPopup : UIPopup
 {
     public Transform cardContainer;
+    public TMP_Text amountCount;
+    private EcsFilter<TagPlayerMoney, MoneyComponent> _ecsEntities;
+
 
     [SerializeField] private float _space = 200f;
     [SerializeField] private float _amplitude = 100f;
@@ -29,6 +34,7 @@ public class UIShopPopup : UIPopup
         card.transform.SetParent(cardContainer);
         _cards.Add(card);
         UpdateLayout();
+        amountCount.text = _ecsEntities.First().Get<MoneyComponent>().GetCurrentMoney().ToString();
     }
 
     private void Update() => UpdateLayout();

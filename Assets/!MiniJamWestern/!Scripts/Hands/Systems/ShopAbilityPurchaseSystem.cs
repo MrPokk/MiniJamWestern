@@ -23,6 +23,7 @@ public class ShopAbilityPurchaseSystem : IEcsAutoImplement
                 var abilityView = card.AbilityView;
                 var instantiateAbility = Object.Instantiate(abilityView);
                 instantiateAbility.Entity.Add<IsNotDragging>();
+                instantiateAbility.Entity.Add<IsNotClick>();
 
                 storageProvider.AddFirstEmpty(instantiateAbility);
 

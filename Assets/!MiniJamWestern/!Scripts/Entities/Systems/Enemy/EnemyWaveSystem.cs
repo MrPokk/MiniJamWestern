@@ -19,17 +19,22 @@ public class EnemyWaveSystem : IEcsAutoImplement
             return;
         }
 
+        IncreaseToDifficulty(targetTier);
+
+        foreach (var group in waveData.enemyGroups)
+        {
+            SpawnGroup(group);
+        }
+    }
+
+    private static void IncreaseToDifficulty(DifficultyTier targetTier)
+    {
         Debug.Log($"Spawning wave for tier: {targetTier}");
         if (targetTier == DifficultyTier.Tier1_Advanced)
         {
             Debug.Log("Add Transfer to");
             GFlow.AddTransferProgressMax(1);
             GFlow.AddTransferProgress(1);
-        }
-
-        foreach (var group in waveData.enemyGroups)
-        {
-            SpawnGroup(group);
         }
     }
 

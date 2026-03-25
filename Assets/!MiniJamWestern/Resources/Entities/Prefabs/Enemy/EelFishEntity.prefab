@@ -238,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UsingActionComponentProvider
   _value:
     abilities:
-    - tagActionsProvider: {fileID: 5965930271600435582, guid: 05c5bd74a398ea748b09be8d610f5c23, type: 3}
+    - tagActionsProvider: {fileID: 5965930271600435582, guid: 5157f3f9eb4eb297091f893c9d2b55b7, type: 3}
       isVisibleInScene: 0
     - tagActionsProvider: {fileID: 5965930271600435582, guid: 6365a8ded0e59f7df838a5a8b5f4b5d5, type: 3}
       isVisibleInScene: 0
@@ -247,6 +247,8 @@ MonoBehaviour:
     - tagActionsProvider: {fileID: 5965930271600435582, guid: 58706355cdfb379b3b7226e3b8f62712, type: 3}
       isVisibleInScene: 0
     - tagActionsProvider: {fileID: 5965930271600435582, guid: bd6addf4ad9d0d842bba4cd388f6c804, type: 3}
+      isVisibleInScene: 0
+    - tagActionsProvider: {fileID: 5965930271600435582, guid: d4ad46410ace6e61eab95ff67ba25cfe, type: 3}
       isVisibleInScene: 0
   _hideSlots: 1
 --- !u!114 &4666372572243402185
