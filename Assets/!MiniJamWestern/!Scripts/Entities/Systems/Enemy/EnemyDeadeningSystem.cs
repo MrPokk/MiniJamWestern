@@ -19,6 +19,8 @@ public class EnemyDeadeningSystem : IEcsInitSystem
 
     private void OnDead(EcsEntity entity)
     {
+        IntentVisualUtility.ClearVisuals(entity);
+
         var inventory = entity.GetProvider<AbilityInventoryProvider>();
         if (inventory != null)
         {

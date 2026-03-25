@@ -19,7 +19,7 @@ public class EnemyWaveSystem : IEcsAutoImplement
             return;
         }
 
-        IncreaseToDifficulty(targetTier);
+        // IncreaseToDifficulty(targetTier);
 
         foreach (var group in waveData.enemyGroups)
         {

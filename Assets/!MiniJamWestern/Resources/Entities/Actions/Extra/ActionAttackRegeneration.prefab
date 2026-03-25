@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -5695121260021062679, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _value.icon
+      value: 
+      objectReference: {fileID: -181912593, guid: e6c04fd742b0de3b88835b1beb71cfa3, type: 3}
+    - target: {fileID: -5695121260021062679, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: _value.title
       value: VAMPIRIC STRIKE
       objectReference: {fileID: 0}
