@@ -4,22 +4,28 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 using System;
+using System.Collections.Generic;
 using BitterECS.Integration.Unity;
 
 public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public enum CardType { ACTION, PERK, HEAL }
+    public enum CardType { ACTION, PERK, HEAL, MAX_HEALTH }
 
     [Header("UI References")]
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _titleLabel;
     [SerializeField] private TMP_Text _descriptionLabel;
     [SerializeField] private TMP_Text _amountLabel;
+    [SerializeField] private TMP_Text _amountFreeLabel;
+    [SerializeField] private GameObject _amountObject;
 
-    [Header("Settings")]
-    [SerializeField] private float _hoverOffset = 50f;
+    [Header("Settings")][SerializeField] private float _hoverOffset = 50f;
     [SerializeField] private float _hoverScale = 1.05f;
-    [SerializeField] private float _animDuration = 0.25f; [SerializeField] private Ease _easeType = Ease.OutCubic;
+    [SerializeField] private float _animDuration = 0.25f;
+    [SerializeField] private Ease _easeType = Ease.OutCubic; [Header("Setting Affordable")]
+    [SerializeField] private ShimmeringShaderController _shimmeringShaderController;
+    [SerializeField] private Color _color1;
+    [SerializeField] private Color _color2;
 
     private CardType _type;
     public CardType Type => _type;
@@ -33,6 +39,22 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     private Quaternion _baseRotation = Quaternion.identity;
     private float _currentHoverY = 0f;
     private float _currentScale = 1f;
+
+    private void Awake()
+    {
+        _amountFreeLabel.gameObject.SetActive(false);
+
+        _shimmeringShaderController ??= GetComponentInChildren<ShimmeringShaderController>();
+    }
+
+    public void SetAffordable()
+    {
+        if (!_shimmeringShaderController)
+            throw new ArgumentNullException(nameof(_shimmeringShaderController) + "is not set");
+
+        _shimmeringShaderController.Color1 = _color1;
+        _shimmeringShaderController.Color2 = _color2;
+    }
 
     public void AssignAction(TagActionsProvider provider)
     {
@@ -56,7 +78,7 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         _descriptionLabel.text = AbilityUIConverter.GetFinalText(soldInfo, dynamicValue);
     }
 
-    public void AssignHeal(int amount, int defaultPrice = 50)
+    public void AssignHeal(int amount, int defaultPrice)
     {
         _type = CardType.HEAL;
         _titleLabel.text = "Heal";
@@ -65,8 +87,23 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         SetPrice(defaultPrice);
     }
 
+    public void AssignMaxHealth(int amount, int defaultPrice)
+    {
+        _type = CardType.MAX_HEALTH;
+        _titleLabel.text = "Max HP";
+        _descriptionLabel.text = $"+{amount} Max HP";
+        HealthAmount = amount;
+        SetPrice(defaultPrice);
+    }
+
     public void SetPrice(int price)
     {
+        if (price <= 0)
+        {
+            _amountObject.SetActive(false);
+            _amountFreeLabel.gameObject.SetActive(true);
+        }
+
         Price = price;
         _amountLabel.text = Price.ToString();
     }

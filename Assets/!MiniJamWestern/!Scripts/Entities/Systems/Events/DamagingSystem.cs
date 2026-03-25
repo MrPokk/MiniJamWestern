@@ -11,40 +11,33 @@ public class DamagingSystem : IEcsAutoImplement
 
     private static void OnTarget(EcsEntity entity)
     {
-        if (!entity.Has<DamageConstComponent>())
+        if (!entity.TryGet<DamageConstComponent>(out var damageComp))
         {
             return;
         }
 
-        var damageComp = entity.Get<DamageConstComponent>();
         ref var attackerTo = ref entity.Get<IsAttackerTo>();
         ref var targetEntity = ref attackerTo.targetEntity;
 
-        if (!targetEntity.IsAlive)
-        {
-            return;
-        }
-
-        if (!targetEntity.Has<HealthComponent>())
+        if (!targetEntity.IsAlive || !targetEntity.Has<HealthComponent>())
         {
             return;
         }
 
         ref var health = ref targetEntity.Get<HealthComponent>();
 
-        var oldHealth = health.GetCurrentHealth();
-        var damageTaken = damageComp.damage;
-        var deltaHealth = oldHealth - damageTaken;
+        var newHealth = health.GetCurrentHealth() - damageComp.damage;
+        health.SetHealth(newHealth);
 
-        health.SetHealth(deltaHealth);
         targetEntity.AddFrame<IsDamagedEvent>();
 
-        if (deltaHealth <= 0 && !targetEntity.Has<IsDeadEvent>())
+        if (health.GetCurrentHealth() <= 0)
         {
-            targetEntity.AddFrame<IsDeadEvent>();
+            if (!targetEntity.Has<IsDeadEvent>())
+            {
+                targetEntity.AddFrame<IsDeadEvent>();
+            }
         }
-
-        return;
     }
 }
 

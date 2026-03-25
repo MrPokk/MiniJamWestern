@@ -107,6 +107,8 @@ MonoBehaviour:
   smoothSpeed: 10
   tiltSensitivity: 1
   maxTilt: 0.4
+  noiseSpeed: 1.2
+  noiseStrength: 0.1
 --- !u!1 &8949300816209093632
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,8 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponentProvider
   _value:
-    _maxHealth: 4
-    _currentHealth: 4
+    _maxHealth: 5
+    _currentHealth: 5
 --- !u!114 &9017329876921612687
 MonoBehaviour:
   m_ObjectHideFlags: 0

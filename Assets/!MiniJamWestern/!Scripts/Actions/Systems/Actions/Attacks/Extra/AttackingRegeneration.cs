@@ -18,6 +18,7 @@ public class AttackRegenerationHandler
         var newHealth = health.GetCurrentHealth() + healValue;
 
         health.SetHealth(newHealth);
+        entity.AddFrame<UpdateHealthUIEvent>();
 
         Debug.Log($"[Regeneration] Entity {entity.Id} healed +{healValue} HP. Current HP: {newHealth}");
     }

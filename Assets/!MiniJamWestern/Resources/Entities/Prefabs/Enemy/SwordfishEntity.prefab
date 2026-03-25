@@ -208,8 +208,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponentProvider
   _value:
-    _maxHealth: 3
-    _currentHealth: 3
+    _maxHealth: 4
+    _currentHealth: 4
 --- !u!114 &6022195578200359378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,17 +357,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8519356800687042514}
     m_Modifications:
+    - target: {fileID: 357466771869371215, guid: 092e3507b14513c72945e04b922c48b1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.6500001
+      objectReference: {fileID: 0}
+    - target: {fileID: 357466771869371215, guid: 092e3507b14513c72945e04b922c48b1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.8000001
+      objectReference: {fileID: 0}
     - target: {fileID: 4241268660094668104, guid: 092e3507b14513c72945e04b922c48b1, type: 3}
       propertyPath: m_Name
       value: MoneyElement
       objectReference: {fileID: 0}
     - target: {fileID: 4341293568601688562, guid: 092e3507b14513c72945e04b922c48b1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.19691
+      value: 2.14691
       objectReference: {fileID: 0}
     - target: {fileID: 4341293568601688562, guid: 092e3507b14513c72945e04b922c48b1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.16794997
+      value: -0.33205003
       objectReference: {fileID: 0}
     - target: {fileID: 4341293568601688562, guid: 092e3507b14513c72945e04b922c48b1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -400,6 +408,22 @@ PrefabInstance:
     - target: {fileID: 4341293568601688562, guid: 092e3507b14513c72945e04b922c48b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656219503712645403, guid: 092e3507b14513c72945e04b922c48b1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.95000017
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656219503712645403, guid: 092e3507b14513c72945e04b922c48b1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.34999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 8023855362267921869, guid: 092e3507b14513c72945e04b922c48b1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.6500001
+      objectReference: {fileID: 0}
+    - target: {fileID: 8023855362267921869, guid: 092e3507b14513c72945e04b922c48b1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.100000024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -112,7 +112,7 @@ namespace BitterECS.Integration.Unity
                 _linkedEntity.Destroy();
             }
 
-            if (gameObject != null && this != null)
+            if (this != null && gameObject != null)
             {
                 if (gameObject.scene.IsValid())
                 {

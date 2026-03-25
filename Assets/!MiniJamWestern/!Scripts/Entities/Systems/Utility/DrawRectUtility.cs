@@ -8,13 +8,15 @@ public class DrawRectUtility : MonoBehaviour
     public static DrawRectUtility Instance { get; private set; }
 
     private LineRenderer _lineRend;
-    // ИСПРАВЛЕНИЕ: Используем Vector3, чтобы не терять глубину (Z) при клике в 3D пространстве
     private Vector3 _initialMousePosition;
     private bool _isDrawing;
 
     [Header("Resolution Settings")]
     [SerializeField] private float _referenceScreenHeight = 1080f;
-    [SerializeField] private int _orderLayer = 0;
+
+    [Header("Sorting Layer Range")]
+    [SerializeField] private int _minOrderLayer = 0;
+    [SerializeField] private int _maxOrderLayer = 1000;
 
     [Header("Visual Settings")]
     [SerializeField] private float _lineWidthPixels = 1.0f;
@@ -40,9 +42,7 @@ public class DrawRectUtility : MonoBehaviour
         _lineRend.positionCount = 0;
         _lineRend.loop = true;
         _lineRend.useWorldSpace = true;
-
-        // ИСПРАВЛЕНИЕ: Интерактивная рамка всегда рисуется поверх всего (большой offset)
-        _lineRend.sortingOrder = _orderLayer + 2000;
+        _lineRend.sortingOrder = _maxOrderLayer + 1;
 
         if (_pixelSprite == null)
         {
@@ -50,6 +50,14 @@ public class DrawRectUtility : MonoBehaviour
             tex.SetPixel(0, 0, Color.white);
             tex.Apply();
             _pixelSprite = Sprite.Create(tex, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f));
+        }
+    }
+
+    private void OnValidate()
+    {
+        if (_minOrderLayer > _maxOrderLayer)
+        {
+            _minOrderLayer = _maxOrderLayer;
         }
     }
 
@@ -71,7 +79,7 @@ public class DrawRectUtility : MonoBehaviour
     public void DrawStaticRect(int id, Vector3 center, float sizeInPixels, Color color)
     {
         var lr = GetOrCreateLineRenderer(id);
-        SetLineRendererPoints(lr, id, center, sizeInPixels, color); // Передали ID
+        SetLineRendererPoints(lr, id, center, sizeInPixels, color);
     }
 
     public void HideStaticRect(int id)
@@ -92,9 +100,6 @@ public class DrawRectUtility : MonoBehaviour
         var worldHeight = GetWorldHeightAtPosition(center);
         var logicalScale = worldHeight / _referenceScreenHeight;
         var worldSize = sizeInPixels * logicalScale;
-
-        // ИСПРАВЛЕНИЕ Z-FIGHTING: 
-        // Создаем уникальное микро-смещение по Z на основе ID, чтобы они физически не сливались.
         float uniqueZOffset = 0.01f - ((Mathf.Abs(id) % 1000) * 0.0001f);
 
         sr.transform.position = new Vector3(center.x, center.y, center.z + uniqueZOffset);
@@ -130,9 +135,16 @@ public class DrawRectUtility : MonoBehaviour
             lr.material = _lineRend.sharedMaterial;
         }
 
-        // ИСПРАВЛЕНИЕ Z-FIGHTING: Разные ID получают разный sortingOrder. 
-        // +1000 гарантирует, что контуры всегда поверх заливки (Fill).
-        lr.sortingOrder = _orderLayer + 1000 + (Mathf.Abs(id) % 1000);
+        int totalRange = _maxOrderLayer - _minOrderLayer;
+        if (totalRange < 1) totalRange = 1;
+
+        int fillRange = totalRange / 2;
+        int outlineRange = totalRange - fillRange;
+        if (outlineRange <= 0) outlineRange = 1;
+
+        int outlineStartOrder = _minOrderLayer + fillRange;
+        int orderOffset = Mathf.Abs(id) % outlineRange;
+        lr.sortingOrder = outlineStartOrder + orderOffset;
 
         lr.gameObject.SetActive(true);
         _activeRects[id] = lr;
@@ -155,8 +167,14 @@ public class DrawRectUtility : MonoBehaviour
             sr.sprite = _pixelSprite;
         }
 
-        // ИСПРАВЛЕНИЕ Z-FIGHTING: Каждый уникальный прямоугольник имеет свой приоритет отрисовки
-        sr.sortingOrder = _orderLayer + (Mathf.Abs(id) % 1000);
+        int totalRange = _maxOrderLayer - _minOrderLayer;
+        if (totalRange < 1) totalRange = 1;
+
+        int fillRange = totalRange / 2;
+        if (fillRange <= 0) fillRange = 1;
+
+        int orderOffset = Mathf.Abs(id) % fillRange;
+        sr.sortingOrder = _minOrderLayer + orderOffset;
 
         sr.gameObject.SetActive(true);
         _activeFills[id] = sr;
@@ -172,7 +190,6 @@ public class DrawRectUtility : MonoBehaviour
         return 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
     }
 
-    // ИСПРАВЛЕНИЕ: Добавлен параметр id
     private void SetLineRendererPoints(LineRenderer lr, int id, Vector3 center, float sizeInPixels, Color color)
     {
         var worldHeight = GetWorldHeightAtPosition(center);
@@ -181,8 +198,6 @@ public class DrawRectUtility : MonoBehaviour
         var worldLineWidth = Mathf.Max(_lineWidthPixels * logicalScale, minPhysicalScale);
         var worldSize = sizeInPixels * logicalScale;
         var half = worldSize * 0.5f;
-
-        // Микро-смещение по Z для обводок, чтобы они не конфликтовали друг с другом
         float uniqueZOffset = -((Mathf.Abs(id) % 1000) * 0.0001f);
         float zPos = center.z + uniqueZOffset;
 
@@ -226,8 +241,6 @@ public class DrawRectUtility : MonoBehaviour
             _lineRend.endColor = _lineColor;
 
             _lineRend.positionCount = 4;
-
-            // ИСПРАВЛЕНИЕ: Используем Vector3, чтобы сохранять Z позицию мыши
             _lineRend.SetPosition(0, new Vector3(_initialMousePosition.x, _initialMousePosition.y, _initialMousePosition.z));
             _lineRend.SetPosition(1, new Vector3(_initialMousePosition.x, currentPos.y, _initialMousePosition.z));
             _lineRend.SetPosition(2, new Vector3(currentPos.x, currentPos.y, currentPos.z));

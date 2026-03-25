@@ -13,6 +13,7 @@ public class ShopSystem : IEcsAutoImplement
     public Priority Priority => Priority.High;
 
     private EcsFilter<TagPlayerMoney, MoneyComponent> _ecsEntities;
+    private EcsFilter<TagPlayer, HealthComponent> _playerFilter;
 
     private UIShopPopup _shopPopup;
     private ShopCard _cardPrefab;
@@ -39,9 +40,26 @@ public class ShopSystem : IEcsAutoImplement
         AssignUniqueAction(listCard[0], availablePaths);
         AssignUniqueAction(listCard[1], availablePaths);
 
-        listCard[2].AssignHeal(3, 1);
+        var player = _playerFilter.First();
+        var healthComp = player.Get<HealthComponent>();
+
+        if (healthComp.GetCurrentHealth() >= healthComp.GetMaxHealth())
+        {
+            listCard[2].AssignMaxHealth(1, 3);
+        }
+        else
+        {
+            listCard[2].AssignHeal(3, 3);
+        }
 
         EnsureAffordableCard(listCard);
+
+        var playerMoney = GetPlayerMoney();
+        foreach (var card in listCard)
+        {
+            if (playerMoney < card.Price)
+                card.SetAffordable();
+        }
     }
 
     private void EnsureAffordableCard(List<ShopCard> cards)
@@ -51,17 +69,21 @@ public class ShopSystem : IEcsAutoImplement
 
         foreach (var card in cards)
         {
-            if (card.Price <= playerMoney && card.Type != ShopCard.CardType.HEAL)
+            if (card.Price <= playerMoney && card.Type != ShopCard.CardType.HEAL && card.Type != ShopCard.CardType.MAX_HEALTH)
             {
                 hasAffordable = true;
                 break;
             }
         }
 
-        if (!hasAffordable && cards.Count > 0)
+        if (!hasAffordable)
         {
-            var randomCard = cards[Random.Range(0, cards.Count)];
-            randomCard.SetPrice(playerMoney);
+            var actionCards = cards.FindAll(c => c.Type == ShopCard.CardType.ACTION);
+            if (actionCards.Count > 0)
+            {
+                var randomCard = actionCards[Random.Range(0, actionCards.Count)];
+                randomCard.SetPrice(playerMoney);
+            }
         }
     }
 

@@ -1218,7 +1218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Startup
   _useDebug: 1
-  _debugTier: 0
+  _debugTier: 1
   _cameraObject: {fileID: 1697277113}
   _playfieldConfig: {fileID: 11400000, guid: d002ea22b9001b47387db3ca9d089b2d, type: 2}
   _complicationSettings: {fileID: 11400000, guid: 2e4980954013dff14940f8a7887a4227, type: 2}
@@ -1518,7 +1518,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1109092903143952528, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1870,7 +1870,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingOrder: -1000
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2060,7 +2060,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1109092903143952528, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2310,7 +2310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoneyComponentProvider
   _value:
     _maxMoney: 12
-    _currentMoney: 2
+    _currentMoney: 0
 --- !u!114 &1044205449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3156,7 +3156,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1109092903143952528, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3374,7 +3374,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1109092903143952528, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4022,7 +4022,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1109092903143952528, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4995,7 +4995,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrawRect
   _referenceScreenHeight: 218
-  _orderLayer: -5
+  _minOrderLayer: -100
+  _maxOrderLayer: -1
   _lineWidthPixels: 1.24
   _lineColor: {r: 1, g: 1, b: 1, a: 1}
   _pixelSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
@@ -5239,7 +5240,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1109092903143952528, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

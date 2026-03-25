@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BitterECS.Core;
+using DG.Tweening;
 using TMPro;
 using UINotDependence.Core;
 using UnityEngine;
@@ -15,6 +16,9 @@ public class UIChamberPopup : UIPopup
     [SerializeField] private Sprite _emptyHeart;
 
     public static Action<int, int> OnPlayerHealthChanged;
+
+    private int _lastCurrentHealth = -1;
+    private int _lastMaxHealth = -1;
 
     public override void Open()
     {
@@ -40,16 +44,38 @@ public class UIChamberPopup : UIPopup
             var slot = _healthSlots[i];
             if (slot == null) continue;
 
-            if (i < max)
+            bool isNowActive = i < max;
+            bool wasActive = i < _lastMaxHealth;
+
+            if (isNowActive)
             {
                 slot.gameObject.SetActive(true);
-                slot.sprite = (i < current) ? _fullHeart : _emptyHeart;
+
+                bool isNowFull = i < current;
+                bool wasFull = i < _lastCurrentHealth;
+
+                slot.sprite = isNowFull ? _fullHeart : _emptyHeart;
+
+                bool shouldAnimate = !wasActive || (isNowFull && !wasFull);
+
+                if (shouldAnimate)
+                {
+                    slot.transform.DOKill();
+                    var originalScale = Vector3.one;
+                    slot.transform.localScale = Vector3.zero;
+                    slot.transform.DOScale(originalScale, 0.3f)
+                        .SetEase(Ease.OutBack)
+                        .Play();
+                }
             }
             else
             {
                 slot.gameObject.SetActive(false);
             }
         }
+
+        _lastCurrentHealth = current;
+        _lastMaxHealth = max;
     }
 
     private void UpdateHealthFromECS()
