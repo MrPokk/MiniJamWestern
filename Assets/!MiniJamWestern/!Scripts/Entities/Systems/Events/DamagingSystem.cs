@@ -33,10 +33,7 @@ public class DamagingSystem : IEcsAutoImplement
 
         if (health.GetCurrentHealth() <= 0)
         {
-            if (!targetEntity.Has<IsDeadEvent>())
-            {
-                targetEntity.AddFrame<IsDeadEvent>();
-            }
+            targetEntity.AddFrame<IsDeadEvent>();
         }
     }
 }

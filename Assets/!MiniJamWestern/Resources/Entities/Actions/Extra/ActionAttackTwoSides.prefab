@@ -42,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: managedReferences[4048788235717443661]._value
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: managedReferences[4048788162374008910].distance
@@ -59,6 +59,18 @@ PrefabInstance:
     - target: {fileID: 896809214723962877, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: managedReferences[4048788235717443661].distance
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066741636676043921, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _value.color.b
+      value: 0.12941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066741636676043921, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _value.color.g
+      value: 0.11764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066741636676043921, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      propertyPath: _value.color.r
+      value: 0.6039216
       objectReference: {fileID: 0}
     - target: {fileID: 2594039447500818966, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       propertyPath: m_Name
@@ -108,8 +120,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1066741636676043921, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

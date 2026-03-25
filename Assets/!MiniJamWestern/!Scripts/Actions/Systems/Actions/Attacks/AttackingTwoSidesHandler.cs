@@ -15,13 +15,7 @@ public class AttackingTwoSidesHandler
         var dir = new Vector2Int(Mathf.Clamp(diff.x, -1, 1), Mathf.Clamp(diff.y, -1, 1));
         if (dir == Vector2Int.zero) return;
 
-        var forwardPos = grid.currentPosition + dir;
         var backwardPos = grid.currentPosition - dir;
-
-        if (GridInteractionHandler.TryGetEntityAt(forwardPos, out var targetForward))
-        {
-            entity.AddFrame<IsAttackerTo>(new(targetForward));
-        }
 
         if (GridInteractionHandler.TryGetEntityAt(backwardPos, out var targetBackward))
         {

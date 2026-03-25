@@ -10,7 +10,6 @@ public class EnemyDeadeningSystem : IEcsInitSystem
     private EcsEvent _ecsEvent;
 
     private EcsFilter<TagInventoryStorage> _ecsEntities;
-    private EcsFilter<TagEnemy> _ecsEntitiesEnemy;
 
     public void Init()
     {
@@ -19,10 +18,10 @@ public class EnemyDeadeningSystem : IEcsInitSystem
 
     private void OnDead(EcsEntity entity)
     {
-        if (entity.TryGet<GridComponent>(out var gridCom))
-        {
-            GridInteractionHandler.Extraction(gridCom.currentPosition);
-        }
+        //if (entity.TryGet<GridComponent>(out var gridCom))
+        //{
+        //    GridInteractionHandler.Extraction(gridCom.currentPosition);
+        //}
 
         var inventory = entity.GetProvider<AbilityInventoryProvider>();
         if (inventory != null)
@@ -32,10 +31,7 @@ public class EnemyDeadeningSystem : IEcsInitSystem
 
         entity.Remove<IsIntentComponent>();
 
-        if (!entity.Has<IsPreDestroyDeadEvent>())
-        {
-            entity.AddFrame<IsPreDestroyDeadEvent>();
-        }
+        entity.AddFrame<IsPreDestroyDeadEvent>();
         entity.Destroy();
     }
 
