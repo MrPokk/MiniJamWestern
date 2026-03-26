@@ -6,38 +6,38 @@ public class EnemyIntentOutlineSystem : IEcsRunSystem, IEcsInitSystem
 {
     public Priority Priority => Priority.Medium;
 
-    private EcsFilter<IsIntentComponent, EnemyStateComponent, TagEnemy> _filter;
+    private EcsFilter<TagEnemy> _filter;
     private EcsEvent _intentEvent;
-    private EcsEvent _isDeadReset;
 
     public void Init()
     {
         _intentEvent.Subscribe<IsIntentComponent>(removed: OnIntentRemoved);
-        _isDeadReset.Subscribe<IsPreDestroyDeadEvent>(added: OnIntentRemoved);
     }
 
     private void OnIntentRemoved(EcsEntity entity)
     {
         ResetIntentDisplaySystem.OnReset(entity);
+        IntentVisualUtility.ClearVisuals(entity);
     }
 
     public void Run()
     {
-        _filter.For((EcsEntity entity, ref IsIntentComponent intent, ref EnemyStateComponent state, ref TagEnemy _) =>
+        _filter.For((EcsEntity entity, ref TagEnemy _) =>
         {
-            if (state.state == EnemyState.Thinking) return;
+            if (!entity.IsAlive || entity.Has<IsDeadEvent>() || entity.Has<IsPreDestroyDeadEvent>()) return;
 
-            var targetPosition = intent.targetPosition;
-            var color = Color.white;
-
-            if (intent.abilityEntity.IsAlive && intent.abilityEntity.TryGet<SetColorComponent>(out var colorComp))
+            if (entity.TryGet<EnemyStateComponent>(out var state) && state.state != EnemyState.Thinking && entity.TryGet<IsIntentComponent>(out var intent))
             {
-                color = colorComp.color;
-            }
+                var color = Color.white;
+                if (intent.abilityEntity.IsAlive && intent.abilityEntity.TryGet<SetColorComponent>(out var colorComp))
+                {
+                    color = colorComp.color;
+                }
 
-            if (entity.TryGet<OutlineComponent>(out var outlineComp))
-            {
-                outlineComp.SetOutlineColor(color);
+                if (entity.TryGet<OutlineComponent>(out var outlineComp))
+                {
+                    outlineComp.SetOutlineColor(color);
+                }
             }
         });
     }

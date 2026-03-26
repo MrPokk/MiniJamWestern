@@ -1,5 +1,14 @@
-﻿using System;
+﻿
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using BitterECS.Core;
+using BitterECS.Integration.Unity;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using UINotDependence.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,14 +16,30 @@ public class PlayerDeadeningSystem : IEcsAutoImplement
 {
     public Priority Priority => Priority.High;
 
+    private EcsEvent _ecsEvent = new EcsEvent()
+    .SubscribeWhereEntity<IsDeadEvent>(e => e.Has<TagPlayer>(), added: OnPlayerDead);
 
-    private EcsEvent _ecsEvent = new EcsEvent().SubscribeWhereEntity<IsDeadEvent>(e => e.Has<TagPlayer>(), added: OnPlayerDead);
     private static void OnPlayerDead(EcsEntity entity)
     {
+        OnDeadCoroutine(entity).Forget();
+    }
 
-        Debug.Log("Player is Dead next restart ");
-        //TODO: ADD restart 
+    private static async UniTask OnDeadCoroutine(EcsEntity entity)
+    {
+        if (entity.TryGet<UnityComponent<Transform>>(out var transformComp) && transformComp.value != null)
+        {
+            var transform = transformComp.value;
+            transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
+            {
+                entity.Destroy();
+            }).Play();
+        }
 
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        await UniTask.Delay(TimeSpan.FromSeconds(1));
+        UIController.OpenScreen<UIToDefeatFloating>();
+        await UniTask.Delay(TimeSpan.FromSeconds(3));
+        await SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+        UIController.CloseScreen();
     }
 }

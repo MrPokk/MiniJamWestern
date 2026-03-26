@@ -19,6 +19,10 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     [SerializeField] private TMP_Text _amountFreeLabel;
     [SerializeField] private GameObject _amountObject;
 
+    [Header("UI Health References")]
+    [SerializeField] private Sprite _healthMax;
+    [SerializeField] private Sprite _healthRegent;
+
     [Header("Settings")][SerializeField] private float _hoverOffset = 50f;
     [SerializeField] private float _hoverScale = 1.05f;
     [SerializeField] private float _animDuration = 0.25f;
@@ -81,6 +85,7 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public void AssignHeal(int amount, int defaultPrice)
     {
         _type = CardType.HEAL;
+        if (_healthRegent != null) _icon.sprite = _healthRegent;
         _titleLabel.text = "Heal";
         _descriptionLabel.text = $"Restore {amount} HP";
         HealthAmount = amount;
@@ -90,6 +95,7 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public void AssignMaxHealth(int amount, int defaultPrice)
     {
         _type = CardType.MAX_HEALTH;
+        if (_healthMax != null) _icon.sprite = _healthMax;
         _titleLabel.text = "Max HP";
         _descriptionLabel.text = $"+{amount} Max HP";
         HealthAmount = amount;

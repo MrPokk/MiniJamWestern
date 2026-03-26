@@ -1,10 +1,34 @@
 fileFormatVersion: 2
-guid: e6c04fd742b0de3b88835b1beb71cfa3
+guid: f5183ac06850b6a649e35c99d667b41b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7622179969359323607
-    second: card_action_atlas_0
+      213: -6358719283302392559
+    second: ui_logo_atlas_0
+  - first:
+      213: -4014123448758717154
+    second: ui_logo_atlas_1
+  - first:
+      213: -2251705434719662188
+    second: ui_logo_atlas_2
+  - first:
+      213: 4319066893956371208
+    second: ui_logo_atlas_3
+  - first:
+      213: -1858647073781291522
+    second: ui_logo_atlas_4
+  - first:
+      213: 1514431143592761739
+    second: ui_logo_atlas_5
+  - first:
+      213: 5042039287898005678
+    second: ui_logo_atlas_6
+  - first:
+      213: 277032875157523033
+    second: ui_logo_atlas_7
+  - first:
+      213: -8199572342637951083
+    second: ui_logo_atlas_8
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,9 +64,9 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -100,13 +124,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: card_action_atlas_0
+      name: ui_logo_atlas_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 205
-        width: 75
-        height: 75
+        x: 33
+        y: 182
+        width: 197
+        height: 68
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,20 +139,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 92e5d30b3b3983690800000000000000
-      internalID: -7622179969359323607
+      spriteID: 11d9554708a41c7a0800000000000000
+      internalID: -6358719283302392559
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: card_action_atlas_1
+      name: ui_logo_atlas_1
       rect:
         serializedVersion: 2
-        x: 92
-        y: 205
-        width: 75
-        height: 75
+        x: 62
+        y: 106
+        width: 137
+        height: 70
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,108 +161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9e1e47be8d58ed46bfa12716fac60f2
-      internalID: -181912593
+      spriteID: 4ebf36d199fbc2dbdbcab4aeca0780fd
+      internalID: -4014123448758717154
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: card_action_atlas_2
+      name: ui_logo_atlas_2
       rect:
         serializedVersion: 2
-        x: 174
-        y: 205
-        width: 75
-        height: 75
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 132e03f454ae6afc08a45dc9f267beea
-      internalID: -698063145
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: card_action_atlas_3
-      rect:
-        serializedVersion: 2
-        x: 13
-        y: 94
-        width: 75
-        height: 75
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f3023a04740ff96e18edf41b7b6d2dab
-      internalID: -694260074
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: card_action_atlas_4
-      rect:
-        serializedVersion: 2
-        x: 88
-        y: 94
-        width: 75
-        height: 75
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4d11499c6dfabd6a09ca60a7ae983da4
-      internalID: 1532900312
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: card_action_atlas_5
-      rect:
-        serializedVersion: 2
-        x: 166
-        y: 94
-        width: 75
-        height: 75
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5db20a328659e785b94d75712839d11c
-      internalID: 856758884
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: card_action_atlas_6
-      rect:
-        serializedVersion: 2
-        x: 92
-        y: 4
-        width: 75
-        height: 75
+        x: 58
+        y: 0
+        width: 150
+        height: 106
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -247,30 +183,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f90747a6fb68176394233bb999a2641
-      internalID: 1319299978
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: card_action_atlas_7
-      rect:
-        serializedVersion: 2
-        x: 167
-        y: 4
-        width: 75
-        height: 75
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e7a35fb8d27b61f20ab112d0cf55e0c0
-      internalID: 250599007
+      spriteID: aec142ca02bf77c60b868bff770a8e81
+      internalID: -2251705434719662188
       vertices: []
       indices: 
       edges: []
@@ -279,7 +193,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8a963d74ffa2cf619ae19c2ce267ff26
+    spriteID: 1e4f135138b439b3eab8a8ac7fe78add
     internalID: 0
     vertices: []
     indices: 
@@ -291,14 +205,15 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      card_action_atlas_0: -7622179969359323607
-      card_action_atlas_1: -181912593
-      card_action_atlas_2: -698063145
-      card_action_atlas_3: -694260074
-      card_action_atlas_4: 1532900312
-      card_action_atlas_5: 856758884
-      card_action_atlas_6: 1319299978
-      card_action_atlas_7: 250599007
+      ui_logo_atlas_0: -6358719283302392559
+      ui_logo_atlas_1: -4014123448758717154
+      ui_logo_atlas_2: -2251705434719662188
+      ui_logo_atlas_3: 4319066893956371208
+      ui_logo_atlas_4: -1858647073781291522
+      ui_logo_atlas_5: 1514431143592761739
+      ui_logo_atlas_6: 5042039287898005678
+      ui_logo_atlas_7: 277032875157523033
+      ui_logo_atlas_8: -8199572342637951083
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

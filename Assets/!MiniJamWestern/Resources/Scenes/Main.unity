@@ -2210,8 +2210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a01f04b61e75359b36c078d03528b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Startup
-  _useDebug: 1
-  _debugTier: 3
+  _useDebug: 0
+  _useDebugShop: 0
+  _debugTier: 4
   _cameraObject: {fileID: 1697277113}
   _playfieldConfig: {fileID: 11400000, guid: d002ea22b9001b47387db3ca9d089b2d, type: 2}
   _complicationSettings: {fileID: 11400000, guid: 2e4980954013dff14940f8a7887a4227, type: 2}

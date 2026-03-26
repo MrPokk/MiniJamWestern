@@ -9,7 +9,6 @@ public class EnemyDeadeningSystem : IEcsInitSystem
 {
     public Priority Priority => Priority.High;
     private EcsEvent _ecsEvent;
-
     private EcsFilter<TagInventoryStorage> _ecsEntities;
 
     public void Init()
@@ -21,13 +20,22 @@ public class EnemyDeadeningSystem : IEcsInitSystem
     {
         IntentVisualUtility.ClearVisuals(entity);
 
-        var inventory = entity.GetProvider<AbilityInventoryProvider>();
-        if (inventory != null)
+        entity.Remove<IsIntentComponent>();
+        entity.Remove<EnemyStateComponent>();
+
+        try
         {
-            MoveAllToStorage(inventory);
+            var inventory = entity.GetProvider<AbilityInventoryProvider>();
+            if (inventory != null)
+            {
+                MoveAllToStorage(inventory);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"[EnemyDeadeningSystem] Ошибка переноса лута в хранилище: {ex}");
         }
 
-        entity.Remove<IsIntentComponent>();
         entity.AddFrame<IsPreDestroyDeadEvent>();
 
         if (entity.TryGet<UnityComponent<Transform>>(out var transformComp) && transformComp.value != null)
@@ -35,23 +43,23 @@ public class EnemyDeadeningSystem : IEcsInitSystem
             var transform = transformComp.value;
             transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
             {
-                entity.Destroy();
+                if (entity.IsAlive)
+                {
+                    IntentVisualUtility.ClearVisuals(entity); // Контрольный вызов
+                    entity.Destroy();
+                }
             }).Play();
         }
         else
         {
+            IntentVisualUtility.ClearVisuals(entity);
             entity.Destroy();
         }
     }
 
     private void MoveAllToStorage(AbilityInventoryProvider enemyInventory)
     {
-        if (_ecsEntities.Count == 0)
-        {
-            Debug.LogWarning("[EnemyDeadeningSystem] Хранилище не найдено! Лут уничтожен вместе с врагом.");
-            return;
-        }
-
+        if (_ecsEntities.Count == 0) return;
         if (enemyInventory.Value.listSlot == null) return;
 
         var itemsToMove = enemyInventory.Value.listSlot

@@ -8,6 +8,7 @@ public class UIEffectTransitionPopup : UIPopup
 {
     [SerializeField] private Image transitionImage;
     [SerializeField] private float transitionDuration = 0.5f;
+    public float TransitionDuration => transitionDuration;
 
     private Material _transitionMaterial;
     private CoroutineHandle _transitionHandle;

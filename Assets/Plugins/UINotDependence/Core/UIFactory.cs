@@ -15,8 +15,8 @@ namespace UINotDependence.Core
             if (rootManager.IsInitialized) return rootManager;
 
             var canvas = CreateCanvas(rootManager.transform, uiCamera);
-            var screens = CreateUIContainer("UIScreens", canvas);
             var popups = CreateUIContainer("UIPopups", canvas);
+            var screens = CreateUIContainer("UIScreens", canvas);
 
             rootManager.Initialize(new WindowsContainer(popups, screens, binders));
             Object.DontDestroyOnLoad(rootManager.gameObject);

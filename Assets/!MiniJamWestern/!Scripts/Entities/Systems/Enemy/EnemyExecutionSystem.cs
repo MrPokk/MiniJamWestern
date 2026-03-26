@@ -1,4 +1,5 @@
 ﻿using BitterECS.Core;
+using System.Collections.Generic; // Добавьте этот namespace
 
 public class EnemyExecutionSystem : IUpdateTurn
 {
@@ -6,11 +7,25 @@ public class EnemyExecutionSystem : IUpdateTurn
 
     private EcsFilter<GridComponent, ListActionComponent, IsIntentComponent, EnemyStateComponent> _enemies;
 
+    private readonly List<EcsEntity> _entitiesBuffer = new();
+
     public void RefreshTurn()
     {
-        _enemies.For((EcsEntity entity, ref GridComponent grid, ref ListActionComponent list, ref IsIntentComponent intent, ref EnemyStateComponent state) =>
+        _entitiesBuffer.Clear();
+        _enemies.For((EcsEntity entity, ref GridComponent _, ref ListActionComponent _, ref IsIntentComponent _, ref EnemyStateComponent _) =>
         {
-            if (!entity.IsAlive) return;
+            _entitiesBuffer.Add(entity);
+        });
+
+        foreach (var entity in _entitiesBuffer)
+        {
+            if (!entity.IsAlive) continue;
+            if (!entity.Has<IsIntentComponent>() || !entity.Has<EnemyStateComponent>()) continue;
+
+            ref var grid = ref entity.Get<GridComponent>();
+            ref var list = ref entity.Get<ListActionComponent>();
+            ref var intent = ref entity.Get<IsIntentComponent>();
+            ref var state = ref entity.Get<EnemyStateComponent>();
 
             switch (state.state)
             {
@@ -22,7 +37,7 @@ public class EnemyExecutionSystem : IUpdateTurn
                     ProcessExecution(entity, ref grid, list, ref intent, ref state);
                     break;
             }
-        });
+        }
     }
 
     private void ProcessPreparation(EcsEntity entity, GridComponent grid, ref IsIntentComponent intent, ref EnemyStateComponent state)
@@ -43,6 +58,7 @@ public class EnemyExecutionSystem : IUpdateTurn
         AbilityLogicRouter.Execute(entity, intent.chosenAbility, ref grid, list, ref target);
 
         state.state = EnemyState.Thinking;
+
         entity.Remove<IsIntentComponent>();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using BitterECS.Core;
 using BitterECS.Integration.Unity;
 using UINotDependence.Core;
@@ -12,6 +13,8 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
     private EcsFilter<TagEnemy, GridComponent> _enemies;
     private CoroutineHandle _isTransitioning;
 
+    private bool _isFinal;
+
     public void Run()
     {
         if (_enemies.Count > 0) return;
@@ -20,14 +23,26 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
         _isTransitioning = CoroutineUtility.Run(WaveTransitionSequence());
     }
 
+    private void OnPlayerFinal()
+    {
+        UIController.OpenScreen<UIToThanksPlayFloating>();
+    }
+
     private IEnumerator WaveTransitionSequence()
     {
+
+        if (GFlow.GState.CurrentDifficulty == DifficultyTier.Tier4_Advanced)
+        {
+            OnPlayerFinal();
+            yield break;
+        }
+
         var playerEntity = _player.First();
         var currentPos = playerEntity.Get<GridComponent>().currentPosition;
 
         var maxY = GetMaxY(currentPos);
 
-        UIController.OpenPopup<UIEffectTransitionPopup>();
+        var directions = UIController.OpenPopup<UIEffectTransitionPopup>().TransitionDuration;
         yield return new WaitForSeconds(0.5f);
 
         var minY = GetMinY(currentPos);
@@ -37,6 +52,7 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
         GFlow.IncreaseToDifficulty();
         EcsSystemStatic.GetSystem<EnemyWaveSystem>().SpawnCurrentWave();
         UIController.ClosePopup<UIEffectTransitionPopup>();
+        yield return new WaitForSeconds(directions);
 
         EcsSystemStatic.GetSystem<ShopSystem>().OpenShop();
 
@@ -72,4 +88,5 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
     {
         return (minY + maxY) / 2;
     }
+
 }

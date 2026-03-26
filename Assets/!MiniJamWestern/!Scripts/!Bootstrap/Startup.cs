@@ -1,4 +1,5 @@
-﻿using BitterECS.Core;
+﻿using System;
+using BitterECS.Core;
 using BitterECS.Integration.Unity;
 using UINotDependence.Core;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class Startup : EcsUnityRoot<Startup>
 {
     [Header("Debug Settings")]
     [SerializeField] private bool _useDebug;
+    [SerializeField] private bool _useDebugShop;
     [SerializeField] private DifficultyTier _debugTier;
 
     [Header("Main Settings")]
@@ -20,21 +22,47 @@ public class Startup : EcsUnityRoot<Startup>
 
     private static EventSystem s_eventSystem;
     private static CameraObjectComponent s_mainCamera;
+    private static bool s_isFirstStart;
 
     public static CameraObjectComponent MainCamera => s_mainCamera;
 
+
     protected override void Bootstrap()
     {
+#if !UNITY_EDITOR
+        _useDebug = false;
+#endif
+
         InitializeUI();
+        InitializeToStartFloating();
         InitializeGrid();
         InitializeEventSystem();
         InitializePlaying();
         DebugShope();
     }
 
+    private void InitializeToStartFloating()
+    {
+        if (s_isFirstStart != false && !_useDebug)
+        {
+            return;
+        }
+
+        s_isFirstStart = true;
+
+        UIToStartFloating.OnFloatingFinished += OpenTransitionPopup;
+        UIController.OpenScreen<UIToStartFloating>();
+    }
+
+    private void OpenTransitionPopup()
+    {
+        UIToStartFloating.OnFloatingFinished -= OpenTransitionPopup;
+        UIController.OpenPopup<UIEffectTransitionPopup>();
+        UIController.ClosePopup<UIEffectTransitionPopup>();
+    }
+
     private void InitializeUI()
     {
-        // Ensure camera singleton
         if (s_mainCamera == null)
         {
             s_mainCamera = _cameraObject;
@@ -42,7 +70,6 @@ public class Startup : EcsUnityRoot<Startup>
         }
         else
         {
-            // If another camera is assigned, destroy the new one
             if (_cameraObject != s_mainCamera)
             {
                 Destroy(_cameraObject.gameObject);
@@ -70,7 +97,7 @@ public class Startup : EcsUnityRoot<Startup>
 
     private void DebugShope()
     {
-        if (_useDebug)
+        if (_useDebugShop)
         {
             EcsSystemStatic.GetSystem<ShopSystem>().OpenShop();
         }

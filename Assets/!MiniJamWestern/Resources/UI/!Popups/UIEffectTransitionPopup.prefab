@@ -52,7 +52,7 @@ MonoBehaviour:
   _btnCloseObject: {fileID: 0}
   _btnAlternativeCloseObject: {fileID: 0}
   transitionImage: {fileID: 5310042932152490557}
-  transitionDuration: 0.5
+  transitionDuration: 1
 --- !u!1 &6480123119946139973
 GameObject:
   m_ObjectHideFlags: 0

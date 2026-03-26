@@ -64,7 +64,7 @@ public class UIAnimationComponent : MonoBehaviour
         });
     }
 
-    public void Animate(UIAnimationPreset preset, Action onComplete = null)
+    private void Animate(UIAnimationPreset preset, Action onComplete = null)
     {
         KillCurrent();
 
