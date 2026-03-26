@@ -9,6 +9,7 @@ public struct AbilitySlotComponent
 {
     public EcsEntity itemEntity;
     public AbilityInventoryProvider abilityInventory;
+    public Vector3 initialLocalPos;
 }
 [RequireComponent(typeof(BoxCollider2D))]
 public class AbilitySlotProvider : ProviderEcs<AbilitySlotComponent>, IDropHandler

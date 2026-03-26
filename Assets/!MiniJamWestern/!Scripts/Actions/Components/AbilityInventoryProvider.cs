@@ -34,7 +34,9 @@ public class AbilityInventoryProvider : ProviderEcs<AbilityInventory>
         Value.listSlot = new List<AbilitySlotProvider>(GetComponentsInChildren<AbilitySlotProvider>(true));
         foreach (var slot in Value.listSlot)
         {
-            slot.Entity.Get<AbilitySlotComponent>().abilityInventory = this;
+            ref var slotComp = ref slot.Entity.Get<AbilitySlotComponent>();
+            slotComp.abilityInventory = this;
+            slotComp.initialLocalPos = slot.transform.localPosition;
         }
     }
 
