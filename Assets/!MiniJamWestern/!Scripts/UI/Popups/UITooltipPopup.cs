@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using EasyTextEffects;
+using TMPro;
 using UINotDependence.Core;
 using UnityEngine;
 
@@ -20,25 +21,48 @@ public class UITooltipPopup : UIPopup
 
     public void Bind(SoldInfoComponent soldInfoComponent, int dynamicValue)
     {
+        InitNameText(soldInfoComponent);
+        InitDescriptionText(soldInfoComponent, dynamicValue);
+        InitAbilityText(soldInfoComponent);
+    }
+
+    private void InitNameText(SoldInfoComponent soldInfoComponent)
+    {
         if (_nameText)
         {
             var title = soldInfoComponent.title;
             title = title.Replace("\r\n", " ").Replace("\n", " ");
             _nameText.text = title;
+            RefreshTextEffect(_nameText);
         }
+    }
 
+    private void InitDescriptionText(SoldInfoComponent soldInfoComponent, int dynamicValue)
+    {
         if (_descriptionText)
         {
             var finalDescription = AbilityUIConverter.GetFinalText(soldInfoComponent, dynamicValue);
             _descriptionText.text = finalDescription;
+            RefreshTextEffect(_descriptionText);
         }
+    }
 
+    private void InitAbilityText(SoldInfoComponent soldInfoComponent)
+    {
         if (_abilityText)
         {
             var amountText = soldInfoComponent.amount > 0 ? $"Amount: {soldInfoComponent.amount}" : "";
             _abilityText.text = amountText;
             _abilityText.gameObject.SetActive(!string.IsNullOrEmpty(amountText));
+            if (_abilityText.gameObject.activeSelf)
+                RefreshTextEffect(_abilityText);
         }
+    }
+
+    private void RefreshTextEffect(TMP_Text textComponent)
+    {
+        if (textComponent == null) return;
+        if (textComponent.TryGetComponent<TextEffect>(out var textEffect)) textEffect.Refresh();
     }
 
     public override void Open()
