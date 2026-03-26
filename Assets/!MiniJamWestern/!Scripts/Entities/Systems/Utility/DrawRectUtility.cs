@@ -76,6 +76,30 @@ public class DrawRectUtility : MonoBehaviour
         }
     }
 
+    public void DrawStaticLine(int id, Vector3 start, Vector3 end, float widthInPixels, Color color)
+    {
+        var lr = GetOrCreateLineRenderer(id);
+
+        var worldHeight = GetWorldHeightAtPosition((start + end) * 0.5f);
+        var logicalScale = worldHeight / _referenceScreenHeight;
+        var minPhysicalScale = worldHeight / Screen.height;
+        var worldLineWidth = Mathf.Max(widthInPixels * logicalScale, minPhysicalScale);
+
+        var uniqueZOffset = -(Mathf.Abs(id) % 1000 * 0.0001f);
+
+        lr.startWidth = lr.endWidth = worldLineWidth;
+        lr.startColor = lr.endColor = color;
+        lr.positionCount = 2; // Для линии нужно только 2 точки
+
+        lr.SetPosition(0, new Vector3(start.x, start.y, start.z + uniqueZOffset));
+        lr.SetPosition(1, new Vector3(end.x, end.y, end.z + uniqueZOffset));
+    }
+
+    public void HideStaticLine(int id)
+    {
+        HideStaticRect(id); // Используем ту же логику пула, что и у прямоугольников
+    }
+
     public void DrawStaticRect(int id, Vector3 center, float sizeInPixels, Color color)
     {
         var lr = GetOrCreateLineRenderer(id);
