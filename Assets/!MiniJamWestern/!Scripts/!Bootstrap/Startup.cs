@@ -1,6 +1,7 @@
 ﻿using System;
 using BitterECS.Core;
 using BitterECS.Integration.Unity;
+using InGame.Script.Component_Sound;
 using UINotDependence.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -32,8 +33,8 @@ public class Startup : EcsUnityRoot<Startup>
 #if !UNITY_EDITOR
         _useDebug = false;
 #endif
-
         InitializeUI();
+        InitializeSound();
         InitializeToStartFloating();
         InitializeGrid();
         InitializeEventSystem();
@@ -41,10 +42,16 @@ public class Startup : EcsUnityRoot<Startup>
         DebugShope();
     }
 
+    private void InitializeSound()
+    {
+        DontDestroyOnLoad(SoundController.Instance);
+    }
+
     private void InitializeToStartFloating()
     {
         if (s_isFirstStart != false && !_useDebug)
         {
+            SoundController.PlayMusic(SoundType.Music);
             return;
         }
 
@@ -59,6 +66,7 @@ public class Startup : EcsUnityRoot<Startup>
         UIToStartFloating.OnFloatingFinished -= OpenTransitionPopup;
         UIController.OpenPopup<UIEffectTransitionPopup>();
         UIController.ClosePopup<UIEffectTransitionPopup>();
+        SoundController.PlayMusic(SoundType.Music);
     }
 
     private void InitializeUI()

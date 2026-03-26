@@ -141,6 +141,8 @@ public class UIToStartFloating : UIScreen, IPointerClickHandler
     {
         if (_isClosing || _isTransitioning || _images == null || _images.Count == 0) return;
 
+        SoundController.PlaySoundRandomPitch(SoundType.Click);
+
         if (_currentStage < _images.Count - 1)
         {
             _isTransitioning = true;

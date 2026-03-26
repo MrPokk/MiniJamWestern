@@ -8,7 +8,7 @@ namespace InGame.Script.Component_Sound
         [SerializeField, Range(0, 1)] private float volume = 1;
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            SoundManager.PlaySound(sound, null, volume);
+            SoundController.PlaySound(sound, null, volume);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System;
 using Random = UnityEngine.Random;
 using Object = UnityEngine.Object;
+using InGame.Script.Component_Sound;
 
 public class ShopSystem : IEcsAutoImplement
 {
@@ -26,6 +27,9 @@ public class ShopSystem : IEcsAutoImplement
 
         _shopPopup = UIController.OpenPopup<UIShopPopup>();
         _shopPopup.Clear();
+
+        SoundController.PlaySoundRandomPitch(SoundType.ShopCardsOpen);
+
         SpawnCards();
     }
 
@@ -111,6 +115,7 @@ public class ShopSystem : IEcsAutoImplement
         card.onSelected = OnCardSelected;
 
         _shopPopup.AddCard(card);
+        SoundController.PlaySoundRandomPitch(SoundType.GiveCards); // Уже было реализовано
 
         return card;
     }
@@ -126,6 +131,7 @@ public class ShopSystem : IEcsAutoImplement
 
         EcsSystemStatic.GetSystem<ShopAbilityPurchaseSystem>().ProcessPurchase(card);
         EcsSystemStatic.GetSystem<ShopHealthPurchaseSystem>().ProcessPurchase(card);
+        SoundController.PlaySoundRandomPitch(SoundType.TakeCards); // Уже было реализовано
 
         SpendMoney(card.Price);
         CloseShop();
@@ -148,6 +154,8 @@ public class ShopSystem : IEcsAutoImplement
 
     public void CloseShop()
     {
+        SoundController.PlaySoundRandomPitch(SoundType.ShopCardsClose);
+
         UIController.ClosePopup<UIShopPopup>();
     }
 }

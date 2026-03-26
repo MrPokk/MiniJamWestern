@@ -17,6 +17,7 @@ public class GFlow
     public void Play()
     {
         UIController.OpenPopup<UIChamberPopup>();
+        UIController.OpenPopup<UISettingPopup>();
     }
 
     public static void RefreshTurn()

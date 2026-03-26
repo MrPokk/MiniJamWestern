@@ -2,6 +2,7 @@
 using System.Collections;
 using BitterECS.Core;
 using BitterECS.Integration.Unity;
+using InGame.Script.Component_Sound;
 using UINotDependence.Core;
 using UnityEngine;
 
@@ -13,8 +14,6 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
     private EcsFilter<TagEnemy, GridComponent> _enemies;
     private CoroutineHandle _isTransitioning;
 
-    private bool _isFinal;
-
     public void Run()
     {
         if (_enemies.Count > 0) return;
@@ -23,9 +22,12 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
         _isTransitioning = CoroutineUtility.Run(WaveTransitionSequence());
     }
 
-    private void OnPlayerFinal()
+    private IEnumerator OnPlayerFinal()
     {
+        SoundController.PlaySoundRandomPitch(SoundType.Win);
+        yield return new WaitForSeconds(0.3f);
         UIController.OpenScreen<UIToThanksPlayFloating>();
+        SoundController.StopMusic(SoundType.Music);
     }
 
     private IEnumerator WaveTransitionSequence()
@@ -33,8 +35,7 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
 
         if (GFlow.GState.CurrentDifficulty == DifficultyTier.Tier4_Advanced)
         {
-            OnPlayerFinal();
-            yield break;
+            yield return OnPlayerFinal();
         }
 
         var playerEntity = _player.First();

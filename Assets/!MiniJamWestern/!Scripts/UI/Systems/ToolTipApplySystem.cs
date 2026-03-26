@@ -61,7 +61,12 @@ public class ToolTipApplySystem : IEcsAutoImplement, IEcsRunSystem
             {
                 ref var soldInfo = ref entity.Get<SoldInfoComponent>();
                 var popup = UIController.OpenPopup<UITooltipPopup>();
-                popup.Bind(soldInfo, soldInfo.amount);
+                var dynamicValue = 0;
+                if (entity.TryGet<TagActions>(out var tagActions) && tagActions.ability is IComponentValue valueComp)
+                {
+                    dynamicValue = valueComp.value;
+                }
+                popup.Bind(soldInfo, dynamicValue);
             }
 
             _pendingEntity = null;

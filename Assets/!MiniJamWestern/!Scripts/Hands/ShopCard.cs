@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using System;
 using System.Collections.Generic;
 using BitterECS.Integration.Unity;
+using InGame.Script.Component_Sound;
 
 public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -17,16 +18,16 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     [SerializeField] private TMP_Text _descriptionLabel;
     [SerializeField] private TMP_Text _amountLabel;
     [SerializeField] private TMP_Text _amountFreeLabel;
-    [SerializeField] private GameObject _amountObject;
-
-    [Header("UI Health References")]
+    [SerializeField] private GameObject _amountObject; [Header("UI Health References")]
     [SerializeField] private Sprite _healthMax;
     [SerializeField] private Sprite _healthRegent;
 
     [Header("Settings")][SerializeField] private float _hoverOffset = 50f;
     [SerializeField] private float _hoverScale = 1.05f;
     [SerializeField] private float _animDuration = 0.25f;
-    [SerializeField] private Ease _easeType = Ease.OutCubic; [Header("Setting Affordable")]
+    [SerializeField] private Ease _easeType = Ease.OutCubic;
+
+    [Header("Setting Affordable")]
     [SerializeField] private ShimmeringShaderController _shimmeringShaderController;
     [SerializeField] private Color _color1;
     [SerializeField] private Color _color2;
@@ -134,6 +135,8 @@ public class ShopCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        SoundController.PlaySoundRandomPitch(SoundType.HoverCards);
+
         DOTween.Kill(this);
 
         DOTween.To(() => _currentHoverY, x => _currentHoverY = x, _hoverOffset, _animDuration)

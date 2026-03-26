@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageConstComponentProvider
   _value:
-    damage: 1
+    damage: 2
 --- !u!114 &8239171485971994167
 MonoBehaviour:
   m_ObjectHideFlags: 0

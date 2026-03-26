@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,30 +14,43 @@ public class PlayerDeadeningSystem : IEcsAutoImplement
 {
     public Priority Priority => Priority.High;
 
+    private static bool s_isProcessingDeath = false;
+
     private EcsEvent _ecsEvent = new EcsEvent()
-    .SubscribeWhereEntity<IsDeadEvent>(e => e.Has<TagPlayer>(), added: OnPlayerDead);
+    .SubscribeWhereEntity<IsDeadEvent>(e => EcsConditions.Has<TagPlayer, GridComponent>(e), added: OnPlayerDead);
 
     private static void OnPlayerDead(EcsEntity entity)
     {
+        if (s_isProcessingDeath) return;
+
+        s_isProcessingDeath = true;
+
         OnDeadCoroutine(entity).Forget();
     }
 
     private static async UniTask OnDeadCoroutine(EcsEntity entity)
     {
-        if (entity.TryGet<UnityComponent<Transform>>(out var transformComp) && transformComp.value != null)
+        try
         {
-            var transform = transformComp.value;
-            transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
+            if (entity.TryGet<UnityComponent<Transform>>(out var transformComp) && transformComp.value != null)
             {
-                entity.Destroy();
-            }).Play();
-        }
+                var transform = transformComp.value;
+                transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
+                {
+                    entity.Destroy();
+                }).Play();
+            }
 
-        await UniTask.Delay(TimeSpan.FromSeconds(1));
-        UIController.OpenScreen<UIToDefeatFloating>();
-        await UniTask.Delay(TimeSpan.FromSeconds(3));
-        await SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-        UIController.CloseScreen();
+            await UniTask.Delay(TimeSpan.FromSeconds(1));
+            UIController.OpenScreen<UIToDefeatFloating>();
+            await UniTask.Delay(TimeSpan.FromSeconds(3));
+            await SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+            UIController.CloseScreen();
+        }
+        finally
+        {
+            s_isProcessingDeath = false;
+        }
     }
 }

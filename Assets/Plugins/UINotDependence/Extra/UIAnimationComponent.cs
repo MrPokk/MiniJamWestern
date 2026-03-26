@@ -9,7 +9,10 @@ public class UIAnimationPreset
     public float duration = 0.3f;
     public Ease easeType = Ease.OutBack;
     public Vector3 scale = Vector3.one;
-    public Vector3 position = Vector3.one;
+
+    public bool modifyPosition = false; // ДОБАВЛЕНО: Флаг для контроля позиции
+    public Vector3 position = Vector3.zero;
+
     public float alpha = 1f;
 }
 
@@ -21,9 +24,7 @@ public class UIAnimationComponent : MonoBehaviour
     [SerializeField] private UIAnimationPreset _closePreset = new() { scale = Vector3.zero, alpha = 0f };
 
     [Header("Settings")]
-    [SerializeField] private bool _disableOnClose = true;
-
-    [Header("References")]
+    [SerializeField] private bool _disableOnClose = true; [Header("References")]
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private RectTransform _rectTransform;
     [SerializeField] private GraphicRaycaster _raycaster;
@@ -71,9 +72,15 @@ public class UIAnimationComponent : MonoBehaviour
         _activeSequence = DOTween.Sequence()
             .SetTarget(this)
             .Append(_canvasGroup.DOFade(preset.alpha, preset.duration).SetEase(preset.easeType))
-            .Join(_rectTransform.DOScale(preset.scale, preset.duration).SetEase(preset.easeType))
-            .Join(_rectTransform.DOAnchorPos(preset.position, preset.duration).SetEase(preset.easeType))
-            .OnComplete(() => onComplete?.Invoke())
+            .Join(_rectTransform.DOScale(preset.scale, preset.duration).SetEase(preset.easeType));
+
+        // ИЗМЕНЕНИЕ: Анимируем позицию ТОЛЬКО если это явно указано в пресете
+        if (preset.modifyPosition)
+        {
+            _activeSequence.Join(_rectTransform.DOAnchorPos(preset.position, preset.duration).SetEase(preset.easeType));
+        }
+
+        _activeSequence.OnComplete(() => onComplete?.Invoke())
             .Play();
     }
 
@@ -82,6 +89,13 @@ public class UIAnimationComponent : MonoBehaviour
         KillCurrent();
         if (_canvasGroup) _canvasGroup.alpha = preset.alpha;
         if (_rectTransform) _rectTransform.localScale = preset.scale;
+
+        // ИЗМЕНЕНИЕ: Обнуляем позицию ТОЛЬКО если пресет этого требует
+        if (preset.modifyPosition && _rectTransform)
+        {
+            _rectTransform.anchoredPosition = preset.position;
+        }
+
         ToggleRaycasts(preset.alpha > 0.9f);
     }
 

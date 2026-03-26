@@ -506,6 +506,69 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_17
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 206
+      y: 90
+      width: 22
+      height: 21
+    spriteID: 2c1ac4c2b6b7101609cd75eee08799c0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_18
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 183
+      y: 89
+      width: 20
+      height: 20
+    spriteID: eea8295441b722f2cb393cf728dcd58b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: ui_atlas_20
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 3, y: 3, z: 3, w: 3}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 184
+      y: 109
+      width: 16
+      height: 16
+    spriteID: 01c69e3d2f8f1c6cabfa20aac120800d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
   tileSetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -526,7 +589,7 @@ ScriptedImporter:
       cellRect:
         x: 19
         y: 82
-        width: 207
+        width: 221
         height: 157
       spriteId: 2bb75264f8809f086bf45dc6fa673836
     linkedCells: []

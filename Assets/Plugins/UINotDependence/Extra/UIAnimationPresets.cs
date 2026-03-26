@@ -3,7 +3,6 @@ using UnityEngine;
 
 public static class UIAnimationPresets
 {
-    // --- POPUP (Масштабирование с отскоком) ---
     public static UIAnimationPreset PopupOpen => new()
     {
         duration = 0.4f,
@@ -20,7 +19,6 @@ public static class UIAnimationPresets
         alpha = 0f
     };
 
-    // --- SCREEN / FADE (Плавное появление) ---
     public static UIAnimationPreset FadeIn => new()
     {
         duration = 0.3f,
@@ -33,16 +31,15 @@ public static class UIAnimationPresets
     {
         duration = 0.25f,
         easeType = Ease.InCubic,
-        scale = Vector3.one, // Масштаб не меняем
+        scale = Vector3.one,
         alpha = 0f
     };
 
-    // --- SLIDE (Выезд справа) ---
-    // Внимание: position зависит от ширины экрана, 800 — это примерный оффсет
     public static UIAnimationPreset SlideRightIn => new()
     {
         duration = 0.4f,
         easeType = Ease.OutCubic,
+        modifyPosition = true,
         position = Vector3.zero,
         alpha = 1f
     };
@@ -51,11 +48,11 @@ public static class UIAnimationPresets
     {
         duration = 0.3f,
         easeType = Ease.InCubic,
+        modifyPosition = true,
         position = new Vector3(800, 0, 0),
         alpha = 0f
     };
 
-    // --- BOUNCE (Сильный отскок) ---
     public static UIAnimationPreset BounceIn => new()
     {
         duration = 0.6f,
