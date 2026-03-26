@@ -354,7 +354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 90653242}
   - component: {fileID: 90653243}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 184083225}
   - component: {fileID: 184083226}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +536,7 @@ GameObject:
   m_Component:
   - component: {fileID: 199612340}
   - component: {fileID: 199612341}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -651,7 +651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 213769539}
   - component: {fileID: 213769540}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -798,9 +798,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1928046811}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -881,9 +889,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1643982865}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -1083,9 +1099,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1194348978}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -1166,9 +1190,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1074690334}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -2068,9 +2100,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1074690334}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -2151,9 +2191,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1194348978}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -2326,7 +2374,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 11.25, z: 1}
+  m_LocalScale: {x: 10, y: 7.5, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -2661,7 +2709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 945538020}
   - component: {fileID: 945538021}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2776,7 +2824,7 @@ GameObject:
   m_Component:
   - component: {fileID: 951941814}
   - component: {fileID: 951941815}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3130,7 +3178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1068098247}
   - component: {fileID: 1068098248}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3253,9 +3301,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 940668938}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -3451,9 +3507,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1643982865}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -3820,7 +3884,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1338620927}
   - component: {fileID: 1338620928}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4038,7 +4102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1356586136}
   - component: {fileID: 1356586137}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4480,7 +4544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1462015471}
   - component: {fileID: 1462015472}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4619,7 +4683,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1526626487}
   - component: {fileID: 1526626488}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4708,9 +4772,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1643982865}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -4920,7 +4992,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1535477622}
   - component: {fileID: 1535477623}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5009,9 +5081,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1928046811}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -5136,9 +5216,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1074690334}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -5261,9 +5349,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1928046811}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -5473,7 +5569,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1689147386}
   - component: {fileID: 1689147387}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5688,9 +5784,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 940668938}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive
@@ -5919,7 +6023,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1892038790}
   - component: {fileID: 1892038791}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6354,9 +6458,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1194348978}
     m_Modifications:
+    - target: {fileID: 318184508828990480, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_Name
       value: ActionSlotMedium
+      objectReference: {fileID: 0}
+    - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 486144725363315525, guid: 05041236e3f8d62e0816f2dfeb36c1c6, type: 3}
       propertyPath: m_IsActive

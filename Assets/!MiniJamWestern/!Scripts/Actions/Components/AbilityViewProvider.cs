@@ -26,12 +26,12 @@ public class AbilityViewProvider : ProviderEcs<AbilityComponent>,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Entity.Add<IsHoverAbility>();
+        Entity.Add<IsHover>();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Entity.Remove<IsHoverAbility>();
+        Entity.Remove<IsHover>();
     }
 
     public void OnPointerDown(PointerEventData eventData)

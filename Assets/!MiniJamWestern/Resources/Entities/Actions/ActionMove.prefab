@@ -106,6 +106,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2594039447500818966, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2763946904360203279}
+    - targetCorrespondingSourceObject: {fileID: 2594039447500818966, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -2684787440040837949}
   m_SourcePrefab: {fileID: 100100000, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
 --- !u!1 &9027122275147996309 stripped
 GameObject:
@@ -124,9 +127,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
-  _targetScale: 1.1
-  _duration: 0.2
-  _easeType: 27
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
 --- !u!114 &2763946904360203279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +146,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
-  _targetScale: 1.1
-  _duration: 0.2
-  _easeType: 27
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
+--- !u!114 &-2684787440040837949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9027122275147996309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 865c6c94851a749b8af6b94aece437bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IsNotHoverProvider

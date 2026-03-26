@@ -5,15 +5,15 @@ using UnityEngine;
 public class AbilityHoverSystem : IEcsRunSystem
 {
     public Priority Priority => Priority.High;
-    private EcsEvent _ecsEvent = new EcsEvent().Subscribe<IsHoverAbility>(removed: OnResetColor);
-    private EcsFilter<IsHoverAbility, SetColorComponent> _ecsEntities;
+    private EcsEvent _ecsEvent = new EcsEvent().Subscribe<IsHover>(removed: OnResetColor);
+    private EcsFilter<IsHover, SetColorComponent> _ecsEntities;
     private static EcsFilter<OutlineComponent, GridComponent, TagPlayer> _ecsEntitiesOutline;
     private EcsFilter<TagInventoryEffects> _storageFilter;
 
 
     public void Run()
     {
-        _ecsEntities.For((EcsEntity abilityEntity, ref IsHoverAbility hover, ref SetColorComponent colorComponent) =>
+        _ecsEntities.For((EcsEntity abilityEntity, ref IsHover hover, ref SetColorComponent colorComponent) =>
         {
             var targetColor = colorComponent.color;
 
