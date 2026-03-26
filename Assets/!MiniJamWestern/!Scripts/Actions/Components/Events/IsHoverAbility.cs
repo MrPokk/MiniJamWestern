@@ -1,4 +1,4 @@
-﻿public struct IsHoverAbility
+﻿public struct IsHover
 {
 
 }
