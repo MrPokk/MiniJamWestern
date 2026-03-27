@@ -8,8 +8,13 @@ public static class EnumExtensions
         return values[values.Length - 1];
     }
 
-    public static bool IsEven<T>(this T value) where T : Enum
+    public static bool IsEveryTwo<T>(this T value) where T : Enum
     {
         return Convert.ToInt64(value) % 2 == 0;
+    }
+
+    public static bool IsEveryThird<T>(this T value) where T : Enum
+    {
+        return Convert.ToInt64(value) % 3 == 0;
     }
 }

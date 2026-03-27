@@ -33,8 +33,8 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
 
     private IEnumerator WaveTransitionSequence()
     {
-
-        if (GFlow.GState.CurrentDifficulty == EnumExtensions.GetLastValue<DifficultyTier>())
+        var currentDifficulty = GFlow.GState.CurrentDifficulty;
+        if (currentDifficulty == EnumExtensions.GetLastValue<DifficultyTier>())
         {
             yield return OnPlayerFinal();
         }
@@ -51,13 +51,14 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
         var midY = GetMidY(minY, maxY);
         GridInteractionHandler.Moving(currentPos, new Vector2Int(currentPos.x, midY));
 
-        GFlow.IncreaseToDifficulty();
+        var increaseDifficulty = GFlow.IncreaseToDifficulty();
         EcsSystemStatic.GetSystem<EnemyWaveSystem>().SpawnCurrentWave();
         UIController.ClosePopup<UIEffectTransitionPopup>();
         yield return new WaitForSeconds(directions);
 
         EcsSystemStatic.GetSystem<ShopSystem>().OpenShop();
-
+        Startup.VisualController.UpdateMaterialsByEnum(increaseDifficulty);
+        Debug.Log($"Current: {currentDifficulty} Increase: {increaseDifficulty}");
         _isTransitioning = default;
     }
 

@@ -15,6 +15,7 @@ public class Startup : EcsUnityRoot<Startup>
 
     [Header("Main Settings")]
     [SerializeField] private CameraObjectComponent _cameraObject;
+    [SerializeField] private VisualController _visualController;
     [SerializeField] private GridConfig _playfieldConfig;
     [SerializeField] private ComplicationSettings _complicationSettings;
 
@@ -23,11 +24,13 @@ public class Startup : EcsUnityRoot<Startup>
 
     private static EventSystem s_eventSystem;
     private static CameraObjectComponent s_mainCamera;
+    private static VisualController s_visualController;
+
     private static UIToCRTEffect s_uiToCRTEffect;
     private static bool s_isFirstStart;
 
     public static CameraObjectComponent MainCamera => s_mainCamera;
-
+    public static VisualController VisualController => s_visualController;
 
     protected override void Bootstrap()
     {
@@ -36,11 +39,17 @@ public class Startup : EcsUnityRoot<Startup>
 #endif
         InitializeUI();
         InitializeSound();
+        InitializeVisualSystem();
         InitializeToStartFloating();
         InitializeGrid();
         InitializeEventSystem();
         InitializePlaying();
         DebugShope();
+    }
+
+    private void InitializeVisualSystem()
+    {
+        s_visualController = _visualController;
     }
 
     private void InitializeSound()
