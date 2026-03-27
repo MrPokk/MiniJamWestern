@@ -6,66 +6,83 @@ using UnityEngine;
 
 public static class IntentVisualUtility
 {
+    private const float TileSize = 32f;
+    private const float FillAlpha = 0.3f;
+
     public static void DrawAbilityArea(EcsEntity owner, EcsEntity ability, Vector2Int origin, Vector2Int target, Color color, int salt = 0)
     {
-        if (!owner.Has<IntentVisualTracker>())
-            owner.Add(new IntentVisualTracker { activeRectIds = new List<int>() });
-
-        ref var tracker = ref owner.Get<IntentVisualTracker>();
+        var tracker = GetOrAddTracker(owner);
         ClearVisuals(owner);
 
-        var dir = GetAttackDirection(owner, origin, target);
-        var abilityCurrent = ability.Get<TagActions>().ability;
-        if (abilityCurrent is TagAttackForward tagAttackForward)
+        var direction = GetAttackDirection(owner, origin, target);
+        var abilityEffect = ability.Get<TagActions>().ability;
+
+        switch (abilityEffect)
         {
-            for (var i = 1; i <= tagAttackForward.value; i++)
-            {
-                DrawTile(owner, ref tracker, origin + (dir * i), color, salt);
-            }
-        }
-        else if (abilityCurrent is TagAttackTwoSides twoSides)
-        {
-            for (var i = 1; i <= twoSides.value; i++)
-            {
-                DrawTile(owner, ref tracker, origin + (dir * i), color, salt);
-                DrawTile(owner, ref tracker, origin - (dir * i), color, salt);
-            }
-        }
-        else if (abilityCurrent is TagRotation)
-        {
-            return;
-        }
-        else
-        {
-            DrawTile(owner, ref tracker, target, color, salt);
+            case TagAttackForward forward:
+                DrawLine(owner, tracker, origin, direction, forward.value, color, salt);
+                break;
+
+            case TagAttackTwoSides twoSides:
+                DrawLine(owner, tracker, origin, direction, twoSides.value, color, salt);
+                DrawLine(owner, tracker, origin, -direction, twoSides.value, color, salt);
+                break;
+
+            case TagRotation:
+                break;
+
+            default:
+                DrawTile(owner, tracker, target, color, salt);
+                break;
         }
     }
 
     public static void ClearVisuals(EcsEntity entity)
     {
-        if (!entity.TryGet<IntentVisualTracker>(out var tracker)) return;
-        if (tracker.activeRectIds == null) return;
+        if (!entity.TryGet<IntentVisualTracker>(out var tracker) || tracker.activeRectIds == null)
+            return;
+
+        var drawer = DrawRectUtility.Instance;
+        if (drawer == null) return;
 
         foreach (var id in tracker.activeRectIds)
         {
-            DrawRectUtility.Instance?.HideStaticRect(id);
-            DrawRectUtility.Instance?.HideStaticFullRect(id);
+            drawer.HideStaticRect(id);
+            drawer.HideStaticFullRect(id);
         }
+
         tracker.activeRectIds.Clear();
     }
 
-    private static void DrawTile(EcsEntity owner, ref IntentVisualTracker tracker, Vector2Int gridPos, Color color, int salt)
+    private static void DrawLine(EcsEntity owner, IntentVisualTracker tracker, Vector2Int origin, Vector2Int direction, int length, Color color, int salt)
     {
-        if (!GridInteractionHandler.Instance.Playfield.IsWithinGrid(gridPos)) return;
+        for (var i = 1; i <= length; i++)
+        {
+            DrawTile(owner, tracker, origin + (direction * i), color, salt);
+        }
+    }
 
-        var worldPos = GridInteractionHandler.Instance.Playfield.ConvertingPosition(gridPos);
+    private static void DrawTile(EcsEntity owner, IntentVisualTracker tracker, Vector2Int gridPos, Color color, int salt)
+    {
+        var playfield = GridInteractionHandler.Instance.Playfield;
+        if (!playfield.IsWithinGrid(gridPos)) return;
+
+        if (owner.Has<TagEnemy>() && GridInteractionHandler.TryGetEntityAt(gridPos, out var entityAtTile))
+        {
+            if (entityAtTile.Has<TagEnemy>()) return;
+        }
+
+        var drawer = DrawRectUtility.Instance;
+        if (drawer == null) return;
+
+        var worldPos = playfield.ConvertingPosition(gridPos);
         var rectId = HashCode.Combine(owner.GetHashCode(), gridPos.GetHashCode(), salt);
 
-        DrawRectUtility.Instance?.DrawStaticRect(rectId, worldPos, 32f, color);
+        drawer.DrawStaticRect(rectId, worldPos, TileSize, color);
 
-        Color fillColor = color;
-        fillColor.a = 0.3f;
-        DrawRectUtility.Instance?.DrawStaticFullRect(rectId, worldPos, 32f, fillColor);
+        var fillColor = color;
+        fillColor.a = FillAlpha;
+        drawer.DrawStaticFullRect(rectId, worldPos, TileSize, fillColor);
 
         tracker.activeRectIds.Add(rectId);
     }
@@ -76,8 +93,18 @@ public static class IntentVisualUtility
             return facing.direction;
 
         var diff = targetPos - actorPos;
-        if (diff == Vector2Int.zero) return Vector2Int.up;
+        if (diff == Vector2Int.zero)
+            return Vector2Int.up;
 
         return new Vector2Int(Math.Sign(diff.x), Math.Sign(diff.y));
+    }
+
+    private static IntentVisualTracker GetOrAddTracker(EcsEntity entity)
+    {
+        if (!entity.Has<IntentVisualTracker>())
+        {
+            entity.Add(new IntentVisualTracker { activeRectIds = new List<int>() });
+        }
+        return entity.Get<IntentVisualTracker>();
     }
 }
