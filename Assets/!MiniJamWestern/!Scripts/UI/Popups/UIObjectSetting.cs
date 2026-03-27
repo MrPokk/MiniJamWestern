@@ -82,6 +82,46 @@ public class UIObjectSetting : UIPopup, IBeginDragHandler, IDragHandler
 
         var scaleFactor = _canvas != null ? _canvas.scaleFactor : 1f;
         _rectTransform.anchoredPosition += eventData.delta / scaleFactor;
+
+        // ДОБАВЛЕНО: Проверка и удержание в границах экрана
+        KeepInBounds();
+    }
+
+    // --- МЕТОД ОГРАНИЧЕНИЯ ПЕРЕМЕЩЕНИЯ ---
+    private void KeepInBounds()
+    {
+        if (_rectTransform == null || _canvas == null) return;
+
+        var canvasRect = _canvas.GetComponent<RectTransform>();
+        if (canvasRect == null) return;
+
+        // Получаем мировые координаты 4 углов Канваса (экрана)
+        Vector3[] canvasCorners = new Vector3[4];
+        canvasRect.GetWorldCorners(canvasCorners);
+
+        // Получаем мировые координаты 4 углов самого Окна
+        Vector3[] panelCorners = new Vector3[4];
+        _rectTransform.GetWorldCorners(panelCorners);
+
+        Vector3 offset = Vector3.zero;
+
+        // Сравниваем левую [0] и правую [2] границы
+        if (panelCorners[0].x < canvasCorners[0].x)
+            offset.x = canvasCorners[0].x - panelCorners[0].x; // Вылезли слева -> толкаем вправо
+        else if (panelCorners[2].x > canvasCorners[2].x)
+            offset.x = canvasCorners[2].x - panelCorners[2].x; // Вылезли справа -> толкаем влево
+
+        // Сравниваем нижнюю[0] и верхнюю [2] границы
+        if (panelCorners[0].y < canvasCorners[0].y)
+            offset.y = canvasCorners[0].y - panelCorners[0].y; // Вылезли снизу -> толкаем вверх
+        else if (panelCorners[2].y > canvasCorners[2].y)
+            offset.y = canvasCorners[2].y - panelCorners[2].y; // Вылезли сверху -> толкаем вниз
+
+        // Если окно вышло за пределы экрана, применяем компенсацию
+        if (offset != Vector3.zero)
+        {
+            _rectTransform.position += offset;
+        }
     }
 
     private void SetMusicVolume(float value)
