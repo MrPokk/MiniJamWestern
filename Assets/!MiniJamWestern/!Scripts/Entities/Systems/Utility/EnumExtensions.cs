@@ -7,4 +7,9 @@ public static class EnumExtensions
         var values = (T[])Enum.GetValues(typeof(T));
         return values[values.Length - 1];
     }
+
+    public static bool IsEven<T>(this T value) where T : Enum
+    {
+        return Convert.ToInt64(value) % 2 == 0;
+    }
 }

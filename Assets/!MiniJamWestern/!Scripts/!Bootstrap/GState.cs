@@ -2,16 +2,15 @@
 using BitterECS.Core;
 using UnityEngine;
 
-public enum DifficultyTier
+public enum DifficultyTier : int
 {
-    Tier1_Base = 0,
-    Tier1_Advanced = 1,
-    Tier2_Base = 2,
-    Tier2_Advanced = 3,
-    Tier3_Base = 4,
-    Tier4_Advanced = 5,
-    Tier4_Base = 6,
-    Tier5_Advanced = 7
+    Tier1_Base,
+    Tier1_Advanced,
+    Tier2_Base,
+    Tier2_Advanced,
+    Tier3_Base,
+    Tier4_Advanced,
+    Tier5_Advanced,
 }
 
 public class GState

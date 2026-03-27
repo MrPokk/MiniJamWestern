@@ -58,7 +58,6 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
 
         EcsSystemStatic.GetSystem<ShopSystem>().OpenShop();
 
-
         _isTransitioning = default;
     }
 

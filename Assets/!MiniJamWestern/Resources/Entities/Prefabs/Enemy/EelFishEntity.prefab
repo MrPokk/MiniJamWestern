@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageConstComponentProvider
   _value:
-    damage: 3
+    damage: 1
 --- !u!114 &8239171485971994167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,8 +208,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponentProvider
   _value:
-    _maxHealth: 8
-    _currentHealth: 8
+    _maxHealth: 6
+    _currentHealth: 6
 --- !u!114 &6022195578200359378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UsingActionComponentProvider
   _value:
     abilities:
-    - tagActionsProvider: {fileID: 5965930271600435582, guid: 05c5bd74a398ea748b09be8d610f5c23, type: 3}
+    - tagActionsProvider: {fileID: 5965930271600435582, guid: 5157f3f9eb4eb297091f893c9d2b55b7, type: 3}
       isVisibleInScene: 0
     - tagActionsProvider: {fileID: 5965930271600435582, guid: 6365a8ded0e59f7df838a5a8b5f4b5d5, type: 3}
       isVisibleInScene: 0

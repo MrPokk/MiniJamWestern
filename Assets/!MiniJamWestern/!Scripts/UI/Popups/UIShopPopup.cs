@@ -41,11 +41,18 @@ public class UIShopPopup : UIPopup
     {
         UIAnimationComponent
         .Using(gameObject)
-        .SetPresets(UIAnimationPresets.FadeIn,
-                    UIAnimationPresets.FadeOut)
+        .SetPresets(UIAnimationPresets.PopupOpen,
+                    UIAnimationPresets.PopupClose)
         .PlayOpen();
 
         base.Open();
+    }
+
+    public override void Close()
+    {
+        UIAnimationComponent
+          .Using(gameObject)
+          .PlayClose(() => base.Close());
     }
 
     private void Update() => UpdateLayout();

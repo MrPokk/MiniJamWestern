@@ -17,7 +17,6 @@ public class ShopSystem : IEcsAutoImplement
     private const int AmountAddMaxCount = 1;
     private EcsFilter<TagPlayerMoney, MoneyComponent> _ecsEntities;
     private EcsFilter<TagPlayer, HealthComponent> _playerFilter;
-
     private EcsFilter<TagInventoryEffects> _effectsFilter;
 
     private UIShopPopup _shopPopup;
@@ -26,7 +25,6 @@ public class ShopSystem : IEcsAutoImplement
     public void OpenShop()
     {
         _cardPrefab = new Loader<ShopCard>(UiPrefabsPaths.UICARD_ELEMENT).Prefab();
-
         _shopPopup = UIController.OpenPopup<UIShopPopup>();
         _shopPopup.Clear();
 
@@ -40,7 +38,9 @@ public class ShopSystem : IEcsAutoImplement
         var listCard = new List<ShopCard>();
         for (var i = 0; i < 3; i++)
         {
-            listCard.Add(CreateCard());
+            var card = CreateCard();
+            card.transform.localScale = Vector3.zero;
+            listCard.Add(card);
         }
 
         var ownedAbilitiesTitles = new HashSet<string>();
@@ -52,18 +52,14 @@ public class ShopSystem : IEcsAutoImplement
             foreach (var slot in inv.Value.listSlot)
             {
                 var itemEnt = slot.Value.itemEntity;
-
                 if (itemEnt.TryGet<SoldInfoComponent>(out var soldInfo))
                 {
                     if (!itemEnt.TryGet<MultiAbility>(out _))
-                    {
                         ownedAbilitiesTitles.Add(soldInfo.title);
-                    }
                 }
             }
         }
 
-        // --- ДОБАВЛЕНО: Разделяем пути на атакующие и обычные ---
         var attackPaths = new List<string>();
         var generalPaths = new List<string>();
 
@@ -72,80 +68,49 @@ public class ShopSystem : IEcsAutoImplement
             var providerPrefab = new Loader<TagActionsProvider>(path).Prefab();
             if (providerPrefab == null) continue;
 
-            // Проверка на наличие в черном списке
             if (providerPrefab.Entity.TryGet<SoldInfoComponent>(out var soldInfo))
             {
-                if (ownedAbilitiesTitles.Contains(soldInfo.title))
-                {
-                    continue;
-                }
+                if (ownedAbilitiesTitles.Contains(soldInfo.title)) continue;
             }
 
-            // Проверяем, реализует ли способность интерфейс IAttackAbility
             bool isAttack = false;
             if (providerPrefab.Entity.TryGet<TagActions>(out var tagActions))
             {
-                if (tagActions.ability is IAttackAbility)
-                {
-                    isAttack = true;
-                }
+                if (tagActions.ability is IAttackAbility) isAttack = true;
             }
 
-            // Распределяем по спискам
-            if (isAttack)
-            {
-                attackPaths.Add(path);
-            }
-            else
-            {
-                generalPaths.Add(path);
-            }
+            if (isAttack) attackPaths.Add(path);
+            else generalPaths.Add(path);
         }
-        // ---------------------------------------------------------
 
-        // --- ДОБАВЛЕНО: Гарантируем выдачу атаки ---
         if (attackPaths.Count > 0)
         {
-            // Первая карта гарантированно берет способность из пула атак
             AssignUniqueAction(listCard[0], attackPaths);
-
-            // Закидываем оставшиеся неиспользованные атаки в общий пул для второй карты
             generalPaths.AddRange(attackPaths);
-
-            // Вторая карта берет любую оставшуюся способность
             AssignUniqueAction(listCard[1], generalPaths);
         }
         else
         {
-            // Если атакующих способностей не осталось вообще (все куплены и нет MultiAbility),
-            // то просто выдаем из того, что есть
             AssignUniqueAction(listCard[0], generalPaths);
             AssignUniqueAction(listCard[1], generalPaths);
         }
-        // -------------------------------------------
 
         var player = _playerFilter.First();
         var healthComp = player.Get<HealthComponent>();
-
         var currentHealth = healthComp.GetCurrentHealth();
         var currentHealthMax = healthComp.GetMaxHealth();
-        if (currentHealth >= currentHealthMax
-            && currentHealth >= AmountRegeneration)
-        {
+
+        if (currentHealth >= currentHealthMax && currentHealth >= AmountRegeneration)
             listCard[2].AssignMaxHealth(AmountAddMaxCount, 3);
-        }
         else
-        {
             listCard[2].AssignHeal(AmountRegeneration, 3);
-        }
 
         EnsureAffordableCard(listCard);
 
         var playerMoney = GetPlayerMoney();
         foreach (var card in listCard)
         {
-            if (playerMoney < card.Price)
-                card.SetAffordable();
+            if (playerMoney < card.Price) card.SetAffordable();
         }
     }
 
@@ -168,7 +133,7 @@ public class ShopSystem : IEcsAutoImplement
             var actionCards = cards.FindAll(c => c.Type == ShopCard.CardType.ACTION);
             if (actionCards.Count > 0)
             {
-                var randomCard = actionCards[Random.Range(0, actionCards.Count)];
+                var randomCard = actionCards[UnityEngine.Random.Range(0, actionCards.Count)];
                 randomCard.SetPrice(playerMoney);
             }
         }
@@ -176,64 +141,46 @@ public class ShopSystem : IEcsAutoImplement
 
     private void AssignUniqueAction(ShopCard card, List<string> paths)
     {
-        if (paths.Count == 0) throw new Exception("No more unique actions available!");
-
-        var randomIndex = Random.Range(0, paths.Count);
+        if (paths.Count == 0) return;
+        var randomIndex = UnityEngine.Random.Range(0, paths.Count);
         var selectedPath = paths[randomIndex];
-
         paths.RemoveAt(randomIndex);
-
         var provider = new Loader<TagActionsProvider>(selectedPath).Prefab();
         card.AssignAction(provider);
     }
 
     private ShopCard CreateCard()
     {
-        var card = Object.Instantiate(_cardPrefab);
+        var card = UnityEngine.Object.Instantiate(_cardPrefab);
         card.onSelected = OnCardSelected;
-
         _shopPopup.AddCard(card);
-        SoundController.PlaySoundRandomPitch(SoundType.GiveCards);
-
+        card.transform.localScale = Vector3.zero;
         return card;
     }
 
     private void OnCardSelected(ShopCard card)
     {
-        var playerMoney = GetPlayerMoney();
-
-        if (playerMoney < card.Price)
-        {
-            return;
-        }
-
+        if (GetPlayerMoney() < card.Price) return;
         EcsSystemStatic.GetSystem<ShopAbilityPurchaseSystem>().ProcessPurchase(card);
         EcsSystemStatic.GetSystem<ShopHealthPurchaseSystem>().ProcessPurchase(card);
         SoundController.PlaySoundRandomPitch(SoundType.TakeCards);
-
         SpendMoney(card.Price);
         CloseShop();
     }
 
-    private int GetPlayerMoney()
-    {
-        var money = _ecsEntities.First().Get<MoneyComponent>().GetCurrentMoney();
-        return money;
-    }
+    private int GetPlayerMoney() => _ecsEntities.First().Get<MoneyComponent>().GetCurrentMoney();
 
     private void SpendMoney(int amount)
     {
         var ecsEntity = _ecsEntities.First();
         ref var moneyComponent = ref ecsEntity.Get<MoneyComponent>();
-        var deltaMoney = moneyComponent.GetCurrentMoney() - amount;
-        moneyComponent.SetMoney(deltaMoney);
+        moneyComponent.SetMoney(moneyComponent.GetCurrentMoney() - amount);
         ecsEntity.AddFrame<PlayerUpdateMoneyUIEvent>();
     }
 
     public void CloseShop()
     {
         SoundController.PlaySoundRandomPitch(SoundType.ShopCardsClose);
-
         UIController.ClosePopup<UIShopPopup>();
     }
 }
