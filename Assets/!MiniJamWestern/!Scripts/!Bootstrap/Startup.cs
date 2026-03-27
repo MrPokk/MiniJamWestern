@@ -23,6 +23,7 @@ public class Startup : EcsUnityRoot<Startup>
 
     private static EventSystem s_eventSystem;
     private static CameraObjectComponent s_mainCamera;
+    private static UIToCRTEffect s_uiToCRTEffect;
     private static bool s_isFirstStart;
 
     public static CameraObjectComponent MainCamera => s_mainCamera;
@@ -88,6 +89,8 @@ public class Startup : EcsUnityRoot<Startup>
         attackVisualSystem.Setup(s_mainCamera);
 
         UIInit.Initialize("UI", s_mainCamera.CameraTarget);
+        if (s_uiToCRTEffect == null)
+            s_uiToCRTEffect = UIController.OpenScreen<UIToCRTEffect>();
     }
 
     private void InitializeEventSystem()

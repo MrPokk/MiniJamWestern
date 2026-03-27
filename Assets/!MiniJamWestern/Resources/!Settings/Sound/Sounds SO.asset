@@ -18,6 +18,11 @@ MonoBehaviour:
     mixer: {fileID: -5531439128510270337, guid: 01cd0fadc8968cb40b6a91e237a496da, type: 2}
     sounds:
     - {fileID: 8300000, guid: 8e53693c4e9205852bf6d2eaf22298f1, type: 3}
+  - name: Ambient
+    volume: 1
+    mixer: {fileID: -5531439128510270337, guid: 01cd0fadc8968cb40b6a91e237a496da, type: 2}
+    sounds:
+    - {fileID: 8300000, guid: db5fd8d7ee5e42b0bb662a63daad448e, type: 3}
   - name: ShopCardsOpen
     volume: 1
     mixer: {fileID: -5466305300834603150, guid: 01cd0fadc8968cb40b6a91e237a496da, type: 2}
@@ -83,4 +88,4 @@ MonoBehaviour:
     volume: 1
     mixer: {fileID: -5466305300834603150, guid: 01cd0fadc8968cb40b6a91e237a496da, type: 2}
     sounds:
-    - {fileID: 8300000, guid: dc99ff26b85c8da2c81199695dc4d3ad, type: 3}
+    - {fileID: 8300000, guid: 82a3db0670df0773c8c842b54793df4c, type: 3}

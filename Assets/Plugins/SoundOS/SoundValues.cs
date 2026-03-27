@@ -4,6 +4,7 @@ namespace InGame.Script.Component_Sound
     public enum SoundType
     {
         Music,
+        Ambient,
 
         ShopCardsOpen,
         ShopCardsClose,

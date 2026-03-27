@@ -71,7 +71,7 @@ public class UIObjectSetting : UIPopup, IBeginDragHandler, IDragHandler
           .Using(gameObject)
           .SetPresets(UIAnimationPresets.FadeIn,
                       UIAnimationPresets.FadeOut)
-          .PlayClose();
+          .PlayClose(() => base.Close());
     }
 
     public void OnBeginDrag(PointerEventData eventData) { }
@@ -83,11 +83,9 @@ public class UIObjectSetting : UIPopup, IBeginDragHandler, IDragHandler
         var scaleFactor = _canvas != null ? _canvas.scaleFactor : 1f;
         _rectTransform.anchoredPosition += eventData.delta / scaleFactor;
 
-        // ДОБАВЛЕНО: Проверка и удержание в границах экрана
         KeepInBounds();
     }
 
-    // --- МЕТОД ОГРАНИЧЕНИЯ ПЕРЕМЕЩЕНИЯ ---
     private void KeepInBounds()
     {
         if (_rectTransform == null || _canvas == null) return;
@@ -95,17 +93,14 @@ public class UIObjectSetting : UIPopup, IBeginDragHandler, IDragHandler
         var canvasRect = _canvas.GetComponent<RectTransform>();
         if (canvasRect == null) return;
 
-        // Получаем мировые координаты 4 углов Канваса (экрана)
         Vector3[] canvasCorners = new Vector3[4];
         canvasRect.GetWorldCorners(canvasCorners);
 
-        // Получаем мировые координаты 4 углов самого Окна
         Vector3[] panelCorners = new Vector3[4];
         _rectTransform.GetWorldCorners(panelCorners);
 
         Vector3 offset = Vector3.zero;
 
-        // Сравниваем левую [0] и правую [2] границы
         if (panelCorners[0].x < canvasCorners[0].x)
             offset.x = canvasCorners[0].x - panelCorners[0].x; // Вылезли слева -> толкаем вправо
         else if (panelCorners[2].x > canvasCorners[2].x)

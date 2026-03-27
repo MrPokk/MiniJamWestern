@@ -24,16 +24,17 @@ public class CheckEmptyWaveSystem : IEcsRunSystem
 
     private IEnumerator OnPlayerFinal()
     {
-        SoundController.PlaySoundRandomPitch(SoundType.Win);
         yield return new WaitForSeconds(0.3f);
-        UIController.OpenScreen<UIToThanksPlayFloating>();
+        SoundController.PlaySoundRandomPitch(SoundType.Win);
         SoundController.StopMusic(SoundType.Music);
+        SoundController.PlayMusic(SoundType.Ambient);
+        UIController.OpenScreen<UIToThanksPlayFloating>();
     }
 
     private IEnumerator WaveTransitionSequence()
     {
 
-        if (GFlow.GState.CurrentDifficulty == DifficultyTier.Tier4_Advanced)
+        if (GFlow.GState.CurrentDifficulty == EnumExtensions.GetLastValue<DifficultyTier>())
         {
             yield return OnPlayerFinal();
         }

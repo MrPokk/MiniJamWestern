@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_ShimmeringPatternURP_var_6
-  m_Shader: {fileID: 4800000, guid: 34af5df4c60782ae3b1666b052e31e49, type: 3}
+  m_Name: Custom_Retro_CRT_Simple
+  m_Shader: {fileID: 4800000, guid: 786a55aae3fd2fae184e957e283e0035, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -29,18 +29,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColorMask: 15
-    - _DistortionStrength: 0.2
-    - _NoiseScale: 18.01
-    - _Speed: 0.5
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    m_Colors:
-    - _Color1: {r: 0.16862746, g: 0.15294118, b: 0.18431373, a: 1}
-    - _Color2: {r: 0.08235294, g: 0.09411765, b: 0.11372549, a: 1}
-    - _PatternScroll: {r: 0.1, g: 0, b: 0, a: 0}
+    - _Distortion: 0.5
+    - _ScanlineCount: 256
+    - _ScanlineIntensity: 0.352
+    - _Zoom: 0.994
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

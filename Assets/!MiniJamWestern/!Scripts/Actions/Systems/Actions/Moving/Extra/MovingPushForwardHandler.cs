@@ -1,4 +1,5 @@
 ﻿using BitterECS.Core;
+using UnityEngine;
 
 public class MovingPushForwardHandler
 {
@@ -6,15 +7,29 @@ public class MovingPushForwardHandler
     {
         if (!list.Is<TagMovePushForward>(out var movePush)) return;
 
+        if (GridInteractionHandler.TryGetEntityAt(target.position, out var victim))
+        {
+            if (victim.Id != actor.Id)
+            {
+
+                AttackExtraDamage.ApplyEffect(victim, movePush.value);
+
+                Debug.Log($"[Push] {actor.Id} толкает и наносит урон {victim.Id}");
+            }
+        }
+
         PushUtility.PushEntity(gridCom, target, movePush);
 
-        if (!VectorUtility.TryGetStepDirection(gridCom.currentPosition, target.position, out var dir)) return;
-
-        var nextPos = gridCom.currentPosition + dir;
-        if (GridInteractionHandler.IsPlacing(nextPos))
+        if (VectorUtility.TryGetStepDirection(gridCom.currentPosition, target.position, out var dir))
         {
-            GridInteractionHandler.MoveEntity(actor, nextPos);
+            var nextPos = gridCom.currentPosition + dir;
+            if (GridInteractionHandler.IsPlacing(nextPos))
+            {
+                GridInteractionHandler.MoveEntity(actor, nextPos);
+            }
         }
+
+        AttackingForwardHandler.Execute(actor, gridCom, list, target);
     }
 }
 

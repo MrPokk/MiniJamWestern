@@ -6,6 +6,7 @@ using BitterECS.Core;
 using BitterECS.Integration.Unity;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using InGame.Script.Component_Sound;
 using UINotDependence.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -43,6 +44,7 @@ public class PlayerDeadeningSystem : IEcsAutoImplement
 
             await UniTask.Delay(TimeSpan.FromSeconds(1));
             UIController.OpenScreen<UIToDefeatFloating>();
+            SoundController.PlaySound(SoundType.Defeat);
             await UniTask.Delay(TimeSpan.FromSeconds(3));
             await SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             await UniTask.Delay(TimeSpan.FromSeconds(0.5));

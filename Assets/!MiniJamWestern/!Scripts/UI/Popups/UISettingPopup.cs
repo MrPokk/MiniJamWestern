@@ -36,18 +36,6 @@ public class UISettingPopup : UIPopup, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (UIController.TryGetOpenedPopup<UIObjectSetting>(out var objectSetting))
-        {
-            UIController.ClosePopup<UIObjectSetting>();
-        }
-        else
-        {
-            if (objectSetting != null)
-            {
-                objectSetting.Open();
-            }
-
-            UIController.OpenPopup<UIObjectSetting>();
-        }
+        UIController.ChangePopup<UIObjectSetting>();
     }
 }
