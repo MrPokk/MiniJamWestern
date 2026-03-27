@@ -42,7 +42,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.09529004}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.249981, y: 15.841591}
+  m_AnchoredPosition: {x: -0.000019073486, y: 13.671448}
   m_SizeDelta: {x: 351.6366, y: 6.325382}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6867332132029478914
@@ -63,7 +63,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 3
+  m_Spacing: 5
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -82,7 +82,7 @@ GameObject:
   - component: {fileID: 883365367436122004}
   - component: {fileID: 3121273690336555783}
   - component: {fileID: 5283948668701450456}
-  - component: {fileID: 7550886445957534995}
+  - component: {fileID: 4681864676282384769}
   m_Layer: 5
   m_Name: Image_5
   m_TagString: Untagged
@@ -107,7 +107,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 34.3165, y: 29.627}
+  m_SizeDelta: {x: 31.2165, y: 29.627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3121273690336555783
 CanvasRenderer:
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7550886445957534995
+--- !u!114 &4681864676282384769
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,12 +156,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 699964519079735136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 0, y: -4}
-  m_UseGraphicAlpha: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
 --- !u!1 &828979606527542402
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +177,7 @@ GameObject:
   - component: {fileID: 4261864551844189318}
   - component: {fileID: 5154178329285261191}
   - component: {fileID: 8673590935167915561}
-  - component: {fileID: 7046813941232779874}
+  - component: {fileID: 7828908594020125069}
   m_Layer: 5
   m_Name: Image_1
   m_TagString: Untagged
@@ -198,7 +202,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 34.3165, y: 29.627}
+  m_SizeDelta: {x: 31.2165, y: 29.627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5154178329285261191
 CanvasRenderer:
@@ -238,7 +242,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7046813941232779874
+--- !u!114 &7828908594020125069
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -247,12 +251,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 828979606527542402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 0, y: -4}
-  m_UseGraphicAlpha: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
 --- !u!1 &1653940755044600887
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,7 +272,7 @@ GameObject:
   - component: {fileID: 5669227850078015500}
   - component: {fileID: 6020978622332237402}
   - component: {fileID: 4033624709444714510}
-  - component: {fileID: 7087178087746165440}
+  - component: {fileID: 7612825936926116461}
   m_Layer: 5
   m_Name: Image_8
   m_TagString: Untagged
@@ -289,7 +297,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 34.3165, y: 29.627}
+  m_SizeDelta: {x: 31.2165, y: 29.627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6020978622332237402
 CanvasRenderer:
@@ -329,7 +337,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7087178087746165440
+--- !u!114 &7612825936926116461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,12 +346,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1653940755044600887}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 0, y: -4}
-  m_UseGraphicAlpha: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
 --- !u!1 &1973897042174801972
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +367,7 @@ GameObject:
   - component: {fileID: 6828415197740262901}
   - component: {fileID: 2193977145306320180}
   - component: {fileID: 2518082028586229669}
-  - component: {fileID: 4838701560830455249}
+  - component: {fileID: 5050303468256063086}
   m_Layer: 5
   m_Name: Image_2
   m_TagString: Untagged
@@ -380,7 +392,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 34.3165, y: 29.627}
+  m_SizeDelta: {x: 31.2165, y: 29.627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2193977145306320180
 CanvasRenderer:
@@ -420,7 +432,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4838701560830455249
+--- !u!114 &5050303468256063086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -429,12 +441,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1973897042174801972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 0, y: -4}
-  m_UseGraphicAlpha: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
 --- !u!1 &3101764660063484990
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +464,7 @@ GameObject:
   - component: {fileID: 7717448525962111930}
   - component: {fileID: 5944362764573978925}
   - component: {fileID: 7113126677065042538}
+  - component: {fileID: 1802380320005782354}
   m_Layer: 5
   m_Name: TunrBtn
   m_TagString: Untagged
@@ -473,8 +490,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.8183212, y: 43.60337}
-  m_SizeDelta: {x: 208.2159, y: 100.1113}
+  m_AnchoredPosition: {x: -0.8183212, y: 0.42500305}
+  m_SizeDelta: {x: 200.4727, y: 52.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2957223607254938208
 CanvasRenderer:
@@ -504,7 +521,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3973048205977056702, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
+  m_Sprite: {fileID: 7186439489957785556, guid: 763b39e07fde2f47db96dd14d865c949, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -577,6 +594,25 @@ MonoBehaviour:
   minScale: {x: 0.8, y: 0.8, z: 1}
   maxScale: {x: 1.2, y: 1.2, z: 1}
   scaleSpeed: 1
+--- !u!114 &1802380320005782354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3101764660063484990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
 --- !u!1 &3194931673474990796
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,8 +712,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.1, y: 5.9}
-  m_SizeDelta: {x: -64.525, y: -63.1227}
+  m_AnchoredPosition: {x: 5.548126, y: 3.321022}
+  m_SizeDelta: {x: -55.5456, y: -24.6185}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8978321989011167037
 CanvasRenderer:
@@ -734,7 +770,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.15
+  m_fontSize: 13.4
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -813,8 +849,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.680641, y: 0}
-  m_SizeDelta: {x: 312.9931, y: 85.5617}
+  m_AnchoredPosition: {x: -0.000022888184, y: 0}
+  m_SizeDelta: {x: 224.4498, y: 59.162}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &407747945445053403
 CanvasRenderer:
@@ -865,7 +901,7 @@ GameObject:
   - component: {fileID: 4786100079505970143}
   - component: {fileID: 8381161446544738634}
   - component: {fileID: 3832060098745084362}
-  - component: {fileID: 5227491224270274286}
+  - component: {fileID: 3134406140713418716}
   m_Layer: 5
   m_Name: Image_6
   m_TagString: Untagged
@@ -890,7 +926,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 34.3165, y: 29.627}
+  m_SizeDelta: {x: 31.2165, y: 29.627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8381161446544738634
 CanvasRenderer:
@@ -930,7 +966,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5227491224270274286
+--- !u!114 &3134406140713418716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -939,12 +975,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4416449020735454233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 0, y: -4}
-  m_UseGraphicAlpha: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
 --- !u!1 &4983255670657686325
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,7 +996,7 @@ GameObject:
   - component: {fileID: 8343398815148835226}
   - component: {fileID: 7049290842602961552}
   - component: {fileID: 1233014299854411793}
-  - component: {fileID: 6945119667220200374}
+  - component: {fileID: 7729302181635214693}
   m_Layer: 5
   m_Name: Image_3
   m_TagString: Untagged
@@ -981,7 +1021,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 34.3165, y: 29.627}
+  m_SizeDelta: {x: 31.2165, y: 29.627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7049290842602961552
 CanvasRenderer:
@@ -1021,7 +1061,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6945119667220200374
+--- !u!114 &7729302181635214693
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1030,12 +1070,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4983255670657686325}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 0, y: -4}
-  m_UseGraphicAlpha: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
 --- !u!1 &6553752903126624302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,7 +1091,7 @@ GameObject:
   - component: {fileID: 8690075905642108425}
   - component: {fileID: 4905372274044436451}
   - component: {fileID: 6886880252846375487}
-  - component: {fileID: 2902509257338661878}
+  - component: {fileID: 479409793110706702}
   m_Layer: 5
   m_Name: Image_4
   m_TagString: Untagged
@@ -1072,7 +1116,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 34.3165, y: 29.627}
+  m_SizeDelta: {x: 31.2165, y: 29.627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4905372274044436451
 CanvasRenderer:
@@ -1112,7 +1156,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2902509257338661878
+--- !u!114 &479409793110706702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1121,12 +1165,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6553752903126624302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 0, y: -4}
-  m_UseGraphicAlpha: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
 --- !u!1 &7217577822390720744
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,7 +1186,7 @@ GameObject:
   - component: {fileID: 2180906575809079516}
   - component: {fileID: 6957378452860061558}
   - component: {fileID: 7873123587369586252}
-  - component: {fileID: 5563476897428173800}
+  - component: {fileID: 8104076961234467991}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1163,7 +1211,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 34.3165, y: 29.627}
+  m_SizeDelta: {x: 31.2165, y: 29.627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6957378452860061558
 CanvasRenderer:
@@ -1203,7 +1251,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5563476897428173800
+--- !u!114 &8104076961234467991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1212,12 +1260,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7217577822390720744}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 0, y: -4}
-  m_UseGraphicAlpha: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
 --- !u!1 &7479796934695275193
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,7 +1281,7 @@ GameObject:
   - component: {fileID: 5975654460835611088}
   - component: {fileID: 6146983925571134941}
   - component: {fileID: 6284175021776445332}
-  - component: {fileID: 5220719121766504625}
+  - component: {fileID: 4426329803815254884}
   m_Layer: 5
   m_Name: Image_7
   m_TagString: Untagged
@@ -1254,7 +1306,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 34.3165, y: 29.627}
+  m_SizeDelta: {x: 31.2165, y: 29.627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6146983925571134941
 CanvasRenderer:
@@ -1294,7 +1346,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5220719121766504625
+--- !u!114 &4426329803815254884
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1303,12 +1355,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7479796934695275193}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 299fd9f7d75a7fa0d861c9bd2833b72e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 0, y: -4}
-  m_UseGraphicAlpha: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleToHoverComponent
+  _hoverScaleMultiplier: 1.1
+  _hoverDuration: 0.2
+  _hoverEase: 27
+  _punchAmount: {x: -0.1, y: -0.1, z: -0.1}
+  _punchDuration: 0.2
+  _vibrato: 10
+  _elasticity: 1
 --- !u!1 &7687904464682245979
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,8 +1436,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.100006, y: 9.639984}
-  m_SizeDelta: {x: -64.525, y: -63.3103}
+  m_AnchoredPosition: {x: 5.548126, y: 4.9368744}
+  m_SizeDelta: {x: -55.5456, y: -27.8502}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8394885859939067690
 CanvasRenderer:
@@ -1438,7 +1494,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.1
+  m_fontSize: 13.4
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

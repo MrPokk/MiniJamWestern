@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cbc2718c535c050258d370280e633a8d
+guid: 1c9f70f924fd2e9eaa69590ea6624c22
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1389721517479117948
-    second: player_atlas_0
+      213: 7714060160647836981
+    second: promo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,10 +48,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 16384
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_atlas_0
+      name: promo_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 206
-        width: 49
-        height: 35
+        x: 0
+        y: 0
+        width: 525
+        height: 225
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c744f0a6b58494310800000000000000
-      internalID: 1389721517479117948
+      spriteID: 535386368d8dd0b60800000000000000
+      internalID: 7714060160647836981
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 02e88da370f3ac95998e2e0083e1d7c2
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player_atlas_0: 1389721517479117948
+      promo_0: 7714060160647836981
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

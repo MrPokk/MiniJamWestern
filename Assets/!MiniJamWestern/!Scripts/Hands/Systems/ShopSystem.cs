@@ -18,6 +18,8 @@ public class ShopSystem : IEcsAutoImplement
     private EcsFilter<TagPlayerMoney, MoneyComponent> _ecsEntities;
     private EcsFilter<TagPlayer, HealthComponent> _playerFilter;
 
+    private EcsFilter<TagInventoryEffects> _effectsFilter;
+
     private UIShopPopup _shopPopup;
     private ShopCard _cardPrefab;
 
@@ -41,10 +43,86 @@ public class ShopSystem : IEcsAutoImplement
             listCard.Add(CreateCard());
         }
 
-        var availablePaths = new List<string>(ActionsExtraPaths.AllPaths);
+        var ownedAbilitiesTitles = new HashSet<string>();
+        foreach (var invEntity in _effectsFilter)
+        {
+            var inv = invEntity.GetProvider<AbilityInventoryProvider>();
+            if (inv == null) continue;
 
-        AssignUniqueAction(listCard[0], availablePaths);
-        AssignUniqueAction(listCard[1], availablePaths);
+            foreach (var slot in inv.Value.listSlot)
+            {
+                var itemEnt = slot.Value.itemEntity;
+
+                if (itemEnt.TryGet<SoldInfoComponent>(out var soldInfo))
+                {
+                    if (!itemEnt.TryGet<MultiAbility>(out _))
+                    {
+                        ownedAbilitiesTitles.Add(soldInfo.title);
+                    }
+                }
+            }
+        }
+
+        // --- ДОБАВЛЕНО: Разделяем пути на атакующие и обычные ---
+        var attackPaths = new List<string>();
+        var generalPaths = new List<string>();
+
+        foreach (var path in ActionsExtraPaths.AllPaths)
+        {
+            var providerPrefab = new Loader<TagActionsProvider>(path).Prefab();
+            if (providerPrefab == null) continue;
+
+            // Проверка на наличие в черном списке
+            if (providerPrefab.Entity.TryGet<SoldInfoComponent>(out var soldInfo))
+            {
+                if (ownedAbilitiesTitles.Contains(soldInfo.title))
+                {
+                    continue;
+                }
+            }
+
+            // Проверяем, реализует ли способность интерфейс IAttackAbility
+            bool isAttack = false;
+            if (providerPrefab.Entity.TryGet<TagActions>(out var tagActions))
+            {
+                if (tagActions.ability is IAttackAbility)
+                {
+                    isAttack = true;
+                }
+            }
+
+            // Распределяем по спискам
+            if (isAttack)
+            {
+                attackPaths.Add(path);
+            }
+            else
+            {
+                generalPaths.Add(path);
+            }
+        }
+        // ---------------------------------------------------------
+
+        // --- ДОБАВЛЕНО: Гарантируем выдачу атаки ---
+        if (attackPaths.Count > 0)
+        {
+            // Первая карта гарантированно берет способность из пула атак
+            AssignUniqueAction(listCard[0], attackPaths);
+
+            // Закидываем оставшиеся неиспользованные атаки в общий пул для второй карты
+            generalPaths.AddRange(attackPaths);
+
+            // Вторая карта берет любую оставшуюся способность
+            AssignUniqueAction(listCard[1], generalPaths);
+        }
+        else
+        {
+            // Если атакующих способностей не осталось вообще (все куплены и нет MultiAbility),
+            // то просто выдаем из того, что есть
+            AssignUniqueAction(listCard[0], generalPaths);
+            AssignUniqueAction(listCard[1], generalPaths);
+        }
+        // -------------------------------------------
 
         var player = _playerFilter.First();
         var healthComp = player.Get<HealthComponent>();
@@ -115,7 +193,7 @@ public class ShopSystem : IEcsAutoImplement
         card.onSelected = OnCardSelected;
 
         _shopPopup.AddCard(card);
-        SoundController.PlaySoundRandomPitch(SoundType.GiveCards); // Уже было реализовано
+        SoundController.PlaySoundRandomPitch(SoundType.GiveCards);
 
         return card;
     }
@@ -131,7 +209,7 @@ public class ShopSystem : IEcsAutoImplement
 
         EcsSystemStatic.GetSystem<ShopAbilityPurchaseSystem>().ProcessPurchase(card);
         EcsSystemStatic.GetSystem<ShopHealthPurchaseSystem>().ProcessPurchase(card);
-        SoundController.PlaySoundRandomPitch(SoundType.TakeCards); // Уже было реализовано
+        SoundController.PlaySoundRandomPitch(SoundType.TakeCards);
 
         SpendMoney(card.Price);
         CloseShop();

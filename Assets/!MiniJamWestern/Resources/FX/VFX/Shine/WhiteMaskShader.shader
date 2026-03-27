@@ -51,7 +51,7 @@ Shader "Custom/WhitePixelMask"
             };
 
             TEXTURE2D(_MainTex);
-            SAMPLER(sampler_mainTex);
+            SAMPLER(sampler_MainTex); // ИСПРАВЛЕНО: заглавная M
             float _Threshold;
 
             Varyings vert(Attributes IN) {
@@ -63,7 +63,8 @@ Shader "Custom/WhitePixelMask"
             }
 
             half4 frag(Varyings IN) : SV_Target {
-                half4 tex = SAMPLE_TEXTURE2D(_MainTex, sampler_mainTex, IN.uv);
+                // ИСПРАВЛЕНО: заглавная M в sampler_MainTex
+                half4 tex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv);
                 
                 // Проверка на белый цвет: если среднее значение RGB выше порога
                 float brightness = (tex.r + tex.g + tex.b) / 3.0;

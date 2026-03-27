@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cbc2718c535c050258d370280e633a8d
+guid: 71e6a03c20a7bf8ddb24f03fe2f7a4eb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1389721517479117948
-    second: player_atlas_0
+      213: -4028044130607533057
+    second: pattern_32_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,16 +37,16 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 0
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 16384
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_atlas_0
+      name: pattern_32_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 206
-        width: 49
-        height: 35
+        x: 0
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c744f0a6b58494310800000000000000
-      internalID: 1389721517479117948
+      spriteID: ff37a8764338918c0800000000000000
+      internalID: -4028044130607533057
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 02e88da370f3ac95998e2e0083e1d7c2
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player_atlas_0: 1389721517479117948
+      pattern_32_0: -4028044130607533057
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

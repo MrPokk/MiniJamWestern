@@ -116,5 +116,25 @@ PrefabInstance:
     - {fileID: 1066741636676043921, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2594039447500818966, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2049304880362582602}
   m_SourcePrefab: {fileID: 100100000, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+--- !u!1 &9027122275147996309 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2594039447500818966, guid: 93a5d49cca4aec6aaa2170189f4de47f, type: 3}
+  m_PrefabInstance: {fileID: 6825529331693213315}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2049304880362582602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9027122275147996309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f844773922d23a98c6c10cbbe27f77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiAbilityProvider
