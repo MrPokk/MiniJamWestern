@@ -9,13 +9,13 @@ public class EnemyIntentGridVisualSystem : IEcsRunSystem
 
     public void Run()
     {
-        _filter.For((EcsEntity entity, ref TagEnemy _) =>
+        foreach (var entity in _filter)
         {
             if (!TryDrawVisuals(entity))
             {
                 HideVisuals(entity);
             }
-        });
+        }
     }
 
     private bool TryDrawVisuals(EcsEntity entity)
@@ -35,7 +35,6 @@ public class EnemyIntentGridVisualSystem : IEcsRunSystem
 
         var color = abilityEntity.TryGet<SetColorComponent>(out var colorComp) ? colorComp.color : Color.white;
 
-        // Отрисовка сетки
         IntentVisualUtility.DrawAbilityArea(entity, abilityEntity, grid.currentPosition, intent.targetPosition, color);
 
         UpdateInteractiveIcon(entity, intent, color);
