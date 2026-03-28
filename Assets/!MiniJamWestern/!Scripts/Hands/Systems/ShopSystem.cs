@@ -16,7 +16,7 @@ public class ShopSystem : IEcsAutoImplement
     private const int AmountRegeneration = 3;
     private const int AmountAddMaxCount = 1;
     private EcsFilter<TagPlayerMoney, MoneyComponent> _ecsEntities;
-    private EcsFilter<TagPlayer, HealthComponent> _playerFilter;
+    private EcsFilter<TagPlayer, GridComponent, HealthComponent> _playerFilter;
     private EcsFilter<TagInventoryEffects> _effectsFilter;
 
     private UIShopPopup _shopPopup;
@@ -96,10 +96,11 @@ public class ShopSystem : IEcsAutoImplement
         }
 
         var player = _playerFilter.First();
-        var healthComp = player.Get<HealthComponent>();
+        ref var healthComp = ref player.Get<HealthComponent>();
         var currentHealth = healthComp.GetCurrentHealth();
         var currentHealthMax = healthComp.GetMaxHealth();
 
+        Debug.Log($"{currentHealth} / {currentHealthMax}");
         if (currentHealth >= currentHealthMax && currentHealth >= AmountRegeneration)
             listCard[2].AssignMaxHealth(AmountAddMaxCount, 3);
         else

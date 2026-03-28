@@ -27,7 +27,7 @@ public class VisualController : MonoBehaviour
 
     public void UpdateMaterialsByEnum<T>(T value) where T : Enum
     {
-        var isEven = value.IsEveryTwo();
+        var isEven = value.IsEveryThird();
 
         foreach (var v in visuals)
         {

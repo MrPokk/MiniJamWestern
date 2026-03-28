@@ -33,7 +33,7 @@ Material:
     - _Speed: 1
     - _Thickness: 0.5
     m_Colors:
-    - _BgColor: {r: 0.039215688, g: 0.0627451, b: 0.07058824, a: 1}
-    - _LineColor: {r: 0.05490196, g: 0.08235294, b: 0.08627451, a: 1}
+    - _BgColor: {r: 0.05500177, g: 0.11320752, b: 0.11014406, a: 1}
+    - _LineColor: {r: 0.08330367, g: 0.1509434, b: 0.14696458, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
