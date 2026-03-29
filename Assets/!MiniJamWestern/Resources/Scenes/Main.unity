@@ -1679,7 +1679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8438162135960486746, guid: a7ec4d0fe28ebea57af49609884afbe3, type: 3}
       propertyPath: orthographic size
-      value: 5.625
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8438162135960486746, guid: a7ec4d0fe28ebea57af49609884afbe3, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
@@ -2468,7 +2468,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 11.25, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 267917054}
